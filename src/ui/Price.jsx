@@ -1,0 +1,77 @@
+import { styled } from 'styled-components'
+import Card from '../features/dashboard/Card'
+
+import { devicesMax } from '../styles/breakpoint'
+const StyledUl = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 30px;
+
+  @media ${devicesMax.lg} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media ${devicesMax.md} {
+    gap: 15px;
+  }
+  @media ${devicesMax.sm} {
+    grid-template-columns: 1fr;
+  }
+`
+
+function Price() {
+  return (
+    <StyledUl>
+      <Card
+        color="btc"
+        name="Bitcoin"
+        image="../../public/bitcoin.png"
+        sell="11.75"
+        buy="11.00"
+        stock="instock"
+      />
+      <Card
+        color="usdt"
+        name="Usdt"
+        image="../../public/tether-cryptocurrency.256x253.png"
+        sell="11.70"
+        buy="10.90"
+        stock="outstock"
+      />
+      <Card
+        color="doge"
+        name="doge"
+        image="../../public/dogecoin-cryptocurrency.256x253.png"
+        sell="11.75"
+        buy="11.00"
+        stock="instock"
+      />
+      <Card
+        color="ethereum"
+        name="ethereum"
+        image="../../public/ethereum-cryptocurrency.256x253.png"
+        sell="11.75"
+        buy="11.00"
+        stock="outstock"
+      />
+      <Card
+        color="litecoin"
+        name="litecoin"
+        image="../../public/litecoin-cryptocurrency.256x253.png"
+        buy="10.90"
+        sell="00.00"
+        stock="outstock"
+      />
+      <Card
+        color="bitcsh"
+        name="bitcoin-cash"
+        image="../../public/bitcoin-cash-cryptocurrency.256x253.png"
+        sell="11.00"
+        buy="11.75"
+        stock="instock"
+      />
+    </StyledUl>
+  )
+}
+
+export default Price
