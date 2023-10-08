@@ -1,4 +1,5 @@
 import { styled } from 'styled-components'
+import Logout from '../authentication/Logout'
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
@@ -6,7 +7,11 @@ const StyledHeader = styled.header`
   height: 7rem;
 `
 function DashHeader() {
-  return <StyledHeader>header</StyledHeader>
+  return (
+    <StyledHeader>
+      <Logout />
+    </StyledHeader>
+  )
 }
 
 export default DashHeader

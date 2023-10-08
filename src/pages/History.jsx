@@ -5,6 +5,8 @@ import SellTable from '../features/sell/SellTable'
 import { useState } from 'react'
 import { styled } from 'styled-components'
 import Button from '../ui/Button'
+import BuyTableOperations from '../features/buy/BuyTableOperations'
+import SellTableOperations from '../features/sell/SellTableOperations'
 
 const StyledBtn = styled.div`
   width: 15%;
@@ -41,7 +43,9 @@ function History() {
           <Heading as="h1">
             {toggle === 1 ? 'buy history' : 'sell history'}
           </Heading>
-          <p>filter/sort</p>
+
+          {toggle === 1 && <BuyTableOperations />}
+          {toggle === 2 && <SellTableOperations />}
         </Row>
       </Row>
       <Row>

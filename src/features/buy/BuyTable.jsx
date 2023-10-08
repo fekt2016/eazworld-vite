@@ -1,44 +1,18 @@
-import { useQuery } from '@tanstack/react-query'
-// import styled from 'styled-components'
-import { getBuy } from '../../services/apibuy'
 import Spinner from '../../ui/Spinner'
 import BuyRow from './BuyRow'
 import Table from '../../ui/Table'
 
-// const Table = styled.div`
-//   border: 1px solid var(--color-grey-200);
-
-//   font-size: 1.2rem;
-//   background-color: var(--color-grey-0);
-//   border-radius: 7px;
-//   overflow: hidden;
-// `
-
-// const TableHeader = styled.header`
-//   display: grid;
-//   grid-template-columns: repeat(8, 1fr);
-//   column-gap: 2.4rem;
-//   align-items: center;
-
-//   background-color: var(--color-grey-50);
-//   border-bottom: 1px solid var(--color-grey-100);
-//   text-transform: uppercase;
-//   letter-spacing: 0.4px;
-//   font-weight: 600;
-//   color: var(--color-grey-600);
-//   padding: 1.6rem 2.4rem;
-// `
+import Pagination from '../../ui/Pagination'
+import { useBuy } from './useBuy'
 
 function BuyTable() {
-  const { isLoading, data: buying } = useQuery({
-    queryKey: ['buy'],
-    queryFn: getBuy,
-  })
+  const { data, isLoading, error } = useBuy()
 
   if (isLoading) return <Spinner />
-
+  if (error) return 'An error has occured: ' + error.message
+  const { buy } = data
   return (
-    <Table columns="repeat(8, 1fr)">
+    <Table type="table" columns="repeat(8, 1fr)">
       <Table.Header role="row">
         <div>date</div>
         <div>id</div>
@@ -51,9 +25,12 @@ function BuyTable() {
       </Table.Header>
 
       <Table.Body
-        data={buying}
+        data={buy}
         render={(buy) => <BuyRow key={buy.id} buy={buy} />}
       />
+      <Table.Footer>
+        <Pagination count={20} />
+      </Table.Footer>
     </Table>
   )
 }

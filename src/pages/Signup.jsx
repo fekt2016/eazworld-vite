@@ -1,7 +1,8 @@
 import styled from 'styled-components'
-import LoginForm from '../features/authentication/LoginForm'
+
+import SignupForm from '../features/authentication/SignupForm'
 import Logo from '../ui/Logo'
-const LoginLayout = styled.main`
+const SignupLayout = styled.main`
   min-height: 100vh;
   display: grid;
   grid-template-columns: 48rem;
@@ -10,14 +11,13 @@ const LoginLayout = styled.main`
   gap: 3.2rem;
   background-color: var(--color-grey-50);
 `
-
-function Login() {
+function Signup() {
   return (
-    <LoginLayout>
-      <Logo img="../../public/logo100.png" type="small" />
-      <LoginForm />
-    </LoginLayout>
+    <SignupLayout>
+      <Logo img="../../logo100.png" type="small" />
+      <SignupForm />
+    </SignupLayout>
   )
 }
 
-export default Login
+export default Signup

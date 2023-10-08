@@ -3,6 +3,7 @@ import Button from '../../ui/Button'
 import { devicesMax } from '../../styles/breakpoint'
 
 import Heading from '../../ui/Heading'
+import { NavLink } from 'react-router-dom'
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
@@ -55,7 +56,7 @@ function Header() {
             Start Your Order With Just $10 In Less Than 10minutes
           </StyledP>
           <Button variation="primary" size="medium">
-            Get Started With $10
+            <NavLink to="/login">Get Started With $10</NavLink>
           </Button>
         </StyledPBox>
       </StyledText>

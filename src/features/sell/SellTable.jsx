@@ -1,41 +1,14 @@
-import { getSell } from '../../services/apiSell'
-import { useQuery } from '@tanstack/react-query'
 import Spinner from '../../ui/Spinner'
 import SellRow from './SellRow'
 import Table from '../../ui/Table'
-
-// const Table = styled.div`
-//   border: 1px solid var(--color-grey-200);
-
-//   font-size: 1.4rem;
-//   background-color: var(--color-grey-0);
-//   border-radius: 7px;
-//   overflow: hidden;
-//   text-transform: capitalize;
-// `
-
-// const TableHeader = styled.header`
-//   display: grid;
-//   grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 1fr;
-//   column-gap: 2.4rem;
-//   align-items: center;
-
-//   background-color: var(--color-grey-50);
-//   border-bottom: 1px solid var(--color-grey-100);
-//   text-transform: uppercase;
-//   letter-spacing: 0.4px;
-//   font-weight: 600;
-//   color: var(--color-grey-600);
-//   padding: 1.6rem 2.4rem;
-// `
+import { useSell } from './useSell'
+import Pagination from '../../ui/Pagination'
 
 function SellTable() {
-  const { isLoading, data: selling } = useQuery({
-    queryKey: ['sell'],
-    queryFn: getSell,
-  })
+  const { isLoading, data: sell, error } = useSell()
 
   if (isLoading) return <Spinner />
+  if (error) return 'An error has occured: ' + error.message
 
   return (
     <Table columns="repeat(6, 1fr)">
@@ -48,9 +21,12 @@ function SellTable() {
         <div>status</div>
       </Table.Header>
       <Table.Body
-        data={selling}
+        data={sell}
         render={(sell) => <SellRow key={sell.id} sell={sell} />}
       />
+      <Table.Footer>
+        <Pagination count={5} />
+      </Table.Footer>
     </Table>
   )
 }

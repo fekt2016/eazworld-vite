@@ -6,6 +6,7 @@ import {
   HiOutlineCurrencyEuro,
   HiOutlineCog8Tooth,
   HiOutlineDocumentChartBar,
+  HiOutlineCreditCard,
 } from 'react-icons/hi2'
 
 const StyledNav = styled.nav`
@@ -94,9 +95,9 @@ function MainNav() {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/">
-            <HiOutlineDocumentChartBar />
-            <span>prepaid</span>
+          <StyledNavLink to="/prepaid">
+            <HiOutlineCreditCard />
+            <span>Prepaid</span>
           </StyledNavLink>
         </li>
         <li>

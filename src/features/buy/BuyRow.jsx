@@ -5,17 +5,6 @@ import { useState } from 'react'
 import Modal from '../../ui/Modal'
 import OrderCompleted from '../../ui/OrderCompleted'
 import Table from '../../ui/Table'
-// const TableRow = styled.div`
-//   display: grid;
-//   grid-template-columns: repeat(8, 1fr);
-//   column-gap: 2.4rem;
-//   align-items: center;
-//   padding: 1.4rem 2.4rem;
-
-//   &:not(:last-child) {
-//     border-bottom: 1px solid var(--color-grey-100);
-//   }
-// `
 
 const Status = styled.button`
   font-size: 1rem;
@@ -51,17 +40,18 @@ const Price = styled.div`
 //   color: var(--color-green-700);
 // `
 function BuyRow({ buy }) {
-  const [isOpenModal, setIsOpenModal] = useState(false)
   const {
     created_at: date,
     id: buyId,
-    AmountUsd,
-    AmountGh,
+    amountUSD,
+    amountGh,
     currency,
-    total,
+    totalToPay,
     payment,
     status,
   } = buy
+
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
   return (
     <>
@@ -69,9 +59,9 @@ function BuyRow({ buy }) {
         <div>{formatDate(date)}</div>
         <div>{buyId}</div>
         <Buy>{currency}</Buy>
-        <Price>&#36;{AmountUsd}</Price>
-        <Price>&#8373;{AmountGh}</Price>
-        <Price>&#8373;{total}</Price>
+        <Price>&#36;{amountUSD}</Price>
+        <Price>&#8373;{amountGh}</Price>
+        <Price>&#8373;{totalToPay}</Price>
         <div>{payment}</div>
         <Status onClick={() => setIsOpenModal((show) => !show)}>
           {status}
@@ -79,7 +69,6 @@ function BuyRow({ buy }) {
       </Table.Row>
       {isOpenModal && (
         <Modal onClose={() => setIsOpenModal(false)}>
-          {/* <BuyOrderDetails /> */}
           <OrderCompleted />
         </Modal>
       )}

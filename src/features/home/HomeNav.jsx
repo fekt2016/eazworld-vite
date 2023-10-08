@@ -191,7 +191,7 @@ function HomeNav() {
         <StyledBtnD>
           <StyledBtn to="/login">Login</StyledBtn>
 
-          <StyledBtn to="register">Register</StyledBtn>
+          <StyledBtn to="/signup">Register</StyledBtn>
         </StyledBtnD>
       </StyledRightContainer>
     </StyledNav>

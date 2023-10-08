@@ -8,6 +8,7 @@ const StyledLogo = styled.div`
 `
 
 const Img = styled.img`
+  margin: 0 auto;
   ${(props) =>
     props.type === 'big' &&
     css`
@@ -16,7 +17,7 @@ const Img = styled.img`
   ${(props) =>
     props.type === 'small' &&
     css`
-      height: 2rem;
+      height: 5rem;
     `}
 `
 

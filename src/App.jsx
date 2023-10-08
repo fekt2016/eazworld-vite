@@ -9,11 +9,12 @@ import Buy from './pages/Buy'
 import Settings from './pages/Settings'
 import History from './pages/History'
 import PageNotFound from './pages/PageNotFound'
+import Signup from './pages/signup'
 import Login from './pages/Login'
 import DashboardLayout from './features/dashboard/DashboardLayout'
 import Prepaid from './pages/Prepaid'
 import { Toaster } from 'react-hot-toast'
-
+import ProtectedRoute from './ui/ProtectedRoute'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -32,8 +33,15 @@ function App() {
           <Route index element={<Navigate replace to="home" />} />
           <Route path="home" element={<Home />} />
           <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
           <Route path="*" element={<PageNotFound />} />
-          <Route element={<DashboardLayout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="sell" element={<Sell />} />
             <Route path="buy" element={<Buy />} />

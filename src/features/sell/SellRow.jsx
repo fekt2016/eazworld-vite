@@ -5,46 +5,29 @@ import { useState } from 'react'
 import Modal from '../../ui/Modal'
 import OrderDetails from '../../ui/OrderDetails'
 import Table from '../../ui/Table'
-// const TableRow = styled.div`
-//   display: grid;
-//   grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 1fr;
-//   column-gap: 2.2rem;
-//   align-items: center;
-//   padding: 1.2rem 2.2rem;
 
-//   &:not(:last-child) {
-//     border-bottom: 1px solid var(--color-grey-100);
-//   }
-// `
 const Status = styled.button`
   font-size: 1.6rem;
   font-weight: 600;
   font-family: 'Sono';
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: white;
   border: none;
   background-color: var(--color-black-950);
 `
-// const Img = styled.img`
-//   display: block;
-//   width: 6.4rem;
-//   aspect-ratio: 3 / 2;
-//   object-fit: cover;
-//   object-position: center;
-//   transform: scale(1.5) translateX(-7px);
-// `
 
-// const Cabin = styled.div`
-//   font-size: 1.6rem;
-//   font-weight: 600;
-//   color: var(--color-grey-600);
-//   font-family: 'Sono';
-// `
+const Sell = styled.div`
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--color-grey-600);
+  font-family: 'Sono';
+  text-transform: capitalize;
+`
 
-// const Price = styled.div`
-//   font-family: 'Sono';
-//   font-weight: 600;
-// `
+const Price = styled.div`
+  font-family: 'Sono';
+  font-weight: 600;
+`
 
 // const Discount = styled.div`
 //   font-family: 'Sono';
@@ -58,7 +41,7 @@ function SellRow({ sell }) {
     created_at: date,
     id: buyId,
     currency,
-    amountUsd,
+    amountUSD,
     payment,
     status,
   } = sell
@@ -67,9 +50,9 @@ function SellRow({ sell }) {
       <Table.Row columns="repeat(6, 1fr)">
         <div>{formatDate(date)}</div>
         <div>{buyId}</div>
-        <div>{currency}</div>
-        <div>{amountUsd}</div>
-        <div>{payment}</div>
+        <Sell>{currency}</Sell>
+        <Price>{amountUSD}</Price>
+        <Price>{payment}</Price>
         <Status onClick={() => setIsOpenModal((show) => !show)}>
           {status}
         </Status>

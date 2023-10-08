@@ -5,7 +5,9 @@ import Form from '../../ui/Form'
 import Button from '../../ui/Button'
 import { useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
-import StyledSelect from '../../ui/Select'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
+import { createSell } from '../../services/apiSell'
 
 const FormRow = styled.div`
   display: grid;
@@ -37,6 +39,19 @@ const FormRow = styled.div`
 const Label = styled.label`
   font-weight: 500;
 `
+const Select = styled.select`
+  font-size: 1.4rem;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid
+    ${(props) =>
+      props.type === 'white'
+        ? 'var(--color-grey-100)'
+        : 'var(--color-grey-300)'};
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-grey-0);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+`
 
 // const Error = styled.span`
 //   font-size: 1.4rem;
@@ -48,53 +63,101 @@ const StyledTerm = styled.div`
   text-align: center;
   padding: 1rem;
 `
-function onSubmit(data) {
-  console.log(data)
-}
 
-function CreateCabinForm() {
-  const { register, control, handleSubmit, watch } = useForm()
-  const watchUsd = watch('amountUsd')
+function CreateCabinForm({ openModal }) {
+  const queryClient = useQueryClient()
+  const { register, control, handleSubmit, reset, setValue } = useForm()
+
+  const { mutate, isLoading: isCreating } = useMutation({
+    mutationFn: (newSell) => createSell(newSell),
+    onSuccess: () => {
+      toast.success('New order successfully created')
+      queryClient.invalidateQueries({
+        queryKey: ['sell'],
+      })
+      reset()
+      openModal()
+    },
+    onError: (err) => toast.error(err.message),
+  })
+
+  function onSubmit(data) {
+    console.log(data)
+    mutate(data)
+  }
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow>
           <Label htmlFor="currency">Select Currency</Label>
-          <Input type="text" id="currency" {...register('currency')} />
+          <Select {...register('currency')}>
+            <option>bitcon</option>
+            <option>Tether</option>
+            <option>Ethereun</option>
+          </Select>
         </FormRow>
 
         <FormRow>
-          <Label htmlFor="amountUsd">Amount Usd</Label>
-          <Input type="number" id="amountUsd" {...register('amountUsd')} />
-        </FormRow>
-
-        <FormRow>
-          <Label htmlFor="amountgh">Amount Gh</Label>
+          <Label htmlFor="amountUSD">Amount Usd</Label>
           <Input
             type="number"
-            id="amountgh"
-            {...register('amountgh')}
-            defaultValue={watchUsd}
+            id="amountUSD"
+            {...register('amountUSD', {
+              onChange: (e) => {
+                const rate = 12
+                const cedis = e.target.value * rate
+                if (!isNaN(cedis)) {
+                  setValue('amountGh', cedis)
+                }
+              },
+            })}
+          />
+        </FormRow>
+
+        <FormRow>
+          <Label htmlFor="amountGh">Amount Gh</Label>
+          <Input
+            autoFocus
+            type="number"
+            id="amountGh"
+            {...register('amountGh', {
+              onChange: (e) => {
+                const rate = 12
+                const dollar = e.target.value / rate
+                if (!isNaN(dollar)) {
+                  setValue('amountUSD', dollar)
+                }
+              },
+            })}
           />
         </FormRow>
 
         <FormRow>
           <Label htmlFor="payment">Payment Method</Label>
-          <StyledSelect id="payment">
-            <option>mtm momo</option>
+          <Select {...register('payment')}>
+            <option>mtn</option>
             <option>voda cash</option>
-            <option>at money </option>
-          </StyledSelect>
+            <option>At Money</option>
+          </Select>
+        </FormRow>
+        <FormRow>
+          <Input
+            type="hidden"
+            id="status"
+            {...register('status')}
+            defaultValue={'processing'}
+          />
         </FormRow>
 
         <StyledTerm>
           By clicking the order button is that you have agreed that all infor
-          mation pro vide are correct and you should be held liable for payment
+          mation provide are correct and you should be held liable for payment
           detail s submitted
         </StyledTerm>
 
         <FormRow>
-          <Button>Order</Button>
+          <Button>{isCreating ? 'Ordering' : 'Order'}</Button>
+          {/* <Button>ORDER</Button> */}
         </FormRow>
       </Form>
       <DevTool control={control} />

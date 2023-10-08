@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { devicesMax } from '../styles/breakpoint'
 
 const sizes = {
   small: css`
@@ -72,6 +73,9 @@ const Button = styled.button`
 
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
+  @media ${devicesMax.lg} {
+margin-bottom: 2rem ;
+  }
 `
 
 Button.defaultProps = {

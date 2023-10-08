@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { styled } from 'styled-components'
 
-// eslint-disable-next-line react-refresh/only-export-components
 const StyledTabs = styled.div`
   display: flex;
   justify-content: space-between;
@@ -13,7 +12,6 @@ const StyledCon = styled.div``
 
 function BuyTab() {
   const [toggle, setToggle] = useState(1)
-  console.log(toggle)
 
   return (
     <div>

@@ -1,30 +1,22 @@
 import supabase from "./supabase";
 
-export async function getSell(){
+export async function getSell() {
+	const { data, error } = await supabase.from("sell").select("*");
 
-const  { data, error } = await supabase
-.from('sell')
-.select('*')
-if(error){
-  console.error(error)
-  throw new Error('currency could not be loaded')
-}
-return data
+	if (error) {
+		console.error(error);
+		throw new Error("currency could not be loaded");
+	}
+	return data;
 }
 
+export async function createSell(newSell) {
+	const { data, error } = await supabase.from("sell").insert([newSell]);
 
-// export async function deleteCabin(id){
+	if (error) {
+		console.error(error);
+		throw new Error("currency could not be loaded");
+	}
 
-
-//   const { data, error } = await supabase
-//   .from('')
-//   .delete()
-//   .eq('id', id)
-
-//   if(error){
-//     console.error(error)
-//     throw new Error('Cabin could not be loaded')
-//   }
-
-// return data
-// }
+	return data;
+}
