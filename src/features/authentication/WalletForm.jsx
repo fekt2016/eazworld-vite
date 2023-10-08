@@ -18,7 +18,7 @@ function WalletForm() {
         />
       </FormRow>
       <FormRow label="Wallet Address">
-        <Input type="" text id="firstName" />
+        <Input type="text" id="firstName" />
       </FormRow>
       <FormRow>
         <Button>Add Wallet</Button>

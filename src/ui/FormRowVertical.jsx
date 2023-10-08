@@ -1,11 +1,17 @@
 /* eslint react/prop-types: 0 */
 import styled from 'styled-components'
+import { devicesMax } from '../styles/breakpoint'
 
 const StyledFormRow = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   padding: 1.2rem 0;
+
+  @media ${devicesMax.lg} {
+    justify-content: center;
+    align-items: flex-start;
+  }
 `
 
 const Label = styled.label`

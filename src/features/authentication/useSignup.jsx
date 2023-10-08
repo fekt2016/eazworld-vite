@@ -8,7 +8,7 @@ export function useSignup() {
     onSuccess: (user) => {
       console.log(user)
       toast.success(
-        "Acount successfully created! Please verify the new account from the user's email address",
+        "Account successfully created! Please verify the new account from the user's email address",
       )
     },
   })

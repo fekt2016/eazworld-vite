@@ -7,10 +7,10 @@ function PinCodeForm() {
   return (
     <Form>
       <FormRow label="4 Digit Code">
-        <Input type="Number" text id="" />
+        <Input type="Number" />
       </FormRow>
       <FormRow label="Confirm Code">
-        <Input type="Number" text id="" />
+        <Input type="Number" />
       </FormRow>
       <FormRow>
         {/* <Button type="reset" variation="secondary">

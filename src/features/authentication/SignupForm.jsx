@@ -6,7 +6,7 @@ import Input from '../../ui/Input'
 
 import { NavLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { signup } from '../../services/apiAuth'
+import { useSignup } from './useSignup'
 
 // Email regex: /\S+@\S+\.\S+/
 
@@ -22,6 +22,8 @@ const StyledFooter = styled.div`
 `
 
 function SignupForm() {
+  const { signup, isLoading } = useSignup()
+
   const {
     register,
     formState: { errors },
@@ -32,7 +34,6 @@ function SignupForm() {
   // const { errors } = formState
 
   function onSubmit({ firstName, lastName, email, password, phone }) {
-    console.log(firstName, lastName, email, password, phone)
     signup(
       { firstName, lastName, email, password, phone },
       {
@@ -45,6 +46,7 @@ function SignupForm() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Fisrt Name" error={errors?.firstName?.message}>
           <Input
+            disabled={isLoading}
             type="text"
             id="firstName"
             {...register('firstName', { required: 'This field is required' })}
@@ -52,6 +54,7 @@ function SignupForm() {
         </FormRow>
         <FormRow label="Last Name" error={errors?.lastName?.message}>
           <Input
+            disabled={isLoading}
             type="text"
             id="lastName"
             {...register('lastName', { required: 'This field is required' })}
@@ -60,6 +63,7 @@ function SignupForm() {
 
         <FormRow label="Email address" error={errors?.email?.message}>
           <Input
+            disabled={isLoading}
             type="email"
             id="email"
             {...register('email', {
@@ -77,6 +81,7 @@ function SignupForm() {
           error={errors?.password?.message}
         >
           <Input
+            disabled={isLoading}
             type="password"
             id="password"
             {...register('password', {
@@ -94,6 +99,7 @@ function SignupForm() {
           error={errors?.passwordConfirm?.message}
         >
           <Input
+            disabled={isLoading}
             type="password"
             id="passwordConfirm"
             {...register('passwordConfirm', {
@@ -105,6 +111,7 @@ function SignupForm() {
         </FormRow>
         <FormRow label="Phone Number" error={errors?.mobile?.message}>
           <Input
+            disabled={isLoading}
             type="phone"
             id="phone"
             {...register('phone', {
@@ -114,7 +121,7 @@ function SignupForm() {
         </FormRow>
 
         <FormRow>
-          <Button>Sign Up</Button>
+          <Button disabled={isLoading}>Sign Up</Button>
         </FormRow>
         <StyledFooter>
           <StyledBtn to="/login">Already have an account? Login</StyledBtn>
