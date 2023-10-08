@@ -25,7 +25,7 @@ function Price() {
       <Card
         color="btc"
         name="Bitcoin"
-        image="../../public/bitcoin.png"
+        image="../../bitcoin.png"
         sell="11.75"
         buy="11.00"
         stock="instock"
@@ -33,7 +33,7 @@ function Price() {
       <Card
         color="usdt"
         name="Usdt"
-        image="../../public/tether-cryptocurrency.256x253.png"
+        image="../../tether-cryptocurrency.256x253.png"
         sell="11.70"
         buy="10.90"
         stock="outstock"
@@ -41,7 +41,7 @@ function Price() {
       <Card
         color="doge"
         name="doge"
-        image="../../public/dogecoin-cryptocurrency.256x253.png"
+        image="../../dogecoin-cryptocurrency.256x253.png"
         sell="11.75"
         buy="11.00"
         stock="instock"
@@ -49,7 +49,7 @@ function Price() {
       <Card
         color="ethereum"
         name="ethereum"
-        image="../../public/ethereum-cryptocurrency.256x253.png"
+        image="../../ethereum-cryptocurrency.256x253.png"
         sell="11.75"
         buy="11.00"
         stock="outstock"
@@ -57,7 +57,7 @@ function Price() {
       <Card
         color="litecoin"
         name="litecoin"
-        image="../../public/litecoin-cryptocurrency.256x253.png"
+        image="../../litecoin-cryptocurrency.256x253.png"
         buy="10.90"
         sell="00.00"
         stock="outstock"
@@ -65,7 +65,7 @@ function Price() {
       <Card
         color="bitcsh"
         name="bitcoin-cash"
-        image="../../public/bitcoin-cash-cryptocurrency.256x253.png"
+        image="../../bitcoin-cash-cryptocurrency.256x253.png"
         sell="11.00"
         buy="11.75"
         stock="instock"

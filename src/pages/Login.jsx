@@ -14,7 +14,7 @@ const LoginLayout = styled.main`
 function Login() {
   return (
     <LoginLayout>
-      <Logo img="../../public/logo100.png" type="small" />
+      <Logo img="../../logo100.png" type="small" />
       <LoginForm />
     </LoginLayout>
   )
