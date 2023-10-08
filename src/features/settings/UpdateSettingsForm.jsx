@@ -1,6 +1,6 @@
-// import Spinner from 'ui/Spinner';
-// import { useSettings } from 'features/settings/useSettings';
-// import { useUpdateSetting } from 'features/settings/useUpdateSetting';
+import Spinner from 'ui/Spinner'
+import { useSettings } from 'features/settings/useSettings'
+import { useUpdateSetting } from 'features/settings/useUpdateSetting'
 
 import Form from 'ui/Form'
 import FormRow from 'ui/FormRow'

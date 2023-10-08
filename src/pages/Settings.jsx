@@ -8,7 +8,7 @@ import PinCodeForm from '../features/authentication/PinCodeForm'
 import { devicesMax } from '../styles/breakpoint'
 import { useState } from 'react'
 import WalletForm from '../features/authentication/WalletForm'
-import VerificationForm from '../features/authentication/verificationForm'
+import VerificationForm from '../features/authentication/VerificationForm'
 
 const BtnRow = styled.div`
   display: flex;
