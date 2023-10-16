@@ -81,3 +81,22 @@ export async function updateCurrentUser({
 	if (error2) throw new Error(error.message);
 	return updatedUser;
 }
+
+export async function emailLink(email) {
+	const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+		redirectTo: "http://localhost:5173/update-password",
+	});
+
+	if (error) throw new Error(error.message);
+
+	return data;
+}
+
+export async function resetPassword({ email, password }) {
+	const { data, error } = await supabase.auth.updateUser({
+		email,
+		password,
+	});
+	if (error) throw new Error(error.message);
+	return data;
+}

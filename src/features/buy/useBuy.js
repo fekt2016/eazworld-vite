@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBuy } from "../../services/apibuy";
+import { getCurrentUserBuy } from "../../services/apibuy";
 
 export function useBuy() {
 	const { isLoading, data, error } = useQuery({
 		queryKey: ["buy"],
-		queryFn: getBuy,
+		queryFn: getCurrentUserBuy,
 	});
 	return { isLoading, data, error };
 }

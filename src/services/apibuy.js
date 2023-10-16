@@ -21,3 +21,21 @@ export async function createBuy(newBuy) {
 
 	return data;
 }
+
+export async function getCurrentUserBuy() {
+	const {
+		data: { user },
+		error2,
+	} = await supabase.auth.refreshSession();
+
+	if (error2) throw new Error(error.message);
+
+	const { data, error } = await supabase
+		.from("buy")
+		.select("*")
+		.eq("user_id", user.id);
+
+	if (error) throw new Error("currency could not be loaded");
+
+	return data;
+}

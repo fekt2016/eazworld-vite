@@ -31,12 +31,11 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-black-100);
     font-size: 1.6rem;
     font-weight: 500;
-    padding: 1.2rem 2.4rem;
+    padding: 1.2rem 0.4rem;
     transition: all 0.3s;
     text-transform: capitalize;
   }
 
-  /* This works because react-router places the active class on the active NavLink */
   &:hover,
   &:active,
   &.active:link,
@@ -66,6 +65,8 @@ const StyledP = styled.p`
   text-align: center;
   text-transform: capitalize;
 `
+const StyledSpan = styled.span``
+
 function MainNav() {
   return (
     <StyledNav>
@@ -73,37 +74,37 @@ function MainNav() {
         <li>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />
-            <span>dashboard</span>
+            <StyledSpan>dashboard</StyledSpan>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/buy">
             <HiOutlineCurrencyDollar />
-            <span>buy</span>
+            <StyledSpan>buy</StyledSpan>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/sell">
             <HiOutlineCurrencyEuro />
-            <span>sell</span>
+            <StyledSpan>sell</StyledSpan>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/history">
             <HiOutlineDocumentChartBar />
-            <span>history</span>
+            <StyledSpan>history</StyledSpan>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/prepaid">
             <HiOutlineCreditCard />
-            <span>Prepaid</span>
+            <StyledSpan>Prepaid</StyledSpan>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/settings">
             <HiOutlineCog8Tooth />
-            <span>settings</span>
+            <StyledSpan>settings</StyledSpan>
           </StyledNavLink>
         </li>
       </NavList>

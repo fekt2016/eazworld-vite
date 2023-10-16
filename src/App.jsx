@@ -15,6 +15,8 @@ import DashboardLayout from './features/dashboard/DashboardLayout'
 import Prepaid from './pages/Prepaid'
 import { Toaster } from 'react-hot-toast'
 import ProtectedRoute from './ui/ProtectedRoute'
+import RecoverPassword from './pages/RecoverPassword'
+import UpdatePassword from './pages/UpdatePassword'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -34,6 +36,8 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="recover-password" element={<RecoverPassword />} />
+          <Route path="update-password" element={<UpdatePassword />} />
           <Route path="*" element={<PageNotFound />} />
           <Route
             element={

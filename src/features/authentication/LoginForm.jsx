@@ -69,7 +69,9 @@ function LoginForm() {
         </Button>
       </FormRowVertical>
       <StyledFooter>
-        <StyledBtn disabled={isLoading}>Forget password</StyledBtn>
+        <StyledBtn to="/recover-password" disabled={isLoading}>
+          Forget password
+        </StyledBtn>
         <StyledBtn to="/signup" disabled={isLoading}>
           Sign Up
         </StyledBtn>

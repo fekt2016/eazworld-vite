@@ -1,16 +1,15 @@
 import Spinner from '../../ui/Spinner'
 import BuyRow from './BuyRow'
 import Table from '../../ui/Table'
-
 import Pagination from '../../ui/Pagination'
 import { useBuy } from './useBuy'
 
 function BuyTable() {
-  const { data, isLoading, error } = useBuy()
+  const { data: buy, isLoading, error } = useBuy()
 
   if (isLoading) return <Spinner />
   if (error) return 'An error has occured: ' + error.message
-  const { buy } = data
+
   return (
     <Table type="table" columns="repeat(8, 1fr)">
       <Table.Header role="row">

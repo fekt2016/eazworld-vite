@@ -4,15 +4,14 @@ import DashHeader from './DashHeader'
 import { styled } from 'styled-components'
 
 import { devicesMax } from '../../styles/breakpoint'
+import { useState } from 'react'
 
 const StyledDashboardLayout = styled.div`
-  display: grid;
-  grid-template-columns: 26rem 1fr;
-  grid-template-rows: auto 1fr;
+  display: flex;
   height: 100vh;
 
   @media ${devicesMax.md} {
-    grid-template-columns: 1fr;
+    grid-template-columns: 10rem 1fr;
   }
 `
 const Main = styled.main`
@@ -24,15 +23,23 @@ const Main = styled.main`
     padding: 3rem 3.8rem 5.4rem;
   }
 `
+const StyledContainer = styled.div`
+  flex: 1;
+`
 
 function DashboardLayout() {
+  const [sidebar, setSidebar] = useState(false)
+  const showSidebar = () => setSidebar(!sidebar)
+
   return (
     <StyledDashboardLayout>
-      <Sidebar />
-      <DashHeader />
-      <Main>
-        <Outlet />
-      </Main>
+      <Sidebar sidebar={sidebar} />
+      <StyledContainer>
+        <DashHeader sidebar={sidebar} showSidebar={showSidebar} />
+        <Main>
+          <Outlet />
+        </Main>
+      </StyledContainer>
     </StyledDashboardLayout>
   )
 }
