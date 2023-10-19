@@ -9,6 +9,7 @@ const StyledLogo = styled.div`
 
 const Img = styled.img`
   margin: 0 auto;
+  border-radius: 50%;
   ${(props) =>
     props.type === 'big' &&
     css`

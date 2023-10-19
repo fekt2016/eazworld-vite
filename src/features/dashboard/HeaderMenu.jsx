@@ -8,19 +8,22 @@ const StyledHeaderMenu = styled.ul`
   display: flex;
   gap: 0.4rem;
 `
+const StyledLi = styled.li`
+  margin: 1rem;
+`
 
 function HeaderMenu() {
   const Navigate = useNavigate()
   return (
     <StyledHeaderMenu>
-      <li>
+      <StyledLi>
         <ButtonIcon onClick={() => Navigate('/settings')}>
           <HiOutlineUser />
         </ButtonIcon>
-      </li>
-      <li>
+      </StyledLi>
+      <StyledLi>
         <Logout />
-      </li>
+      </StyledLi>
     </StyledHeaderMenu>
   )
 }

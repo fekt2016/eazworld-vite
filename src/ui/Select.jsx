@@ -1,5 +1,6 @@
 /* eslint react/prop-types:0 */
 import styled from 'styled-components'
+import { devicesMax } from '../styles/breakpoint'
 
 const StyledSelect = styled.select`
   font-size: 1.4rem;
@@ -13,6 +14,10 @@ const StyledSelect = styled.select`
   background-color: var(--color-grey-0);
   font-weight: 500;
   box-shadow: var(--shadow-sm);
+  @media ${devicesMax.md} {
+    font-size: 1.2rem;
+    padding: 0.8rem;
+  }
 `
 function Select({ options, value, onChange, ...props }) {
   return (

@@ -1,6 +1,7 @@
 /* eslint react/prop-types:0 */
 import { useSearchParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
+import { devicesMax } from '../styles/breakpoint'
 
 const StyledFilter = styled.div`
   border: 1px solid var(--color-grey-100);
@@ -10,6 +11,9 @@ const StyledFilter = styled.div`
   padding: 0.4rem;
   display: flex;
   gap: 0.4rem;
+  /* @media ${devicesMax.md} {
+    padding: 0.2rem;
+  } */
 `
 
 const FilterButton = styled.button`
@@ -29,6 +33,10 @@ const FilterButton = styled.button`
   /* To give the same height as select */
   padding: 0.44rem 0.8rem;
   transition: all 0.3s;
+  @media ${devicesMax.md} {
+    font-size: 1.2rem;
+    padding: 0.44rem 0.4rem;
+  }
 
   &:hover:not(:disabled) {
     background-color: var(--color-black-950);

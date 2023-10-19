@@ -2,12 +2,17 @@
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { devicesMax } from '../styles/breakpoint'
 
 const StyledPagination = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media ${devicesMax.md} {
+    flex-direction: column;
+  }
 `
 
 const P = styled.p`

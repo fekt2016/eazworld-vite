@@ -2,29 +2,32 @@ import { Outlet } from 'react-router-dom'
 import Sidebar from '../../ui/Sidebar'
 import DashHeader from './DashHeader'
 import { styled } from 'styled-components'
-
-import { devicesMax } from '../../styles/breakpoint'
 import { useState } from 'react'
+import { devicesMax } from '../../styles/breakpoint'
 
 const StyledDashboardLayout = styled.div`
-  display: flex;
   height: 100vh;
-
-  @media ${devicesMax.md} {
-    grid-template-columns: 10rem 1fr;
-  }
+  display: flex;
 `
 const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
-  overflow: scroll;
 
+  background-color: aliceblues;
+  height: 100%;
+  width: 100%;
   @media ${devicesMax.md} {
-    padding: 3rem 3.8rem 5.4rem;
+    padding: 2rem 2rem;
   }
 `
-const StyledContainer = styled.div`
+const ConRight = styled.div`
   flex: 1;
+  height: 100vh;
+  background-color: var(--color-grey-50);
+  overflow: scroll;
+`
+const ConLeft = styled.div`
+  //
 `
 
 function DashboardLayout() {
@@ -33,13 +36,15 @@ function DashboardLayout() {
 
   return (
     <StyledDashboardLayout>
-      <Sidebar sidebar={sidebar} />
-      <StyledContainer>
+      <ConLeft>
+        <Sidebar />
+      </ConLeft>
+      <ConRight>
         <DashHeader sidebar={sidebar} showSidebar={showSidebar} />
         <Main>
           <Outlet />
         </Main>
-      </StyledContainer>
+      </ConRight>
     </StyledDashboardLayout>
   )
 }

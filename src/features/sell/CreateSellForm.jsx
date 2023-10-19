@@ -8,37 +8,9 @@ import { DevTool } from '@hookform/devtools'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { createSell } from '../../services/apiSell'
+import FormRow from '../../ui/FormRow'
+import { devicesMax } from '../../styles/breakpoint'
 
-const FormRow = styled.div`
-  display: grid;
-  align-items: center;
-  grid-template-columns: 24rem 1fr 1.2fr;
-  gap: 2.4rem;
-
-  padding: 1.2rem 0;
-
-  &:first-child {
-    padding-top: 0;
-  }
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-
-  &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
-  }
-`
-
-const Label = styled.label`
-  font-weight: 500;
-`
 const Select = styled.select`
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
@@ -53,20 +25,28 @@ const Select = styled.select`
   box-shadow: var(--shadow-sm);
 `
 
-// const Error = styled.span`
-//   font-size: 1.4rem;
-//   color: var(--color-red-700);
-// `
-
 const StyledTerm = styled.div`
-  width: 60%;
+  width: 70%;
   text-align: center;
   padding: 1rem;
+  align-self: center;
+  @media ${devicesMax.sm} {
+    width: 100%;
+  }
 `
 
 function CreateCabinForm({ openModal }) {
   const queryClient = useQueryClient()
-  const { register, control, handleSubmit, reset, setValue } = useForm()
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    formState,
+  } = useForm()
+
+  const { errors } = formState
 
   const { mutate, isLoading: isCreating } = useMutation({
     mutationFn: (newSell) => createSell(newSell),
@@ -88,8 +68,7 @@ function CreateCabinForm({ openModal }) {
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormRow>
-          <Label htmlFor="currency">Select Currency</Label>
+        <FormRow label="Select Currency">
           <Select {...register('currency')}>
             <option>bitcon</option>
             <option>Tether</option>
@@ -97,12 +76,13 @@ function CreateCabinForm({ openModal }) {
           </Select>
         </FormRow>
 
-        <FormRow>
-          <Label htmlFor="amountUSD">Amount Usd</Label>
+        <FormRow label="Amount Usd" error={errors?.amountUSD?.message}>
           <Input
             type="number"
             id="amountUSD"
             {...register('amountUSD', {
+              required: 'Dollar amount is required',
+              valueAsNumber: true,
               onChange: (e) => {
                 const rate = 12
                 const cedis = e.target.value * rate
@@ -114,13 +94,14 @@ function CreateCabinForm({ openModal }) {
           />
         </FormRow>
 
-        <FormRow>
-          <Label htmlFor="amountGh">Amount Gh</Label>
+        <FormRow label="Amount Gh" error={errors?.amountGh?.message}>
           <Input
             autoFocus
             type="number"
             id="amountGh"
             {...register('amountGh', {
+              required: 'Cedis amount is required',
+              valueAsNumber: true,
               onChange: (e) => {
                 const rate = 12
                 const dollar = e.target.value / rate
@@ -132,8 +113,7 @@ function CreateCabinForm({ openModal }) {
           />
         </FormRow>
 
-        <FormRow>
-          <Label htmlFor="payment">Payment Method</Label>
+        <FormRow label="Payment Method">
           <Select {...register('payment')}>
             <option>mtn</option>
             <option>voda cash</option>

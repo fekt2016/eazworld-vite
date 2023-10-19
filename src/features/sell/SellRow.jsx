@@ -5,15 +5,19 @@ import { useState } from 'react'
 import Modal from '../../ui/Modal'
 import OrderDetails from '../../ui/OrderDetails'
 import Table from '../../ui/Table'
+import { devicesMax } from '../../styles/breakpoint'
+import Menus from '../../ui/Menus'
 
 const Status = styled.button`
   font-size: 1.6rem;
   font-weight: 600;
   font-family: 'Sono';
-  /* text-transform: capitalize; */
   color: white;
   border: none;
   background-color: var(--color-black-950);
+  @media ${devicesMax.md} {
+    font-size: 1.2rem;
+  }
 `
 
 const Sell = styled.div`
@@ -22,18 +26,31 @@ const Sell = styled.div`
   color: var(--color-grey-600);
   font-family: 'Sono';
   text-transform: capitalize;
+
+  @media ${devicesMax.md} {
+    font-size: 1.2rem;
+  }
 `
 
 const Price = styled.div`
   font-family: 'Sono';
   font-weight: 600;
+
+  @media ${devicesMax.md} {
+    display: none;
+  }
 `
 
-// const Discount = styled.div`
-//   font-family: 'Sono';
-//   font-weight: 500;
-//   color: var(--color-green-700);
-// `
+const Date = styled.div`
+  @media ${devicesMax.md} {
+    display: none;
+  }
+`
+const SellId = styled.div`
+  @media ${devicesMax.md} {
+    display: none;
+  }
+`
 
 function SellRow({ sell }) {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -48,20 +65,28 @@ function SellRow({ sell }) {
   return (
     <>
       <Table.Row columns="repeat(6, 1fr)">
-        <div>{formatDate(date)}</div>
-        <div>{buyId}</div>
+        <Date>{formatDate(date)}</Date>
+        <SellId>{buyId}</SellId>
         <Sell>{currency}</Sell>
         <Price>{amountUSD}</Price>
         <Price>{payment}</Price>
         <Status onClick={() => setIsOpenModal((show) => !show)}>
           {status}
         </Status>
+        {isOpenModal && (
+          <Modal onClose={() => setIsOpenModal(false)}>
+            <OrderDetails />
+          </Modal>
+        )}
+        <Menus.Menu>
+          <Menus.Toggle id={buyId} />
+          <Menus.List id={buyId}>
+            <Menus.Button>Duplicate</Menus.Button>
+            <Menus.Button>edit</Menus.Button>
+            <Menus.Button>delete</Menus.Button>
+          </Menus.List>
+        </Menus.Menu>
       </Table.Row>
-      {isOpenModal && (
-        <Modal onClose={() => setIsOpenModal(false)}>
-          <OrderDetails />
-        </Modal>
-      )}
     </>
   )
 }

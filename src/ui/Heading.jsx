@@ -8,6 +8,11 @@ const Heading = styled.h1`
       font-size: 4rem;
       font-weight: 600;
       text-transform: capitalize;
+      text-align: center;
+
+      @media ${devicesMax.md} {
+        font-size: 2.5rem;
+      }
     `}
   ${(props) =>
     props.as === 'h2' &&

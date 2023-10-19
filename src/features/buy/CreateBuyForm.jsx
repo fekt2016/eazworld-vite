@@ -1,6 +1,5 @@
 /*eslint react/prop-types : 0 */
 import styled from 'styled-components'
-
 import Input from '../../ui/Input'
 import Form from '../../ui/Form'
 import Button from '../../ui/Button'
@@ -9,42 +8,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createBuy } from '../../services/apibuy'
 import { toast } from 'react-hot-toast'
 import { DevTool } from '@hookform/devtools'
-
-const FormRow = styled.div`
-  display: grid;
-  align-items: center;
-  grid-template-columns: 24rem 2fr 1.2fr;
-  gap: 2.4rem;
-
-  padding: 1.2rem 0;
-
-  &:first-child {
-    padding-top: 0;
-  }
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-
-  &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
-  }
-`
-const Label = styled.label`
-  font-weight: 500;
-  text-transform: capitalize;
-`
-
-const Error = styled.span`
-  font-size: 1.4rem;
-  color: var(--color-red-700);
-`
+import FormRow from '../../ui/FormRow'
+import { useNavigate } from 'react-router-dom'
 
 const Select = styled.select`
   font-size: 1.4rem;
@@ -60,8 +25,10 @@ const Select = styled.select`
   box-shadow: var(--shadow-sm);
 `
 
-function CreateBuyForm({ openModal }) {
+function CreateBuyForm() {
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
+
   const {
     register,
     handleSubmit,
@@ -72,42 +39,45 @@ function CreateBuyForm({ openModal }) {
     getValues,
   } = useForm()
   const { errors } = formState
-
   const { mutate, isLoading: isCreating } = useMutation({
     mutationFn: (newBuy) => createBuy(newBuy),
+
     onSuccess: () => {
       toast.success('New order successfully created')
       queryClient.invalidateQueries({
         queryKey: ['buy'],
       })
+
       reset()
-      openModal()
+      navigate('/history')
+    },
+    onSettled: (data) => {
+      console.log(data)
     },
     onError: (err) => toast.error(err.message),
   })
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     mutate(data)
   }
 
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormRow>
-          <Label htmlFor="currency">Select currency</Label>
+        <FormRow label="Select Currency">
           <Select {...register('currency')}>
             <option>bitcoin</option>
             <option>Tether</option>
             <option>ethereum</option>
           </Select>
         </FormRow>
-        <FormRow>
-          <Label htmlFor="amountUSD">amount to buy usd</Label>
+        <FormRow error={errors?.amountUSD?.message} label="AmountUSD">
           <Input
             autoFocus
             type="number"
             id="amountUSD"
             {...register('amountUSD', {
+              required: 'Dollar amount is required',
               valueAsNumber: true,
               onChange: (evt) => {
                 const rate = 12
@@ -122,15 +92,14 @@ function CreateBuyForm({ openModal }) {
               },
             })}
           />
-          <Error>{errors.amountUSD?.message}</Error>
         </FormRow>
-        <FormRow>
-          <Label htmlFor="amountGh">amount to buy ghc</Label>
+        <FormRow label="AmountGh" error={errors?.amountGh?.message}>
           <Input
             type="number"
             id="amountGh"
             {...register('amountGh', {
-              required: 'cedis amount is required',
+              required: 'Cedis amount is required',
+              valueAsNumber: true,
               onChange: (evt) => {
                 const rate = 12
                 const dollar = evt.target.value / rate
@@ -140,10 +109,8 @@ function CreateBuyForm({ openModal }) {
               },
             })}
           />
-          <Error>{errors.amountGh?.message}</Error>
         </FormRow>
-        <FormRow>
-          <Label htmlFor="miner">miners fee</Label>
+        <FormRow label="Miner">
           <Select
             {...register('miner', {
               onChange: (evt) => {
@@ -162,8 +129,7 @@ function CreateBuyForm({ openModal }) {
             <option>1.0</option>
           </Select>
         </FormRow>
-        <FormRow>
-          <Label htmlFor="totalToPay">totalToPay</Label>
+        <FormRow label="TotalTopay">
           <Input
             type="number"
             id="totalToPay"
@@ -171,23 +137,20 @@ function CreateBuyForm({ openModal }) {
               required: 'total is required',
             })}
           />
-          <Error>{errors.totalToPay?.message}</Error>
         </FormRow>
-        <FormRow>
-          <Label htmlFor="payment">payment method</Label>
+        <FormRow label="Payment method">
           <Select {...register('payment')}>
             <option>mtn</option>
             <option>voda cash</option>
             <option>At Money</option>
           </Select>
         </FormRow>
-        <FormRow>
-          <Label htmlFor="wallet">wallet address</Label>
+        <FormRow label="Wallet address" error={errors?.wallet?.message}>
           <Input
             type="text"
             id="wallet"
             {...register('wallet', {
-              required: 'wallet address required',
+              required: 'Wallet address required',
             })}
           />
         </FormRow>
@@ -200,9 +163,11 @@ function CreateBuyForm({ openModal }) {
           />
         </FormRow>
         <FormRow>
+          {/* <Button>order</Button> */}
           <Button>{isCreating ? 'Submitting' : 'Place an Order'}</Button>
         </FormRow>
       </Form>
+
       <DevTool control={control} />
     </>
   )

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
+
 import {
   HiOutlineHome,
   HiOutlineCurrencyDollar,
@@ -10,15 +11,16 @@ import {
 } from 'react-icons/hi2'
 
 const StyledNav = styled.nav`
+  flex: 1;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  margin-top: 10rem;
 `
 const NavList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
+  /* gap: 0.8rem; */
+  /* padding: 1rem; */
 `
 
 const StyledNavLink = styled(NavLink)`
@@ -26,13 +28,14 @@ const StyledNavLink = styled(NavLink)`
   &:visited {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 1.2rem;
 
     color: var(--color-black-100);
     font-size: 1.6rem;
     font-weight: 500;
     padding: 1.2rem 0.4rem;
-    transition: all 0.3s;
+    transition: all 0.2s;
     text-transform: capitalize;
   }
 
@@ -56,7 +59,7 @@ const StyledNavLink = styled(NavLink)`
   &:active svg,
   &.active:link svg,
   &.active:visited svg {
-    color: var(--color-brand-600);
+    color: var(--color-black-900);
   }
 `
 const StyledP = styled.p`
@@ -65,48 +68,53 @@ const StyledP = styled.p`
   text-align: center;
   text-transform: capitalize;
 `
-const StyledSpan = styled.span``
+const StyledSpan = styled.span`
+  transition: all 0.2s;
+`
+const StyledLi = styled.li`
+  margin-bottom: 1rem;
+`
 
-function MainNav() {
+function MainNav({ inactive }) {
   return (
     <StyledNav>
       <NavList>
-        <li>
+        <StyledLi>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />
-            <StyledSpan>dashboard</StyledSpan>
+            {inactive ? '' : <StyledSpan>dashboard</StyledSpan>}
           </StyledNavLink>
-        </li>
-        <li>
+        </StyledLi>
+        <StyledLi>
           <StyledNavLink to="/buy">
             <HiOutlineCurrencyDollar />
-            <StyledSpan>buy</StyledSpan>
+            {inactive ? '' : <StyledSpan>buy</StyledSpan>}
           </StyledNavLink>
-        </li>
-        <li>
+        </StyledLi>
+        <StyledLi>
           <StyledNavLink to="/sell">
             <HiOutlineCurrencyEuro />
-            <StyledSpan>sell</StyledSpan>
+            {inactive ? '' : <StyledSpan>sell</StyledSpan>}
           </StyledNavLink>
-        </li>
-        <li>
+        </StyledLi>
+        <StyledLi>
           <StyledNavLink to="/history">
             <HiOutlineDocumentChartBar />
-            <StyledSpan>history</StyledSpan>
+            {inactive ? '' : <StyledSpan>history</StyledSpan>}
           </StyledNavLink>
-        </li>
-        <li>
+        </StyledLi>
+        <StyledLi>
           <StyledNavLink to="/prepaid">
             <HiOutlineCreditCard />
-            <StyledSpan>Prepaid</StyledSpan>
+            {inactive ? '' : <StyledSpan>prepaid</StyledSpan>}
           </StyledNavLink>
-        </li>
-        <li>
+        </StyledLi>
+        <StyledLi>
           <StyledNavLink to="/settings">
             <HiOutlineCog8Tooth />
-            <StyledSpan>settings</StyledSpan>
+            {inactive ? '' : <StyledSpan>settings</StyledSpan>}
           </StyledNavLink>
-        </li>
+        </StyledLi>
       </NavList>
       <StyledP>copyright eazworld </StyledP>
     </StyledNav>

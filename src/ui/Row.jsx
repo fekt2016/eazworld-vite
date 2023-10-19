@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { devicesMax } from '../styles/breakpoint'
 
 const Row = styled.div`
   display: flex;
@@ -9,6 +10,10 @@ const Row = styled.div`
     css`
       justify-content: space-between;
       align-items: center;
+
+      @media ${devicesMax.md} {
+        flex-direction: column;
+      }
     `}
   ${(props) =>
     props.type === 'vertical' &&

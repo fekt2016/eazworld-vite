@@ -1,6 +1,12 @@
 import styled, { css } from 'styled-components'
+import { devicesMax } from '../styles/breakpoint'
 
 const Form = styled.form`
+  overflow: hidden;
+  font-size: 1.4rem;
+
+  display: flex;
+  flex-direction: column;
   ${(props) =>
     props.type === 'regular' &&
     css`
@@ -10,6 +16,10 @@ const Form = styled.form`
       background-color: var(--color-grey-0);
       border: 1px solid var(--color-grey-100);
       border-radius: var(--border-radius-md);
+
+      @media ${devicesMax.md} {
+        padding: 2rem;
+      }
     `}
 
   ${(props) =>
@@ -17,9 +27,6 @@ const Form = styled.form`
     css`
       width: 80rem;
     `}
-
-  overflow: hidden;
-  font-size: 1.4rem;
 `
 Form.defaultProps = {
   type: 'regular',

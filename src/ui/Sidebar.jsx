@@ -1,37 +1,51 @@
 import { styled, css } from 'styled-components'
-import Logo from './Logo'
+import Logo from '../ui/Logo'
 import MainNav from './MainNav'
-import { devicesMax } from '../styles/breakpoint'
+import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi2'
+import ButtonIcon from './ButtonIcon'
+import { useState } from 'react'
 
 const StyledSidebar = styled.aside`
-  background-color: var(--color-black-950);
   padding: 3.2rem 2.4rem;
-  border-right: 1 px solid var(--color-grey-100);
-  width: 26rem;
+  border-right: 1px solid var(--color-grey-100);
+  width: 25rem;
+  height: 100%;
+  background-color: var(--color-black-950);
+  display: flex;
+  transition: width 0.2s ease-in;
+
   display: flex;
   flex-direction: column;
-  gap: 5rem;
-  transition: all 0.3s;
 
-  @media ${devicesMax.md} {
-    width: 0;
-    opacity: 0;
-    visibility: hidden;
-  }
   ${(props) =>
-    props.show &&
+    props.type === 'inactive' &&
     css`
-      width: 26rem;
-      opacity: 1;
-      visibility: visible;
+      width: 80px;
+      padding: 2rem;
     `}
 `
+const SectionTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
 
-function Sidebar({ sidebar }) {
+function Sidebar() {
+  const [inactive, setInactive] = useState(false)
+
   return (
-    <StyledSidebar type={sidebar ? 'show' : ''}>
-      <Logo type="small" img="/logo100.png" />
-      <MainNav />
+    <StyledSidebar type={inactive ? 'inactive' : ''}>
+      <SectionTop>
+        <Logo type="small" img="/logo100.png" />
+        <ButtonIcon type="navIcon" onClick={() => setInactive(!inactive)}>
+          {inactive ? (
+            <HiOutlineArrowRight style={{ color: 'white', fontSize: '16px' }} />
+          ) : (
+            <HiOutlineArrowLeft style={{ color: 'white', fontSize: '16px' }} />
+          )}
+        </ButtonIcon>
+      </SectionTop>
+      <MainNav inactive={inactive} />
     </StyledSidebar>
   )
 }

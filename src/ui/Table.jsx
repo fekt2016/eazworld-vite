@@ -2,14 +2,16 @@
 import { createContext, useContext } from 'react'
 import styled from 'styled-components'
 import Empty from '../ui/Empty'
+import { devicesMax } from '../styles/breakpoint'
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
-
   font-size: 1.4rem;
-  background-color: var(--color-grey-0);
   border-radius: 7px;
   overflow: hidden;
+  @media ${devicesMax.md} {
+    font-size: 1rem;
+  }
 `
 
 const CommonRow = styled.div`
@@ -29,6 +31,11 @@ const StyledHeader = styled(CommonRow)`
   letter-spacing: 0.4px;
   font-weight: 600;
   color: var(--color-grey-600);
+
+  @media ${devicesMax.md} {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 1rem 1.5rem;
+  }
 `
 
 const StyledRow = styled(CommonRow)`
@@ -36,6 +43,13 @@ const StyledRow = styled(CommonRow)`
 
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
+  }
+
+  @media ${devicesMax.md} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media ${devicesMax.md} {
+    padding: 1rem 1.5rem;
   }
 `
 
@@ -53,14 +67,11 @@ const Footer = styled.footer`
   &:not(:has(*)) {
     display: none;
   }
-`
 
-// const Empty = styled.p`
-//   font-size: 1.6rem;
-//   font-weight: 500;
-//   text-align: center;
-//   margin: 2.4rem;
-// `
+  @media ${devicesMax.md} {
+    flex-direction: column;
+  }
+`
 
 const TableContext = createContext()
 
