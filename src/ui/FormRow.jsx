@@ -2,12 +2,11 @@
 import { styled } from 'styled-components'
 import { devicesMax } from '../styles/breakpoint'
 const StyledFormRow = styled.div`
-  display: grid;
-  align-items: center;
-  grid-template-columns: 24rem 1fr 1.2fr;
+  display: flex;
+
   gap: 2.4rem;
 
-  padding: 1.2rem 0;
+  padding: 0.5rem 0;
 
   &:first-child {
     padding-top: 0;
@@ -26,8 +25,9 @@ const StyledFormRow = styled.div`
     justify-content: flex-end;
     gap: 1.2rem;
   }
-  @media ${devicesMax.sm} {
-    grid-template-columns: 1fr;
+  @media ${devicesMax.md} {
+    width: 100%;
+    flex-direction: column;
   }
 `
 const Label = styled.label`

@@ -7,6 +7,7 @@ import { styled } from 'styled-components'
 import Button from '../ui/Button'
 import BuyTableOperations from '../features/buy/BuyTableOperations'
 import SellTableOperations from '../features/sell/SellTableOperations'
+import { NavLink } from 'react-router-dom'
 
 const StyledBtn = styled.div`
   width: 15%;
@@ -14,6 +15,7 @@ const StyledBtn = styled.div`
   display: flex;
   justify-content: space-between;
 `
+const StyledNav = styled(NavLink)``
 
 function History() {
   const [toggle, setToggle] = useState(1)
@@ -23,20 +25,24 @@ function History() {
       <Row>
         <Row type="horizontal">
           <StyledBtn>
-            <Button
-              variation="secondary"
-              size="medium"
-              onClick={() => setToggle(1)}
-            >
-              Buy
-            </Button>
-            <Button
-              variation="secondary"
-              size="medium"
-              onClick={() => setToggle(2)}
-            >
-              Sell
-            </Button>
+            <StyledNav>
+              <Button
+                variation="secondary"
+                size="medium"
+                onClick={() => setToggle(1)}
+              >
+                Buy
+              </Button>
+            </StyledNav>
+            <StyledNav>
+              <Button
+                variation="secondary"
+                size="medium"
+                onClick={() => setToggle(2)}
+              >
+                Sell
+              </Button>
+            </StyledNav>
           </StyledBtn>
         </Row>
         <Row type="horizontal">

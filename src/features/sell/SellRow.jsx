@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import styled from 'styled-components'
 import { formatDate } from '../../utils/helpers'
-import { useState } from 'react'
+
 import Modal from '../../ui/Modal'
 import OrderDetails from '../../ui/OrderDetails'
 import Table from '../../ui/Table'
@@ -53,7 +53,6 @@ const SellId = styled.div`
 `
 
 function SellRow({ sell }) {
-  const [isOpenModal, setIsOpenModal] = useState(false)
   const {
     created_at: date,
     id: buyId,
@@ -70,20 +69,18 @@ function SellRow({ sell }) {
         <Sell>{currency}</Sell>
         <Price>{amountUSD}</Price>
         <Price>{payment}</Price>
-        <Status onClick={() => setIsOpenModal((show) => !show)}>
-          {status}
-        </Status>
-        {isOpenModal && (
-          <Modal onClose={() => setIsOpenModal(false)}>
+        <Modal>
+          <Modal.Open opens="status-sell">
+            <Status>{status}</Status>
+          </Modal.Open>
+          <Modal.Window name="status-sell">
             <OrderDetails />
-          </Modal>
-        )}
+          </Modal.Window>
+        </Modal>
         <Menus.Menu>
           <Menus.Toggle id={buyId} />
           <Menus.List id={buyId}>
-            <Menus.Button>Duplicate</Menus.Button>
-            <Menus.Button>edit</Menus.Button>
-            <Menus.Button>delete</Menus.Button>
+            <div>list</div>
           </Menus.List>
         </Menus.Menu>
       </Table.Row>

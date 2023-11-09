@@ -4,12 +4,11 @@ import Input from '../../ui/Input'
 import Form from '../../ui/Form'
 import Button from '../../ui/Button'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createBuy } from '../../services/apibuy'
-import { toast } from 'react-hot-toast'
+
 import { DevTool } from '@hookform/devtools'
 import FormRow from '../../ui/FormRow'
 import { useNavigate } from 'react-router-dom'
+import { useCreateBuy } from '../buy/useCreateBuy'
 
 const Select = styled.select`
   font-size: 1.4rem;
@@ -26,8 +25,15 @@ const Select = styled.select`
 `
 
 function CreateBuyForm() {
+  const seq = (Math.floor(Math.random() * 10000) + 10000)
+    .toString()
+    .substring(1)
+
+  const orderId = `ew${seq}`
+
+  const { createBuy, isCreating } = useCreateBuy()
+
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
 
   const {
     register,
@@ -39,26 +45,17 @@ function CreateBuyForm() {
     getValues,
   } = useForm()
   const { errors } = formState
-  const { mutate, isLoading: isCreating } = useMutation({
-    mutationFn: (newBuy) => createBuy(newBuy),
 
-    onSuccess: () => {
-      toast.success('New order successfully created')
-      queryClient.invalidateQueries({
-        queryKey: ['buy'],
-      })
-
-      reset()
-      navigate('/history')
-    },
-    onSettled: (data) => {
-      console.log(data)
-    },
-    onError: (err) => toast.error(err.message),
-  })
-
-  async function onSubmit(data) {
-    mutate(data)
+  function onSubmit(data) {
+    createBuy(
+      { ...data },
+      {
+        onSuccess: () => {
+          reset()
+          navigate(`/currentOrder/${orderId}`)
+        },
+      },
+    )
   }
 
   return (
@@ -140,7 +137,7 @@ function CreateBuyForm() {
         </FormRow>
         <FormRow label="Payment method">
           <Select {...register('payment')}>
-            <option>mtn</option>
+            <option>Mtn Momo</option>
             <option>voda cash</option>
             <option>At Money</option>
           </Select>
@@ -159,11 +156,19 @@ function CreateBuyForm() {
             type="hidden"
             id="status"
             {...register('status')}
-            defaultValue={'add payment'}
+            defaultValue={'waiting payment'}
           />
         </FormRow>
         <FormRow>
-          {/* <Button>order</Button> */}
+          <Input
+            type="hidden"
+            id="orderId"
+            {...register('orderId')}
+            defaultValue={`${orderId}`}
+          />
+        </FormRow>
+
+        <FormRow>
           <Button>{isCreating ? 'Submitting' : 'Place an Order'}</Button>
         </FormRow>
       </Form>

@@ -5,11 +5,10 @@ import Form from '../../ui/Form'
 import Button from '../../ui/Button'
 import { useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import toast from 'react-hot-toast'
-import { createSell } from '../../services/apiSell'
+import { useCreateSell } from './useCreateSell'
 import FormRow from '../../ui/FormRow'
 import { devicesMax } from '../../styles/breakpoint'
+import { useNavigate } from 'react-router-dom'
 
 const Select = styled.select`
   font-size: 1.4rem;
@@ -35,8 +34,10 @@ const StyledTerm = styled.div`
   }
 `
 
-function CreateCabinForm({ openModal }) {
-  const queryClient = useQueryClient()
+function CreateCabinForm() {
+  const { createSell, isCreating } = useCreateSell()
+  const navigate = useNavigate()
+
   const {
     register,
     control,
@@ -48,22 +49,18 @@ function CreateCabinForm({ openModal }) {
 
   const { errors } = formState
 
-  const { mutate, isLoading: isCreating } = useMutation({
-    mutationFn: (newSell) => createSell(newSell),
-    onSuccess: () => {
-      toast.success('New order successfully created')
-      queryClient.invalidateQueries({
-        queryKey: ['sell'],
-      })
-      reset()
-      openModal()
-    },
-    onError: (err) => toast.error(err.message),
-  })
-
   function onSubmit(data) {
     console.log(data)
-    mutate(data)
+    createSell(
+      { ...data },
+      {
+        onSuccess: (data) => {
+          console.log(data)
+          reset()
+          navigate('/history')
+        },
+      },
+    )
   }
   return (
     <>

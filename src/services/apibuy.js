@@ -39,3 +39,22 @@ export async function getCurrentUserBuy() {
 
 	return data;
 }
+
+export async function getCurrentBuy() {
+	const { data, error } = await supabase.from("buy").select("*");
+
+	if (error) throw new Error("currency could not be loaded");
+
+	return { data, error };
+}
+
+export async function updateBuy() {
+	const { data, error } = await supabase
+		.from("buy")
+		.update({ status: "payment" })
+		.eq("amountGh", 90);
+
+	if (error) throw new Error("buy could not be loaded");
+
+	return { data, error };
+}

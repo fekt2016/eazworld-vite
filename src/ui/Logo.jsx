@@ -5,20 +5,20 @@ const StyledLogo = styled.div`
   display: flex;
   height: inherit;
   align-items: center;
+  margin-bottom: 6rem;
 `
 
 const Img = styled.img`
   margin: 0 auto;
-  border-radius: 50%;
   ${(props) =>
     props.type === 'big' &&
     css`
-      height: 3rem;
+      height: 1rem;
     `}
   ${(props) =>
     props.type === 'small' &&
     css`
-      height: 5rem;
+      height: 3rem;
     `}
 `
 

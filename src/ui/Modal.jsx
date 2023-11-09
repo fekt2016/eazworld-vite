@@ -4,16 +4,20 @@ import { HiXMark } from 'react-icons/hi2'
 import { createPortal } from 'react-dom'
 import { cloneElement, createContext, useContext, useState } from 'react'
 import { useOutSideClick } from '../hooks/useOutsideClick'
+import { devicesMax } from '../styles/breakpoint'
 const StyledModal = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--color-grey-0);
+  background-color: var(--color-white-0);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
+  @media ${devicesMax.md} {
+    width: 85%;
+  }
 `
 
 const Overlay = styled.div`
@@ -46,9 +50,6 @@ const Button = styled.button`
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    /* Sometimes we need both */
-    /* fill: var(--color-grey-500);
-    stroke: var(--color-grey-500); */
     color: var(--color-grey-500);
   }
 `
@@ -59,6 +60,7 @@ function Modal({ children }) {
   const [openName, SetOpenName] = useState('')
   const close = () => SetOpenName('')
   const open = SetOpenName
+
   return (
     <ModalContext.Provider value={{ openName, close, open }}>
       {children}

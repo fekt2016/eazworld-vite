@@ -3,13 +3,14 @@ import Button from '../../ui/Button'
 import Form from '../../ui/Form'
 import Input from '../../ui/Input'
 import SpinnerMini from '../../ui/SpinnerMini'
-import FormRowVertical from '../../ui/FormRowVertical'
+import FormRow from '../../ui/FormRow'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { useLogin } from './useLogin'
 
 const StyledBtn = styled(NavLink)`
   padding: 0.5rem 1.5rem;
+
   &:hover {
     text-decoration-line: underline;
   }
@@ -42,7 +43,7 @@ function LoginForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRowVertical label="Email address">
+      <FormRow label="Email address">
         <Input
           type="email"
           id="email"
@@ -52,8 +53,8 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
         />
-      </FormRowVertical>
-      <FormRowVertical label="Password">
+      </FormRow>
+      <FormRow label="Password">
         <Input
           type="password"
           id="password"
@@ -62,12 +63,12 @@ function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
         />
-      </FormRowVertical>
-      <FormRowVertical>
+      </FormRow>
+      <FormRow>
         <Button size="large" disabled={isLoading}>
           {isLoading ? <SpinnerMini /> : 'Log in'}
         </Button>
-      </FormRowVertical>
+      </FormRow>
       <StyledFooter>
         <StyledBtn to="/recover-password" disabled={isLoading}>
           Forget password

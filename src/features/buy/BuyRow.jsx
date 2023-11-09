@@ -1,12 +1,10 @@
 /* eslint react/prop-types: 0 */
 import styled from 'styled-components'
 import { formatDate } from '../../utils/helpers'
-import { useState } from 'react'
-import Modal from '../../ui/Modal'
-import OrderCompleted from '../../ui/OrderCompleted'
 import Table from '../../ui/Table'
 import Menus from '../../ui/Menus'
 import { devicesMax } from '../../styles/breakpoint'
+import { Link } from 'react-router-dom'
 
 const Status = styled.button`
   font-size: 1rem;
@@ -53,6 +51,7 @@ const Date = styled.div`
   }
 `
 const BuyId = styled.div`
+  text-transform: capitalize;
   @media ${devicesMax.md} {
     display: none;
   }
@@ -61,7 +60,7 @@ const BuyId = styled.div`
 function BuyRow({ buy }) {
   const {
     created_at: date,
-    id: buyId,
+    orderId: buyId,
     amountUSD,
     amountGh,
     currency,
@@ -70,24 +69,22 @@ function BuyRow({ buy }) {
     status,
   } = buy
 
-  const [isOpenModal, setIsOpenModal] = useState(false)
-
   return (
     <>
       <Table.Row columns="repeat(7, 1fr)">
         <Date>{formatDate(date)}</Date>
-        <BuyId>{buyId}</BuyId>
+        <BuyId>
+          <Link to={`/currentOrder/${buyId}`}>{buyId}</Link>
+        </BuyId>
         <Buy>{currency}</Buy>
         <Price>&#36;{amountUSD}</Price>
         <Price>&#8373;{amountGh}</Price>
         <Price>&#8373;{totalToPay}</Price>
         <Payment>{payment}</Payment>
-        <Status>{status}</Status>
-        {isOpenModal && (
-          <Modal onClose={() => setIsOpenModal(false)}>
-            <OrderCompleted />
-          </Modal>
-        )}
+        <Status>
+          <Link to={`/currentOrder/${buyId}`}>{status}</Link>
+        </Status>
+
         <Menus.Menu>
           <Menus.Toggle id={buyId} />
           <Menus.List id={buyId}>

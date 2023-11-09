@@ -1,4 +1,4 @@
-import { styled } from 'styled-components'
+import { styled, css } from 'styled-components'
 
 import Logo from '../../ui/Logo'
 import { NavLink } from 'react-router-dom'
@@ -6,19 +6,18 @@ import { devicesMax, devicesMin } from '../../styles/breakpoint'
 import { HiOutlineBars3, HiOutlineXMark } from 'react-icons/hi2'
 import { useState } from 'react'
 
-const sideNav = `
-height: 50%;
-flex-direction: column;
-justify-content: space-evenly;
-color: white
+const sideNav = css`
+  height: 50%;
+  flex-direction: column;
+  justify-content: space-evenly;
+  color: white;
 `
 
 const StyledNav = styled.nav`
-  padding: 1rem 2rem;
+  padding: 1rem 5rem;
   border-bottom: 1px solid var(--color-grey-100);
 
-  position: relative;
-  padding-left: 5rem;
+  height: 7rem;
 
   display: flex;
   justify-content: space-between;
@@ -26,9 +25,7 @@ const StyledNav = styled.nav`
 `
 
 const StyledLeftContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
 `
 const StyledRightContainer = styled.div`
   flex: 1;
@@ -53,7 +50,7 @@ const StyledSideNav = styled.div`
 const StyledUl = styled.ul`
   text-transform: capitalize;
 
-  flex-basis: 60%;
+  flex-basis: 70%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -62,6 +59,7 @@ const StyledUl = styled.ul`
 `
 const StyledLi = styled(NavLink)`
   border-bottom: 1px solid transparent;
+  padding: 0.5rem;
   transition: all 0.3s;
   position: relative;
   &::before {
@@ -82,7 +80,7 @@ const StyledLi = styled(NavLink)`
 const StyledList = styled.div`
   display: flex;
   justify-content: space-around;
-  flex-basis: 60%;
+  flex-basis: 70%;
 
   @media ${devicesMax.sm} {
     display: none;
@@ -99,11 +97,11 @@ const StyledBtnD = styled.div`
   }
 `
 const StyledBtn = styled(NavLink)`
-  border: 1px solid var(--color-primary-700);
+  border: 1px solid var(--color-black-950);
   border-radius: var(--Border-radius-cir);
   padding: 0.5rem 1.5rem;
   &:hover {
-    background-color: var(--color-primary-700);
+    background-color: var(--color-black-950);
     color: var(--color-white-0);
   }
 

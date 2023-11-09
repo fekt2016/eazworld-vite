@@ -7,7 +7,9 @@ const Input = styled.input`
   border-radius: var(--border-radius-sm);
   padding: 0.8rem 1.2rem;
   box-shadow: var(--shadow-sm);
-  @media ${devicesMax.lg} {
+  flex: 1;
+
+  @media ${devicesMax.md} {
     width: 100%;
   }
 `

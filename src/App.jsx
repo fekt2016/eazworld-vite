@@ -18,6 +18,7 @@ import ProtectedRoute from './ui/ProtectedRoute'
 import RecoverPassword from './pages/RecoverPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import CurrentOrder from './pages/CurrentOrder'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
