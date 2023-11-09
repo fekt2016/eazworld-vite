@@ -1,22 +1,22 @@
 import { createGlobalStyle } from "styled-components";
 
 const breakpoints = {
-  xs: "320px",
-  sm: "640px",
-  md: "768px",
-  lg: "1024px",
-  xl: "1280px",
-  "2xl": "1536px",
-}
+	xs: "320px",
+	sm: "640px",
+	md: "768px",
+	lg: "1024px",
+	xl: "1280px",
+	"2xl": "1536px",
+};
 
 export const devices = {
-  xs: `(min-width: ${breakpoints.xs})`,
-  sm: `(min-width: ${breakpoints.sm})`,
-  md: `(min-width: ${breakpoints.md})`,
-  lg: `(min-width: ${breakpoints.lg})`,
-  xl: `(min-width: ${breakpoints.xl})`,
-  "2xl": `(min-width: ${breakpoints["2xl"]})`,
-}
+	xs: `(min-width: ${breakpoints.xs})`,
+	sm: `(min-width: ${breakpoints.sm})`,
+	md: `(min-width: ${breakpoints.md})`,
+	lg: `(min-width: ${breakpoints.lg})`,
+	xl: `(min-width: ${breakpoints.xl})`,
+	"2xl": `(min-width: ${breakpoints["2xl"]})`,
+};
 
 const GlobalStyles = createGlobalStyle`:root {
   /* Indigo */
@@ -147,6 +147,7 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+  width: 100vw;
 }
 
 input,
@@ -211,5 +212,5 @@ img {
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
 
-`
+`;
 export default GlobalStyles;
