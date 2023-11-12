@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Row from '../ui/Row'
 import Heading from '../ui/Heading'
 import styled from 'styled-components'
-import AdminHeader from '../features/admin/adminHeader'
+import AdminHeader from '../features/admin/AdminHeader'
 
 const StyledAdmin = styled.div`
   background-color: var(--color-grey-200);
