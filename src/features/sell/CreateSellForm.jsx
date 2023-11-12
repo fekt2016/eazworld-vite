@@ -9,26 +9,33 @@ import { useCreateSell } from './useCreateSell'
 import FormRow from '../../ui/FormRow'
 import { devicesMax } from '../../styles/breakpoint'
 import { useNavigate } from 'react-router-dom'
+import Select from '../../ui/Select'
 
-const Select = styled.select`
-  font-size: 1.4rem;
-  padding: 0.8rem 1.2rem;
-  border: 1px solid
-    ${(props) =>
-      props.type === 'white'
-        ? 'var(--color-grey-100)'
-        : 'var(--color-grey-300)'};
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-grey-0);
-  font-weight: 500;
-  box-shadow: var(--shadow-sm);
-`
+// const Select = styled.select`
+//   flex-basis: 50rem;
+//   font-size: 1.4rem;
+//   padding: 0.8rem 1.2rem;
+//   border: 1px solid
+//     ${(props) =>
+//       props.type === 'white'
+//         ? 'var(--color-grey-100)'
+//         : 'var(--color-grey-300)'};
+//   border-radius: var(--border-radius-sm);
+//   background-color: var(--color-grey-0);
+//   font-weight: 500;
+//   box-shadow: var(--shadow-sm);
+//   @media ${devicesMax.md} {
+//     width: 100%;
+//     flex-basis: auto;
+//   }
+// `
 
 const StyledTerm = styled.div`
   width: 70%;
   text-align: center;
   padding: 1rem;
   align-self: center;
+  background-color: var(--color-grey-400);
   @media ${devicesMax.sm} {
     width: 100%;
   }
@@ -112,8 +119,8 @@ function CreateCabinForm() {
 
         <FormRow label="Payment Method">
           <Select {...register('payment')}>
-            <option>mtn</option>
-            <option>voda cash</option>
+            <option>MTN Momo</option>
+            <option>Vodafone cash</option>
             <option>At Money</option>
           </Select>
         </FormRow>
@@ -127,14 +134,13 @@ function CreateCabinForm() {
         </FormRow>
 
         <StyledTerm>
-          By clicking the order button is that you have agreed that all infor
-          mation provide are correct and you should be held liable for payment
-          detail s submitted
+          By clicking the order button is that you have agreed that all
+          information provide are correct and you should be held liable detail s
+          submitted
         </StyledTerm>
 
         <FormRow>
           <Button>{isCreating ? 'Ordering' : 'Order'}</Button>
-          {/* <Button>ORDER</Button> */}
         </FormRow>
       </Form>
       <DevTool control={control} />

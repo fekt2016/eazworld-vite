@@ -4,6 +4,7 @@ import { styled, css } from 'styled-components'
 
 import Button from '../../ui/Button'
 import Heading from '../../ui/Heading'
+import { devicesMax } from '../../styles/breakpoint'
 
 const StyledLi = styled.li`
   background-color: var(--color-white-0);
@@ -14,6 +15,9 @@ const StyledLi = styled.li`
 
   display: flex;
   justify-content: end;
+  @media ${devicesMax.sm} {
+    padding: 1rem;
+  }
 `
 
 const CurName = styled.div`
@@ -22,7 +26,6 @@ const CurName = styled.div`
 `
 const StyledLeft = styled.div`
   position: absolute;
-  background-color: red;
   top: 20%;
   left: -20px;
   height: 50%;
@@ -78,6 +81,10 @@ const StyledRate = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 1.3rem;
+
+  @media ${devicesMax.sm} {
+    flex-direction: column;
+  }
 `
 const StyledStock = styled.span`
   padding: 2px;

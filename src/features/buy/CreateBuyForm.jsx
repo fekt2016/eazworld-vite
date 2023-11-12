@@ -9,8 +9,10 @@ import { DevTool } from '@hookform/devtools'
 import FormRow from '../../ui/FormRow'
 import { useNavigate } from 'react-router-dom'
 import { useCreateBuy } from '../buy/useCreateBuy'
+import { devicesMax } from '../../styles/breakpoint'
 
 const Select = styled.select`
+  flex-basis: 50rem;
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
   border: 1px solid
@@ -22,6 +24,21 @@ const Select = styled.select`
   background-color: var(--color-grey-0);
   font-weight: 500;
   box-shadow: var(--shadow-sm);
+  @media ${devicesMax.md} {
+    width: 100%;
+    flex-basis: auto;
+  }
+`
+const StyledTerm = styled.div`
+  width: 70%;
+  text-align: center;
+  padding: 1rem;
+  align-self: center;
+  background-color: var(--color-grey-300);
+  margin: 2rem;
+  @media ${devicesMax.sm} {
+    width: 100%;
+  }
 `
 
 function CreateBuyForm() {
@@ -63,7 +80,7 @@ function CreateBuyForm() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Select Currency">
           <Select {...register('currency')}>
-            <option>bitcoin</option>
+            <option>Bitcoin</option>
             <option>Tether</option>
             <option>ethereum</option>
           </Select>
@@ -137,8 +154,8 @@ function CreateBuyForm() {
         </FormRow>
         <FormRow label="Payment method">
           <Select {...register('payment')}>
-            <option>Mtn Momo</option>
-            <option>voda cash</option>
+            <option>MTN Momo</option>
+            <option>Voda cash</option>
             <option>At Money</option>
           </Select>
         </FormRow>
@@ -167,7 +184,11 @@ function CreateBuyForm() {
             defaultValue={`${orderId}`}
           />
         </FormRow>
-
+        <StyledTerm>
+          By clicking the order button, You have agreed that all information
+          provide are correct and you should be held liable for payment detail s
+          submitted
+        </StyledTerm>
         <FormRow>
           <Button>{isCreating ? 'Submitting' : 'Place an Order'}</Button>
         </FormRow>

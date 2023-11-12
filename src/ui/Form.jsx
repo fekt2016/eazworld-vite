@@ -5,6 +5,9 @@ const Form = styled.form`
   overflow: hidden;
   font-size: 1.4rem;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   ${(props) =>
     props.type === 'regular' &&
@@ -19,12 +22,6 @@ const Form = styled.form`
       @media ${devicesMax.md} {
         padding: 2.4rem 1rem;
       }
-    `}
-
-  ${(props) =>
-    props.type === 'modal' &&
-    css`
-      /* width: 80rem; */
     `}
 `
 Form.defaultProps = {

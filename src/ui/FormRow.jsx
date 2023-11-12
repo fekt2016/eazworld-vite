@@ -3,6 +3,7 @@ import { styled } from 'styled-components'
 import { devicesMax } from '../styles/breakpoint'
 const StyledFormRow = styled.div`
   display: flex;
+  justify-content: space-between;
 
   gap: 2.4rem;
 
@@ -32,6 +33,7 @@ const StyledFormRow = styled.div`
 `
 const Label = styled.label`
   font-weight: 500;
+  width: 15rem;
 `
 const Error = styled.span`
   font-size: 1.4rem;
@@ -43,7 +45,7 @@ function FormRow({ label, error, children }) {
     <StyledFormRow>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
-      {error && <Error>{error}</Error>}
+      <div>{error && <Error>{error}</Error>}</div>
     </StyledFormRow>
   )
 }

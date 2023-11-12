@@ -15,13 +15,17 @@ const LoginLayout = styled.main`
 const Container = styled.div`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 7px;
-  width: 35%;
+  width: 45%;
   padding: 2rem;
+  @media ${devicesMax.lg} {
+    width: 70%;
+    padding: 1rem;
+  }
   @media ${devicesMax.md} {
-    width: 60%;
+    width: 65%;
   }
   @media ${devicesMax.sm} {
-    width: 95%;
+    width: 85%;
   }
 `
 

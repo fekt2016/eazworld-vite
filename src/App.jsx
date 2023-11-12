@@ -18,6 +18,7 @@ import ProtectedRoute from './ui/ProtectedRoute'
 import RecoverPassword from './pages/RecoverPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import CurrentOrder from './pages/CurrentOrder'
+import Admin from './pages/Admin'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,6 +56,7 @@ function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="history" element={<History />} />
             <Route path="prepaid" element={<Prepaid />} />
+            <Route path="admin" element={<Admin />} />
           </Route>
         </Routes>
       </BrowserRouter>

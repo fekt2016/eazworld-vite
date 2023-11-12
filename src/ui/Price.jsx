@@ -16,6 +16,7 @@ const StyledUl = styled.ul`
   }
   @media ${devicesMax.sm} {
     grid-template-columns: 1fr;
+    padding: 2rem;
   }
 `
 
