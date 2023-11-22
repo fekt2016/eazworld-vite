@@ -4,7 +4,6 @@ export async function getBuy() {
 	const { data: buy, error } = await supabase.from("buy").select("*");
 
 	if (error) {
-		console.log(error);
 		throw new Error("currency could not be loaded");
 	}
 
@@ -15,7 +14,6 @@ export async function createBuy(newBuy) {
 	const { data, error } = await supabase.from("buy").insert([newBuy]);
 
 	if (error) {
-		console.error(error);
 		throw new Error("currency could not be loaded");
 	}
 
@@ -40,10 +38,13 @@ export async function getCurrentUserBuy() {
 	return data;
 }
 
-export async function getCurrentBuy() {
-	const { data, error } = await supabase.from("buy").select("*");
+export async function getCurrentBuy(id) {
+	const { data, error } = await supabase
+		.from("buy")
+		.select("*")
+		.eq("orderId", id);
 
-	if (error) throw new Error("currency could not be loaded");
+	if (error) throw new Error("there was an error");
 
 	return { data, error };
 }

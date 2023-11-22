@@ -10,10 +10,12 @@ import SellTableOperations from '../features/sell/SellTableOperations'
 import { NavLink } from 'react-router-dom'
 
 const StyledBtn = styled.div`
-  width: 15%;
+  /* width: 35%; */
 
   display: flex;
+  gap: 20px;
   justify-content: space-between;
+  align-items: center;
 `
 const StyledNav = styled(NavLink)``
 

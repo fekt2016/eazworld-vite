@@ -17,8 +17,9 @@ import { Toaster } from 'react-hot-toast'
 import ProtectedRoute from './ui/ProtectedRoute'
 import RecoverPassword from './pages/RecoverPassword'
 import UpdatePassword from './pages/UpdatePassword'
-import CurrentOrder from './pages/CurrentOrder'
+import BuyCurrentOrder from './pages/BuyCurrentOrder'
 import Admin from './pages/Admin'
+import SellCurrentOrder from './pages/SellCurrentOrder'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,7 +51,14 @@ function App() {
             }
           >
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="currentOrder/:orderId" element={<CurrentOrder />} />
+            <Route
+              path="buy-currentOrder/:orderId"
+              element={<BuyCurrentOrder />}
+            />
+            <Route
+              path="sell-currentOrder/:orderId"
+              element={<SellCurrentOrder />}
+            />
             <Route path="sell" element={<Sell />} />
             <Route path="buy" element={<Buy />} />
             <Route path="settings" element={<Settings />} />

@@ -2,7 +2,6 @@
 import styled from 'styled-components'
 import { formatDate } from '../../utils/helpers'
 import Table from '../../ui/Table'
-import Menus from '../../ui/Menus'
 import { devicesMax } from '../../styles/breakpoint'
 import { Link } from 'react-router-dom'
 
@@ -40,21 +39,22 @@ const Price = styled.div`
     display: none;
   }
 `
+// const Price1 = styled.div`
+//   font-family: 'Sono';
+//   font-weight: 600;
+// `
 const Payment = styled.div`
   @media ${devicesMax.md} {
     display: none;
   }
 `
 const Date = styled.div`
-  @media ${devicesMax.md} {
+  /* @media ${devicesMax.md} {
     display: none;
-  }
+  } */
 `
 const BuyId = styled.div`
   text-transform: capitalize;
-  @media ${devicesMax.md} {
-    display: none;
-  }
 `
 
 function BuyRow({ buy }) {
@@ -82,17 +82,20 @@ function BuyRow({ buy }) {
         <Price>&#8373;{totalToPay}</Price>
         <Payment>{payment}</Payment>
         <Status>
-          <Link to={`/currentOrder/${buyId}`}>{status}</Link>
+          <Link to={`/buy-currentOrder/${buyId}`}>{status}</Link>
         </Status>
 
-        <Menus.Menu>
+        {/* <Menus.Menu>
           <Menus.Toggle id={buyId} />
           <Menus.List id={buyId}>
+            {buyId}
+            <Price1>&#8373;{amountGh}</Price1>
+            <Price1>&#36;{amountUSD}</Price1>
             <Menus.Button>Duplicate</Menus.Button>
             <Menus.Button>edit</Menus.Button>
             <Menus.Button>delete</Menus.Button>
           </Menus.List>
-        </Menus.Menu>
+        </Menus.Menu> */}
       </Table.Row>
     </>
   )

@@ -6,7 +6,7 @@ import RateCard from '../features/home/RateCard'
 import Heading from '../ui/Heading'
 import Step from '../features/home/Step'
 import Footer from '../features/home/Footer'
-// import Slider from '../features/home/Slider'
+
 
 function Home() {
   return (
@@ -20,9 +20,6 @@ function Home() {
         assets.
       </StyledSection>
       <RateCard />
-      {/* <StyledSection type="slider">
-        <Slider />
-      </StyledSection> */}
       <StyledSection type="step">
         <Step />
       </StyledSection>

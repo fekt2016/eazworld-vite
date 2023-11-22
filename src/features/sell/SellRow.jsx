@@ -2,11 +2,9 @@
 import styled from 'styled-components'
 import { formatDate } from '../../utils/helpers'
 
-import Modal from '../../ui/Modal'
-import OrderDetails from '../../ui/OrderDetails'
 import Table from '../../ui/Table'
 import { devicesMax } from '../../styles/breakpoint'
-import Menus from '../../ui/Menus'
+import { Link } from 'react-router-dom'
 
 const Status = styled.button`
   font-size: 1.6rem;
@@ -40,6 +38,10 @@ const Price = styled.div`
     display: none;
   }
 `
+// const Price1 = styled.div`
+//   font-family: 'Sono';
+//   font-weight: 600;
+// `
 
 const Date = styled.div`
   @media ${devicesMax.md} {
@@ -55,7 +57,7 @@ const SellId = styled.div`
 function SellRow({ sell }) {
   const {
     created_at: date,
-    id: buyId,
+    orderId: buyId,
     currency,
     amountUSD,
     payment,
@@ -69,20 +71,18 @@ function SellRow({ sell }) {
         <Sell>{currency}</Sell>
         <Price>{amountUSD}</Price>
         <Price>{payment}</Price>
-        <Modal>
-          <Modal.Open opens="status-sell">
-            <Status>{status}</Status>
-          </Modal.Open>
-          <Modal.Window name="status-sell">
-            <OrderDetails />
-          </Modal.Window>
-        </Modal>
-        <Menus.Menu>
+        <Status>
+          <Link to={`/sell-currentOrder/${buyId}`}>{status}</Link>
+        </Status>
+
+        {/* <Menus.Menu>
           <Menus.Toggle id={buyId} />
           <Menus.List id={buyId}>
-            <div>list</div>
+            {buyId}
+            <Price1>&#8373;{amountUSD}</Price1>
+            <Price1>&#36;{amountUSD}</Price1>
           </Menus.List>
-        </Menus.Menu>
+        </Menus.Menu> */}
       </Table.Row>
     </>
   )

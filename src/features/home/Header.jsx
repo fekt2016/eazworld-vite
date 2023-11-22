@@ -7,18 +7,18 @@ import { NavLink } from 'react-router-dom'
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 
   height: 70vh;
   display: flex;
-
+  justify-content: center;
   align-items: center;
 `
 const StyledRight = styled.div`
   flex: 1;
   background-image: url('/Crypto2.png');
   background-position: center;
-  /* background-repeat: no-repeat; */
+  background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
 
@@ -32,11 +32,9 @@ const StyledText = styled.div`
   padding: 4rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-
   text-align: center;
-
   flex: 1;
 `
 const StyledPBox = styled.div`

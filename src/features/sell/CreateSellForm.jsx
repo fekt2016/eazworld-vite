@@ -10,39 +10,31 @@ import FormRow from '../../ui/FormRow'
 import { devicesMax } from '../../styles/breakpoint'
 import { useNavigate } from 'react-router-dom'
 import Select from '../../ui/Select'
-
-// const Select = styled.select`
-//   flex-basis: 50rem;
-//   font-size: 1.4rem;
-//   padding: 0.8rem 1.2rem;
-//   border: 1px solid
-//     ${(props) =>
-//       props.type === 'white'
-//         ? 'var(--color-grey-100)'
-//         : 'var(--color-grey-300)'};
-//   border-radius: var(--border-radius-sm);
-//   background-color: var(--color-grey-0);
-//   font-weight: 500;
-//   box-shadow: var(--shadow-sm);
-//   @media ${devicesMax.md} {
-//     width: 100%;
-//     flex-basis: auto;
-//   }
-// `
+import { useEffect } from 'react'
+import emailjs from '@emailjs/browser'
+import { useUser } from '../authentication/useUser'
 
 const StyledTerm = styled.div`
-  width: 70%;
+  width: 50%;
   text-align: center;
   padding: 1rem;
   align-self: center;
-  background-color: var(--color-grey-400);
+  box-shadow: var(--shadow-lg);
   @media ${devicesMax.sm} {
     width: 100%;
   }
 `
 
 function CreateCabinForm() {
+  const seq = (Math.floor(Math.random() * 10000) + 10000)
+    .toString()
+    .substring(1)
+
+  const orderId = `EW${seq}`
+
   const { createSell, isCreating } = useCreateSell()
+  const { user } = useUser()
+  console.log(user.user_metadata.firstName)
   const navigate = useNavigate()
 
   const {
@@ -55,19 +47,41 @@ function CreateCabinForm() {
   } = useForm()
 
   const { errors } = formState
+  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
   function onSubmit(data) {
     console.log(data)
     createSell(
       { ...data },
       {
-        onSuccess: (data) => {
-          console.log(data)
+        onSuccess: () => {
           reset()
-          navigate('/history')
+          navigate(`/sell-currentOrder/${orderId}`)
         },
       },
     )
+    emailjs
+      .send(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_TEMPLAT_BUY_ID,
+        {
+          from_name: user.user_metadata.firstName,
+          recipient: user.email,
+          orderId,
+          currency: data.currency,
+          amountGh: data.amountGh,
+          amountUSD: data.amountUSD,
+          Payment: data.payment,
+        },
+      )
+      .then(
+        (result) => {
+          console.log(result)
+        },
+        (error) => {
+          console.log(error.text)
+        },
+      )
   }
   return (
     <>
@@ -119,9 +133,10 @@ function CreateCabinForm() {
 
         <FormRow label="Payment Method">
           <Select {...register('payment')}>
-            <option>MTN Momo</option>
-            <option>Vodafone cash</option>
-            <option>At Money</option>
+            <option value="">Select Payment Method</option>
+            <option value="MTN Momo">MTN Momo</option>
+            <option value="Vodafone cash">Vodafone cash</option>
+            <option value="At Money">At Money</option>
           </Select>
         </FormRow>
         <FormRow>
@@ -132,11 +147,19 @@ function CreateCabinForm() {
             defaultValue={'processing'}
           />
         </FormRow>
+        <FormRow>
+          <Input
+            type="hidden"
+            id="orderId"
+            {...register('orderId')}
+            defaultValue={`${orderId}`}
+          />
+        </FormRow>
 
         <StyledTerm>
-          By clicking the order button is that you have agreed that all
-          information provide are correct and you should be held liable detail s
-          submitted
+          <strong>Selling Terms: </strong>By clicking the order button is that
+          you have agreed that all information provide are correct and you
+          should be held liable detail s submitted
         </StyledTerm>
 
         <FormRow>

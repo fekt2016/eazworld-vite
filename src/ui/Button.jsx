@@ -28,7 +28,7 @@ const variations = {
     border-radius: var(--Border-radius-cir);
 
     &:hover {
-      border: 1px solid var(--color-primary-800);
+      border: 1px solid var(--color-white-0);
     }
   `,
   secondary: css`
@@ -40,14 +40,7 @@ const variations = {
       color: var(--color-black-900);
     }
   `,
-  // danger: css`
-  //   color: var(--color-red-100);
-  //   background-color: var(--color-red-700);
 
-  //   &:hover {
-  //     background-color: var(--color-red-800);
-  //   }
-  // `,
   buy: css`
     color: var(--color-white-0);
     background-color: var(--color-primary-300);
@@ -68,7 +61,6 @@ const variations = {
 
 const Button = styled.button`
   border: none;
-
   box-shadow: var(--shadow-sm);
 
   ${(props) => sizes[props.size]}

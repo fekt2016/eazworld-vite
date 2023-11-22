@@ -10,6 +10,9 @@ import FormRow from '../../ui/FormRow'
 import { useNavigate } from 'react-router-dom'
 import { useCreateBuy } from '../buy/useCreateBuy'
 import { devicesMax } from '../../styles/breakpoint'
+import { useEffect } from 'react'
+import emailjs from '@emailjs/browser'
+import { useUser } from '../authentication/useUser'
 
 const Select = styled.select`
   flex-basis: 50rem;
@@ -30,11 +33,12 @@ const Select = styled.select`
   }
 `
 const StyledTerm = styled.div`
-  width: 70%;
+  width: 50%;
   text-align: center;
   padding: 1rem;
   align-self: center;
-  background-color: var(--color-grey-300);
+  box-shadow: var(--shadow-lg);
+
   margin: 2rem;
   @media ${devicesMax.sm} {
     width: 100%;
@@ -46,9 +50,11 @@ function CreateBuyForm() {
     .toString()
     .substring(1)
 
-  const orderId = `ew${seq}`
+  const orderId = `EW${seq}`
 
   const { createBuy, isCreating } = useCreateBuy()
+  const { user } = useUser()
+  console.log(user.user_metadata.firstName)
 
   const navigate = useNavigate()
 
@@ -62,17 +68,44 @@ function CreateBuyForm() {
     getValues,
   } = useForm()
   const { errors } = formState
+  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
   function onSubmit(data) {
+    console.log(data)
     createBuy(
       { ...data },
       {
         onSuccess: () => {
           reset()
-          navigate(`/currentOrder/${orderId}`)
+          navigate(`/buy-currentOrder/${orderId}`)
         },
       },
     )
+    emailjs
+      .send(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_TEMPLATE_ID,
+        {
+          from_name: user.user_metadata.firstName,
+          recipient: user.email,
+          orderId,
+          currency: data.currency,
+          amountGh: data.amountGh,
+          amountUSD: data.amountUSD,
+          Payment: data.payment,
+          TotaltoPay: data.totalToPay,
+          wallet: data.wallet,
+          miner: data.miner,
+        },
+      )
+      .then(
+        (result) => {
+          console.log(result)
+        },
+        (error) => {
+          console.log(error.text)
+        },
+      )
   }
 
   return (
@@ -154,9 +187,13 @@ function CreateBuyForm() {
         </FormRow>
         <FormRow label="Payment method">
           <Select {...register('payment')}>
-            <option>MTN Momo</option>
-            <option>Voda cash</option>
-            <option>At Money</option>
+            <option>Select Payment Method</option>
+            <option value="Mtn Mono">
+              MTN Momo <span>momo</span>
+              <img src="../../../mtn.png" alt="mtn" />
+            </option>
+            <option value="Voda cash">Voda cash</option>
+            <option value="At Money">At Money</option>
           </Select>
         </FormRow>
         <FormRow label="Wallet address" error={errors?.wallet?.message}>
@@ -185,8 +222,9 @@ function CreateBuyForm() {
           />
         </FormRow>
         <StyledTerm>
+          <strong>Buying Terms: </strong>
           By clicking the order button, You have agreed that all information
-          provide are correct and you should be held liable for payment detail s
+          provide are correct and you should be held liable for payment details
           submitted
         </StyledTerm>
         <FormRow>

@@ -33,7 +33,7 @@ function SignupForm() {
   } = useForm()
   // const { errors } = formState
 
-  function onSubmit({ firstName, lastName, email, password, phone }) {
+  async function onSubmit({ firstName, lastName, email, password, phone }) {
     signup(
       { firstName, lastName, email, password, phone },
       {

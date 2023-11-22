@@ -35,8 +35,9 @@ const StyledToggle = styled.button`
 
 const StyledList = styled.ul`
   position: fixed;
-
-  background-color: var(--color-grey-0);
+  padding: 2rem;
+  border: 1px solid var(--color-black-950);
+  background-color: var(--color-white-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 

@@ -17,16 +17,9 @@ const Payment = styled.div`
     display: none;
   }
 `
-const Date = styled.div`
-  @media ${devicesMax.md} {
-    display: none;
-  }
-`
-const BuyId = styled.div`
-  @media ${devicesMax.md} {
-    display: none;
-  }
-`
+const Date = styled.div``
+const BuyId = styled.div``
+
 function BuyTable() {
   const { data: buy, isLoading, error } = useBuy()
 
