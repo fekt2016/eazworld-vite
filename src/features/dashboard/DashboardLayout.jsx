@@ -7,30 +7,24 @@ import { devicesMax } from '../../styles/breakpoint'
 
 const StyledDashboardLayout = styled.div`
   width: 100vw;
-
   display: flex;
   flex-direction: column;
   position: relative;
 `
+
 const Main = styled.main`
-  padding: 4rem 4.8rem 6.4rem;
+  padding: 8rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--color-grey-50);
+  width: 100%;
 
   @media ${devicesMax.md} {
-    margin-right: 1rem;
+    padding: 4rem 2rem 2rem 9rem;
   }
 `
-const ConRight = styled.div`
-  padding: 2rem;
-  flex: 1;
 
-  margin-left: 80px;
-
-  transition: all 0.3s ease-in;
-`
 const StyledP = styled.p`
   color: var(--color-grey-0);
   font-size: 1.2rem;
@@ -41,20 +35,20 @@ const StyledP = styled.p`
 function DashboardLayout() {
   const [sidebar, setSidebar] = useState(false)
   const showSidebar = () => setSidebar((s) => !s)
-  console.log(sidebar)
+
   return (
     <StyledDashboardLayout>
       <Sidebar sidebar={sidebar} showSidebar={showSidebar} />
-      <ConRight>
-        <DashHeader
-          sidebar={sidebar}
-          setSidebar={setSidebar}
-          showSidebar={showSidebar}
-        />
-        <Main>
-          <Outlet />
-        </Main>
-      </ConRight>
+      <DashHeader
+        sidebar={sidebar}
+        setSidebar={setSidebar}
+        showSidebar={showSidebar}
+      />
+
+      <Main>
+        <Outlet />
+      </Main>
+
       <StyledP> &#169;2000 copyright eazworld All rights reserved</StyledP>
     </StyledDashboardLayout>
   )

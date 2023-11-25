@@ -15,7 +15,8 @@ const StyledLi = styled.li`
 
   display: flex;
   justify-content: end;
-  @media ${devicesMax.sm} {
+  @media ${devicesMax.md} {
+    padding: 1rem;
   }
 `
 

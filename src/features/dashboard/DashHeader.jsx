@@ -10,6 +10,7 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: flex-end;
   padding-right: 4rem;
+  position: sticky;
 `
 
 const StyledRight = styled.div`

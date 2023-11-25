@@ -7,7 +7,6 @@ const StyledUl = styled.ul`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
   gap: 30px;
-  /* margin-right: 2rem; */
 
   @media ${devicesMax.lg} {
     grid-template-columns: repeat(2, 1fr);
@@ -17,7 +16,6 @@ const StyledUl = styled.ul`
   }
   @media ${devicesMax.sm} {
     grid-template-columns: 1fr;
-    /* padding: 1rem; */
   }
 `
 

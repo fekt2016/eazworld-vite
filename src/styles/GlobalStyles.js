@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { devicesMax } from "./breakpoint";
 
 const breakpoints = {
 	xs: "320px",
@@ -137,6 +138,9 @@ const GlobalStyles = createGlobalStyle`:root {
 
 html {
   font-size: 62.5%;
+  @media ${devicesMax.md} {
+    font-size: 60%;
+  }
 }
 
 body {
