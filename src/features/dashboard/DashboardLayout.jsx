@@ -16,12 +16,14 @@ const Main = styled.main`
   padding: 8rem;
   display: flex;
   flex-direction: column;
+
   justify-content: space-between;
   background-color: var(--color-grey-50);
   width: 100%;
 
   @media ${devicesMax.md} {
     padding: 4rem 2rem 2rem 9rem;
+    align-items: center;
   }
 `
 
@@ -44,11 +46,9 @@ function DashboardLayout() {
         setSidebar={setSidebar}
         showSidebar={showSidebar}
       />
-
       <Main>
         <Outlet />
       </Main>
-
       <StyledP> &#169;2000 copyright eazworld All rights reserved</StyledP>
     </StyledDashboardLayout>
   )

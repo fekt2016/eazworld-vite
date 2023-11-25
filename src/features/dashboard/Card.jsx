@@ -5,6 +5,7 @@ import { styled, css } from 'styled-components'
 import Button from '../../ui/Button'
 import Heading from '../../ui/Heading'
 import { devicesMax } from '../../styles/breakpoint'
+import { Link } from 'react-router-dom'
 
 const StyledLi = styled.li`
   background-color: var(--color-white-0);
@@ -119,14 +120,14 @@ function Card({ name, image, color, sell, buy, stock }) {
             <span>BUYING: </span>
             <span>&#8373;{buy}</span>
             <Button size="small" variation="buy">
-              BUY
+              <Link to="/buy">BUY</Link>
             </Button>
           </StyledRate>
           <StyledRate>
             <span>SELLING: </span>
             <span>&#8373;{sell}</span>
             <Button size="small" variation="sell">
-              SELL
+              <Link to="/sell">SELL</Link>
             </Button>
           </StyledRate>
         </div>
