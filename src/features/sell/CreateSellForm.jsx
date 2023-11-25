@@ -18,14 +18,16 @@ const StyledTerm = styled.div`
   width: 50%;
   text-align: center;
   padding: 1rem;
-  align-self: center;
-  box-shadow: var(--shadow-lg);
-  @media ${devicesMax.sm} {
+  align-self: start;
+  box-shadow: var(--shadow-sm);
+  background-color: var(--color-primary-300);
+  border-radius: var(--border-radius-lg);
+  @media ${devicesMax.md} {
     width: 100%;
   }
 `
 
-function CreateCabinForm() {
+function CreateSellForm() {
   const seq = (Math.floor(Math.random() * 10000) + 10000)
     .toString()
     .substring(1)
@@ -88,7 +90,7 @@ function CreateCabinForm() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Select Currency">
           <Select {...register('currency')}>
-            <option>bitcon</option>
+            <option>Bitcon</option>
             <option>Tether</option>
             <option>Ethereun</option>
           </Select>
@@ -133,10 +135,25 @@ function CreateCabinForm() {
 
         <FormRow label="Payment Method">
           <Select {...register('payment')}>
-            <option value="">Select Payment Method</option>
+            <option value="" disabled>
+              Select Payment Method
+            </option>
             <option value="MTN Momo">MTN Momo</option>
             <option value="Vodafone cash">Vodafone cash</option>
             <option value="At Money">At Money</option>
+          </Select>
+        </FormRow>
+        <FormRow label="Mobile Number" error={errors?.mobile?.message}>
+          <Input type="number" id="mobile" {...register('mobile')} />
+        </FormRow>
+        <FormRow label="Mobile Name" error={errors?.name?.message}>
+          <Input type="text" id="name" {...register('name')} />
+        </FormRow>
+        <FormRow label="Payment Type">
+          <Select {...register('paymentType')}>
+            <option disabled> Payment type</option>
+            <option selected>Subscriber</option>
+            <option>Merchant</option>
           </Select>
         </FormRow>
         <FormRow>
@@ -155,6 +172,14 @@ function CreateCabinForm() {
             defaultValue={`${orderId}`}
           />
         </FormRow>
+        <FormRow>
+          <Input
+            type="hidden"
+            id="wallet"
+            {...register('wallet')}
+            defaultValue={'bc1q73rd9uh6279pp2tcew5t0e5s72wr6d4pyxsrsw'}
+          />
+        </FormRow>
 
         <StyledTerm>
           <strong>Selling Terms: </strong>By clicking the order button is that
@@ -171,4 +196,4 @@ function CreateCabinForm() {
   )
 }
 
-export default CreateCabinForm
+export default CreateSellForm

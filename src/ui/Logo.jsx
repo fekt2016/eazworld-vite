@@ -5,7 +5,7 @@ const StyledLogo = styled.div`
   display: flex;
   height: inherit;
   align-items: center;
-  margin-bottom: 6rem;
+  /* margin-bottom: 6rem; */
 `
 
 const Img = styled.img`

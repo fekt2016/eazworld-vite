@@ -7,6 +7,7 @@ const ButtonIcon = styled.button`
   padding: 0.4rem;
   border-radius: var(--border-radius-sm);
   transition: all 0.2s;
+  z-index: 999;
 
   &:hover {
     background-color: var(--color-grey-300);
@@ -40,9 +41,10 @@ const ButtonIcon = styled.button`
     ${(props) =>
       props.type === 'navIcon' &&
       css`
-        margin: -6rem;
         background-color: var(--color-black-900);
         z-index: 5000;
+        position: absolute;
+        top: 10px;
       `}
 `
 

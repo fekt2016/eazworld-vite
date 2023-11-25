@@ -8,10 +8,14 @@ import {
   HiOutlineCog8Tooth,
   HiOutlineDocumentChartBar,
   HiOutlineCreditCard,
+  HiArrowRightOnRectangle,
 } from 'react-icons/hi2'
+import { useLogout } from '../features/authentication/useLogout'
+import SpinnerMini from './SpinnerMini'
 
 const StyledNav = styled.nav`
   flex: 1;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -19,8 +23,7 @@ const StyledNav = styled.nav`
   margin-top: 10rem;
 `
 const NavList = styled.ul`
-  /* gap: 0.8rem; */
-  /* padding: 1rem; */
+  width: 100%;
 `
 
 const StyledNavLink = styled(NavLink)`
@@ -62,12 +65,7 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-black-900);
   }
 `
-const StyledP = styled.p`
-  color: var(--color-grey-0);
-  font-size: 1.2rem;
-  text-align: center;
-  text-transform: capitalize;
-`
+
 const StyledSpan = styled.span`
   transition: all 0.2s;
 `
@@ -75,48 +73,102 @@ const StyledLi = styled.li`
   margin-bottom: 1rem;
 `
 
-function MainNav({ inactive }) {
+function MainNav({ sidebar }) {
+  const { logout, isLoading } = useLogout()
   return (
     <StyledNav>
       <NavList>
         <StyledLi>
-          <StyledNavLink to="/dashboard">
+          <StyledNavLink
+            to="/dashboard"
+            style={
+              !sidebar
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'flex-start' }
+            }
+          >
             <HiOutlineHome />
-            {inactive ? '' : <StyledSpan>dashboard</StyledSpan>}
+            {sidebar && <StyledSpan>dashboard</StyledSpan>}
           </StyledNavLink>
         </StyledLi>
         <StyledLi>
-          <StyledNavLink to="/buy">
+          <StyledNavLink
+            to="/buy"
+            style={
+              !sidebar
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'flex-start' }
+            }
+          >
             <HiOutlineCurrencyDollar />
-            {inactive ? '' : <StyledSpan>buy</StyledSpan>}
+            {sidebar && <StyledSpan>buy</StyledSpan>}
           </StyledNavLink>
         </StyledLi>
         <StyledLi>
-          <StyledNavLink to="/sell">
+          <StyledNavLink
+            to="/sell"
+            style={
+              !sidebar
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'flex-start' }
+            }
+          >
             <HiOutlineCurrencyEuro />
-            {inactive ? '' : <StyledSpan>sell</StyledSpan>}
+            {sidebar && <StyledSpan>sell</StyledSpan>}
           </StyledNavLink>
         </StyledLi>
         <StyledLi>
-          <StyledNavLink to="/history">
+          <StyledNavLink
+            to="/history"
+            style={
+              !sidebar
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'flex-start' }
+            }
+          >
             <HiOutlineDocumentChartBar />
-            {inactive ? '' : <StyledSpan>history</StyledSpan>}
+            {sidebar && <StyledSpan>history</StyledSpan>}
           </StyledNavLink>
         </StyledLi>
         <StyledLi>
-          <StyledNavLink to="/prepaid">
+          <StyledNavLink
+            to="/prepaid"
+            style={
+              !sidebar
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'flex-start' }
+            }
+          >
             <HiOutlineCreditCard />
-            {inactive ? '' : <StyledSpan>prepaid</StyledSpan>}
+            {sidebar && <StyledSpan>prepaid</StyledSpan>}
           </StyledNavLink>
         </StyledLi>
         <StyledLi>
-          <StyledNavLink to="/settings">
+          <StyledNavLink
+            to="/settings"
+            style={
+              !sidebar
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'flex-start' }
+            }
+          >
             <HiOutlineCog8Tooth />
-            {inactive ? '' : <StyledSpan>settings</StyledSpan>}
+            {sidebar && <StyledSpan>settings</StyledSpan>}
+          </StyledNavLink>
+        </StyledLi>
+        <StyledLi onClick={logout} disabled={isLoading}>
+          <StyledNavLink
+            style={
+              !sidebar
+                ? { justifyContent: 'center' }
+                : { justifyContent: 'flex-start' }
+            }
+          >
+            {!isLoading ? <HiArrowRightOnRectangle /> : <SpinnerMini />}
+            {sidebar && <StyledSpan>logout</StyledSpan>}
           </StyledNavLink>
         </StyledLi>
       </NavList>
-      <StyledP>copyright eazworld </StyledP>
     </StyledNav>
   )
 }

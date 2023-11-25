@@ -20,6 +20,16 @@ export async function createSell(newSell) {
 
 	return data;
 }
+export async function getCurrentSell(id) {
+	const { data, error } = await supabase
+		.from("sell")
+		.select("*")
+		.eq("orderId", id);
+
+	if (error) throw new Error("there was an error");
+
+	return { data, error };
+}
 
 export async function getCurrentUserSell() {
 	const {

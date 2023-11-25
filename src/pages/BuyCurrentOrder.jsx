@@ -247,7 +247,7 @@ function BuyCurrentOrder() {
                   <FormRow label="Account Type">
                     <Select onChange={(e) => setAccount(e.target.value)}>
                       <option>Merchant</option>
-                      <option>subscriber</option>
+                      <option>Subscriber</option>
                     </Select>
                   </FormRow>
                   <FormRow label="Amount sent">

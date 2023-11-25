@@ -148,6 +148,7 @@ body {
   line-height: 1.5;
   font-size: 1.6rem;
   width: 100vw;
+   overflow-x: hidden;
 }
 
 input,

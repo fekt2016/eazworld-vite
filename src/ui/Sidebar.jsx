@@ -1,51 +1,45 @@
-import { styled, css } from 'styled-components'
+import { styled } from 'styled-components'
 import Logo from '../ui/Logo'
 import MainNav from './MainNav'
-import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi2'
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
 import ButtonIcon from './ButtonIcon'
-import { useState } from 'react'
 
 const StyledSidebar = styled.aside`
-  padding: 3.2rem 2.4rem;
+  padding: 3.2rem 1.4rem;
   border-right: 1px solid var(--color-grey-100);
-  width: 25rem;
-  height: 100%;
+  height: 100vh;
   background-color: var(--color-black-950);
-  display: flex;
   transition: width 0.2s ease-in;
-
-  display: flex;
+  position: fixed;
+  top: 0;
   flex-direction: column;
-
-  ${(props) =>
-    props.type === 'inactive' &&
-    css`
-      width: 80px;
-      padding: 2rem;
-    `}
+  z-index: 999;
 `
 const SectionTop = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `
 
-function Sidebar() {
-  const [inactive, setInactive] = useState(false)
-
+function Sidebar({ sidebar, showSidebar }) {
   return (
-    <StyledSidebar type={inactive ? 'inactive' : ''}>
+    <StyledSidebar style={!sidebar ? { width: '60px' } : { width: ' 24rem' }}>
+      <ButtonIcon
+        type="navIcon"
+        onClick={showSidebar}
+        style={!sidebar ? { left: '62px' } : { left: '220px' }}
+      >
+        {sidebar ? (
+          <HiChevronLeft style={{ color: 'white' }} />
+        ) : (
+          <HiChevronRight style={{ color: 'white' }} />
+        )}
+      </ButtonIcon>
       <SectionTop>
         <Logo type="small" img="/logo100.png" />
-        <ButtonIcon type="navIcon" onClick={() => setInactive(!inactive)}>
-          {inactive ? (
-            <HiOutlineArrowRight style={{ color: 'white', fontSize: '16px' }} />
-          ) : (
-            <HiOutlineArrowLeft style={{ color: 'white', fontSize: '16px' }} />
-          )}
-        </ButtonIcon>
       </SectionTop>
-      <MainNav inactive={inactive} />
+      <MainNav sidebar={sidebar} />
     </StyledSidebar>
   )
 }

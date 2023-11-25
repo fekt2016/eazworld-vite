@@ -3,7 +3,6 @@ import HeaderMenu from './HeaderMenu'
 import UserAvatar from '../authentication/UserAvatar'
 
 const StyledHeader = styled.header`
-  background-color: var(--color-grey-0);
   border-bottom: 1px solid var(--color-grey-100);
   height: 7rem;
   display: flex;
@@ -15,7 +14,10 @@ const StyledHeader = styled.header`
 
 const StyledRight = styled.div`
   display: flex;
+  justify-content: flex-end;
+  width: 100%;
 `
+
 function DashHeader() {
   return (
     <>

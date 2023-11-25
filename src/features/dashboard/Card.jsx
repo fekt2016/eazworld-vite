@@ -10,13 +10,12 @@ const StyledLi = styled.li`
   background-color: var(--color-white-0);
   padding: 2rem;
   position: relative;
-  border-radius: var(--border-radius-tiny);
+  border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
 
   display: flex;
   justify-content: end;
   @media ${devicesMax.sm} {
-    padding: 1rem;
   }
 `
 
@@ -80,11 +79,8 @@ const StyledRate = styled.div`
   padding: 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 1.3rem;
-
-  @media ${devicesMax.sm} {
-    flex-direction: column;
-  }
 `
 const StyledStock = styled.span`
   padding: 2px;

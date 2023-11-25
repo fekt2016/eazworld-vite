@@ -6,45 +6,56 @@ import { useState } from 'react'
 import { devicesMax } from '../../styles/breakpoint'
 
 const StyledDashboardLayout = styled.div`
-  height: 100vh;
+  width: 100vw;
+
   display: flex;
+  flex-direction: column;
+  position: relative;
 `
 const Main = styled.main`
-  background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--color-grey-50);
 
-  background-color: aliceblues;
-  height: 100%;
-  width: 100%;
   @media ${devicesMax.md} {
-    padding: 2rem 2rem;
+    margin-right: 1rem;
   }
 `
 const ConRight = styled.div`
+  padding: 2rem;
   flex: 1;
-  height: 100vh;
-  background-color: var(--color-grey-50);
-  overflow: scroll;
+
+  margin-left: 80px;
+
+  transition: all 0.3s ease-in;
 `
-const ConLeft = styled.div`
-  //
+const StyledP = styled.p`
+  color: var(--color-grey-0);
+  font-size: 1.2rem;
+  text-align: center;
+  text-transform: capitalize;
 `
 
 function DashboardLayout() {
   const [sidebar, setSidebar] = useState(false)
-  const showSidebar = () => setSidebar(!sidebar)
-
+  const showSidebar = () => setSidebar((s) => !s)
+  console.log(sidebar)
   return (
     <StyledDashboardLayout>
-      <ConLeft>
-        <Sidebar />
-      </ConLeft>
+      <Sidebar sidebar={sidebar} showSidebar={showSidebar} />
       <ConRight>
-        <DashHeader sidebar={sidebar} showSidebar={showSidebar} />
+        <DashHeader
+          sidebar={sidebar}
+          setSidebar={setSidebar}
+          showSidebar={showSidebar}
+        />
         <Main>
           <Outlet />
         </Main>
       </ConRight>
+      <StyledP> &#169;2000 copyright eazworld All rights reserved</StyledP>
     </StyledDashboardLayout>
   )
 }

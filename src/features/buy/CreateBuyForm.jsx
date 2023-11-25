@@ -71,7 +71,6 @@ function CreateBuyForm() {
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
   function onSubmit(data) {
-    console.log(data)
     createBuy(
       { ...data },
       {
@@ -113,9 +112,9 @@ function CreateBuyForm() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Select Currency">
           <Select {...register('currency')}>
+            <option value={''}>Select currency</option>
             <option>Bitcoin</option>
             <option>Tether</option>
-            <option>ethereum</option>
           </Select>
         </FormRow>
         <FormRow error={errors?.amountUSD?.message} label="AmountUSD">
@@ -172,6 +171,7 @@ function CreateBuyForm() {
               },
             })}
           >
+            <option value={0.5}>Select Miners fee</option>
             <option>0.5</option>
             <option>1.0</option>
           </Select>
@@ -187,7 +187,9 @@ function CreateBuyForm() {
         </FormRow>
         <FormRow label="Payment method">
           <Select {...register('payment')}>
-            <option>Select Payment Method</option>
+            <option disabled selected>
+              Select Payment Method
+            </option>
             <option value="Mtn Mono">
               MTN Momo <span>momo</span>
               <img src="../../../mtn.png" alt="mtn" />
@@ -228,7 +230,9 @@ function CreateBuyForm() {
           submitted
         </StyledTerm>
         <FormRow>
-          <Button>{isCreating ? 'Submitting' : 'Place an Order'}</Button>
+          <div>
+            <Button>{isCreating ? 'Submitting' : 'Place an Order'}</Button>
+          </div>
         </FormRow>
       </Form>
 
