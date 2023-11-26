@@ -4,6 +4,7 @@ import { devicesMax } from '../styles/breakpoint'
 const StyledFormRow = styled.div`
   display: flex;
   justify-content: space-between;
+  position: relative;
 
   gap: 2.4rem;
 
@@ -43,7 +44,7 @@ const Error = styled.span`
 function FormRow({ label, error, children }) {
   return (
     <StyledFormRow>
-      {label && <Label htmlFor={children.props.id}>{label}</Label>}
+      {label && <Label>{label}</Label>}
       {children}
       <div>{error && <Error>{error}</Error>}</div>
     </StyledFormRow>

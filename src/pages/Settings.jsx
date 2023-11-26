@@ -16,6 +16,7 @@ const BtnRow = styled.div`
   background-color: var(--color-white-0);
   padding: 2rem;
   margin: 2rem;
+  width: 100%;
 
   @media ${devicesMax.lg} {
     flex-direction: column;
@@ -24,6 +25,8 @@ const BtnRow = styled.div`
 const ContentBox = styled.div`
   background-color: var(--color-white-0);
   margin: 0 auto;
+  width: 100%;
+  padding: 1rem;
 
   ${(props) => props.type === 'big' && css``}
 `

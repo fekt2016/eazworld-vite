@@ -4,10 +4,12 @@ import { devicesMax } from '../styles/breakpoint'
 const Form = styled.form`
   overflow: hidden;
   font-size: 1.4rem;
-  width: 100%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 2rem;
+  margin: 0 auto;
 
   ${(props) =>
     props.type === 'regular' &&
