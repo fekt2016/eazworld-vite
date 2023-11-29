@@ -74,7 +74,7 @@ export async function updateCurrentUser({
 
 	const { data: updatedUser, error: error2 } = supabase.auth.updateUser({
 		data: {
-			avatar: `${supabaseUrl}storage/v1/object/public/avatars/${fileName}`,
+			avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
 		},
 	});
 
@@ -82,21 +82,19 @@ export async function updateCurrentUser({
 	return updatedUser;
 }
 
-export async function emailLink(email) {
-	const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-		redirectTo: "http://localhost:5173/update-password",
-	});
-
-	if (error) throw new Error(error.message);
-
-	return data;
-}
-
 export async function resetPassword({ email, password }) {
 	const { data, error } = await supabase.auth.updateUser({
 		email,
 		password,
 	});
+	if (error) throw new Error(error.message);
+	return data;
+}
+
+export async function emailLink(email) {
+	console.log(email);
+	const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
 	if (error) throw new Error(error.message);
 	return data;
 }

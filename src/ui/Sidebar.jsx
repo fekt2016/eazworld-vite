@@ -3,6 +3,10 @@ import Logo from '../ui/Logo'
 import MainNav from './MainNav'
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
 import ButtonIcon from './ButtonIcon'
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import supabase from '../services/supabase'
+import AdminNav from '../features/admin/AdminNav'
 
 const StyledSidebar = styled.aside`
   padding: 3.2rem 1.4rem;
@@ -24,25 +28,64 @@ const SectionTop = styled.div`
 `
 
 function Sidebar({ sidebar, showSidebar }) {
-  return (
-    <StyledSidebar style={!sidebar ? { width: '60px' } : { width: ' 24rem' }}>
-      <ButtonIcon
-        type="navIcon"
-        onClick={showSidebar}
-        style={!sidebar ? { left: '62px' } : { left: '220px' }}
-      >
-        {sidebar ? (
-          <HiChevronLeft style={{ color: 'white' }} />
-        ) : (
-          <HiChevronRight style={{ color: 'white' }} />
-        )}
-      </ButtonIcon>
-      <SectionTop>
-        <Logo type="small" img="/logo100.png" />
-      </SectionTop>
-      <MainNav sidebar={sidebar} />
-    </StyledSidebar>
-  )
-}
+  const [user, setUser] = useState('')
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: session } = await supabase.auth.getSession()
+
+      if (!session.session) return navigate('/login')
+
+      const { data: user } = await supabase.from('users').select('*').single()
+      setUser(user)
+    }
+
+    getUser()
+  }, [navigate, user])
+
+  if (user?.role === 'admin') {
+    return (
+      <StyledSidebar style={!sidebar ? { width: '60px' } : { width: ' 24rem' }}>
+        <ButtonIcon
+          type="navIcon"
+          onClick={showSidebar}
+          style={!sidebar ? { left: '62px' } : { left: '220px' }}
+        >
+          {sidebar ? (
+            <HiChevronLeft style={{ color: 'white' }} />
+          ) : (
+            <HiChevronRight style={{ color: 'white' }} />
+          )}
+        </ButtonIcon>
+        <SectionTop>
+          <Logo type="small" img="/logo100.png" />
+        </SectionTop>
+        <AdminNav sidebar={sidebar} />
+      </StyledSidebar>
+    )
+  }
+
+  if (user?.role === 'user') {
+    return (
+      <StyledSidebar style={!sidebar ? { width: '60px' } : { width: ' 24rem' }}>
+        <ButtonIcon
+          type="navIcon"
+          onClick={showSidebar}
+          style={!sidebar ? { left: '62px' } : { left: '220px' }}
+        >
+          {sidebar ? (
+            <HiChevronLeft style={{ color: 'white' }} />
+          ) : (
+            <HiChevronRight style={{ color: 'white' }} />
+          )}
+        </ButtonIcon>
+        <SectionTop>
+          <Logo type="small" img="/logo100.png" />
+        </SectionTop>
+        <MainNav sidebar={sidebar} />
+      </StyledSidebar>
+    )
+  }
+}
 export default Sidebar

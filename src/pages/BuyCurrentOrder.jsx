@@ -170,7 +170,7 @@ function BuyCurrentOrder() {
 
   if (isLoading) return <Spinner />
   const { data: currentData } = buy
-
+  console.log(currentData)
   return (
     <>
       <StyledOrder>

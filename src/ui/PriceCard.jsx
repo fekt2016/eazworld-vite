@@ -3,6 +3,7 @@ import Card from '../features/dashboard/Card'
 
 import { devicesMax } from '../styles/breakpoint'
 const StyledUl = styled.ul`
+  padding: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
@@ -13,13 +14,15 @@ const StyledUl = styled.ul`
   }
   @media ${devicesMax.md} {
     gap: 15px;
+
+    width: 100%;
   }
   @media ${devicesMax.sm} {
     grid-template-columns: 1fr;
   }
 `
 
-function Price() {
+function PriceCard() {
   return (
     <StyledUl>
       <Card
@@ -74,4 +77,4 @@ function Price() {
   )
 }
 
-export default Price
+export default PriceCard

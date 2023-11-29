@@ -3,14 +3,19 @@ import styled from 'styled-components'
 import SignupForm from '../features/authentication/SignupForm'
 import Logo from '../ui/Logo'
 import Heading from '../ui/Heading'
+import { devicesMax } from '../styles/breakpoint'
+
 const SignupLayout = styled.main`
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 48rem;
-  align-content: center;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 3.2rem;
+  align-items: center;
   background-color: var(--color-grey-50);
+
+  @media ${devicesMax.md} {
+    margin-top: 2rem;
+  }
 `
 function Signup() {
   return (

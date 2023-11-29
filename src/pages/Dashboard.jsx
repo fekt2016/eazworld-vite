@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Heading from '../ui/Heading'
-import PriceCard from '../ui/Price'
+import PriceCard from '../ui/PriceCard'
 import Row from '../ui/Row'
 import supabase from '../services/supabase'
 import { Link, useNavigate } from 'react-router-dom'
@@ -12,7 +12,11 @@ const StyledLink = styled(Link)`
   color: var(--color-white-0);
   padding: 1rem;
 `
-
+// const Empty = styled.div`
+//   height: 50rem;
+//   width: 100%;
+//   background-color: var(--color-white-0);
+// `
 function Dashboard() {
   const [user, setUser] = useState('')
   const navigate = useNavigate()
@@ -39,6 +43,7 @@ function Dashboard() {
       </Row>
       <Row>
         <PriceCard />
+        {/* <Empty></Empty> */}
       </Row>
     </>
   )

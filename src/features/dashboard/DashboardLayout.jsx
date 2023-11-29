@@ -3,7 +3,6 @@ import Sidebar from '../../ui/Sidebar'
 import DashHeader from './DashHeader'
 import { styled } from 'styled-components'
 import { useState } from 'react'
-import { devicesMax } from '../../styles/breakpoint'
 
 const StyledDashboardLayout = styled.div`
   width: 100vw;
@@ -13,18 +12,12 @@ const StyledDashboardLayout = styled.div`
 `
 
 const Main = styled.main`
-  padding: 8rem;
+  padding: 8rem 2rem 20rem 8rem;
+
   display: flex;
   flex-direction: column;
-
   justify-content: space-between;
   background-color: var(--color-grey-50);
-  width: 100%;
-
-  @media ${devicesMax.md} {
-    padding: 4rem 2rem 2rem 9rem;
-    align-items: center;
-  }
 `
 
 const StyledP = styled.p`

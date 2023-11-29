@@ -20,6 +20,9 @@ import UpdatePassword from './pages/UpdatePassword'
 import BuyCurrentOrder from './pages/BuyCurrentOrder'
 import Admin from './pages/Admin'
 import SellCurrentOrder from './pages/SellCurrentOrder'
+import ManageOrder from './features/admin/ManageOrder'
+import Customers from './features/admin/Customers'
+import RateUpdate from './features/admin/RateUpdate'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,7 +67,11 @@ function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="history" element={<History />} />
             <Route path="prepaid" element={<Prepaid />} />
-            <Route path="admin" element={<Admin />} />
+            <Route path="admin" element={<Admin />}>
+              <Route path="manage-order" element={<ManageOrder />} />
+              <Route path="customers" element={<Customers />} />
+              <Route path="rate-update" element={<RateUpdate />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

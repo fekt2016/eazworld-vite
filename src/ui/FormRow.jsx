@@ -5,14 +5,13 @@ const StyledFormRow = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
+  padding: 1rem;
 
-  gap: 2.4rem;
+  /* gap: 2rem; */
 
-  padding: 0.5rem 0;
-
-  &:first-child {
+  /* &:first-child {
     padding-top: 0;
-  }
+  } */
 
   &:last-child {
     padding-bottom: 0;
@@ -35,18 +34,26 @@ const StyledFormRow = styled.div`
 const Label = styled.label`
   font-weight: 500;
   width: 15rem;
+  margin-bottom: 1rem;
 `
 const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
+`
+const InputBox = styled.div`
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
 `
 
 function FormRow({ label, error, children }) {
   return (
     <StyledFormRow>
       {label && <Label>{label}</Label>}
-      {children}
-      <div>{error && <Error>{error}</Error>}</div>
+      <InputBox>
+        {children}
+        <div>{error && <Error>{error}</Error>}</div>
+      </InputBox>
     </StyledFormRow>
   )
 }

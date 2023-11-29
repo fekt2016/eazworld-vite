@@ -3,22 +3,39 @@ import Button from '../../ui/Button'
 import Form from '../../ui/Form'
 import FormRow from '../../ui/FormRow'
 import Input from '../../ui/Input'
+import PhoneInput from 'react-phone-number-input/react-hook-form-input'
+import 'react-phone-number-input/style.css'
 
 import { NavLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useSignup } from './useSignup'
+import { devicesMax } from '../../styles/breakpoint'
+// import { devicesMax } from '../../styles/breakpoint'
 
 // Email regex: /\S+@\S+\.\S+/
 
 const StyledBtn = styled(NavLink)`
   padding: 0.5rem 1.5rem;
-  &:hover {
+  color: var(--color-primary-700);
     text-decoration-line: underline;
   }
 `
 const StyledFooter = styled.div`
   display: flex;
   justify-content: space-between;
+`
+const StyledPhoneInput = styled(PhoneInput)`
+  border: 1px solid var(--color-gray-700);
+  background-color: var(--color-grey-200);
+  border-radius: var(--border-radius-sm);
+  padding: 0.8rem 1.2rem;
+
+  flex-basis: 50rem;
+
+  @media ${devicesMax.md} {
+    width: 100%;
+    flex-basis: auto;
+  }
 `
 
 function SignupForm() {
@@ -28,6 +45,7 @@ function SignupForm() {
     register,
     formState: { errors },
     getValues,
+    control,
     handleSubmit,
     reset,
   } = useForm()
@@ -43,7 +61,7 @@ function SignupForm() {
   }
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form type="signup" onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Fisrt Name" error={errors?.firstName?.message}>
           <Input
             disabled={isLoading}
@@ -69,26 +87,24 @@ function SignupForm() {
             {...register('email', {
               required: 'This field is required',
               pattern: {
-                value: /\S+@\S+\.\S+/,
+                value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                 message: 'Please provide valid email address',
               },
             })}
           />
         </FormRow>
 
-        <FormRow
-          label="Password (min 8 characters)"
-          error={errors?.password?.message}
-        >
+        <FormRow label="Password (min 8)" error={errors?.password?.message}>
           <Input
             disabled={isLoading}
             type="password"
             id="password"
             {...register('password', {
               required: 'This field is required',
-              minLength: {
-                value: 8,
-                message: 'Password needs a minimum of 8 characters',
+              pattern: {
+                value: /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,
+                message:
+                  'Password requirements: 8-20 characters, 1 number, 1 letter, 1 symbol.',
               },
             })}
           />
@@ -109,14 +125,20 @@ function SignupForm() {
             })}
           />
         </FormRow>
-        <FormRow label="Phone Number" error={errors?.mobile?.message}>
-          <Input
+        <FormRow label="Phone Number" error={errors?.phone?.message}>
+          <StyledPhoneInput
             disabled={isLoading}
-            type="phone"
+            name="phoneInput"
             id="phone"
-            {...register('phone', {
-              required: 'This field is required',
-            })}
+            control={control}
+            defaultCountry="GH"
+            rules={{
+              required: true,
+              pattern: {
+                value: '/^(?[0]?)?[-.s]?d{2}[-.s]?d{3}[-.s]?d{4}?$/',
+                message: 'check your phone',
+              },
+            }}
           />
         </FormRow>
 

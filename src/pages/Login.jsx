@@ -15,8 +15,9 @@ const LoginLayout = styled.main`
 const Container = styled.div`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 7px;
-  width: 45%;
-  padding: 2rem;
+  width: 40%;
+  padding: 6rem 2rem;
+
   @media ${devicesMax.lg} {
     width: 70%;
     padding: 1rem;
