@@ -14,6 +14,7 @@ import emailjs from '@emailjs/browser'
 import { useUser } from '../authentication/useUser'
 import { randomOrderId } from '../../utils/helpers'
 import Select from '../../ui/Select'
+import { useMiner } from '../miner/useMiner'
 
 const rate = import.meta.env.VITE_RATE_BUY
 
@@ -30,23 +31,6 @@ const Advert = styled.div`
   flex: 1;
 `
 
-// const Select = styled.select`
-//   font-size: 1.4rem;
-//   padding: 0.8rem 1.2rem;
-//   border: 1px solid
-//     ${(props) =>
-//       props.type === 'white'
-//         ? 'var(--color-grey-100)'
-//         : 'var(--color-grey-300)'};
-//   border-radius: var(--border-radius-sm);
-//   background-color: var(--color-grey-0);
-//   font-weight: 500;
-//   box-shadow: var(--shadow-sm);
-//   @media ${devicesMax.md} {
-//     width: 100%;
-//     flex-basis: auto;
-//   }
-// `
 const StyledTerm = styled.div`
   width: 50%;
   text-align: center;
@@ -63,6 +47,7 @@ const StyledTerm = styled.div`
 function CreateBuyForm() {
   const { createBuy, isCreating } = useCreateBuy()
   const { user } = useUser()
+  const { isLoading, data } = useMiner()
 
   const navigate = useNavigate()
 
@@ -115,7 +100,10 @@ function CreateBuyForm() {
         },
       )
   }
-
+  if (isLoading) return <p>Loading...</p>
+  console.log(data)
+  const mine = data[0]
+  console.log(mine)
   return (
     <BuyContainer>
       <Form type="buy" onSubmit={handleSubmit(onSubmit)}>
@@ -191,8 +179,8 @@ function CreateBuyForm() {
             <option value="" disabled selected>
               Select Miners fee
             </option>
-            <option>15</option>
-            <option>25</option>
+            <option>{mine.normal}</option>
+            <option>{mine.priority}</option>
           </Select>
         </FormRow>
         <FormRow label="TotalTopay">
