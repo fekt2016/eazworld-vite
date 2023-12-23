@@ -192,7 +192,13 @@ function CreateBuyForm() {
               },
             })}
           >
+<<<<<<< HEAD
             <option value={0.5}>Select Miners fee</option>
+=======
+            <option value="" disabled selected>
+              Select Miners fee
+            </option>
+>>>>>>> parent of 9df51db (email setting)
             <option>0.5</option>
             <option>1.0</option>
           </Select>
