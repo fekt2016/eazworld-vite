@@ -14,6 +14,20 @@ import { useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { useUser } from '../authentication/useUser'
 
+<<<<<<< HEAD
+=======
+const SellContainer = styled.div`
+  display: flex;
+  padding: 1rem;
+  gap: 10px;
+  @media ${devicesMax.md} {
+    flex-direction: column;
+  }
+`
+const Advert = styled.div`
+  flex: 1;
+`
+>>>>>>> parent of 49283c7 (final)
 const StyledTerm = styled.div`
   width: 50%;
   text-align: center;
@@ -86,6 +100,7 @@ function CreateSellForm() {
       )
   }
   return (
+<<<<<<< HEAD
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Select Currency">
@@ -93,6 +108,16 @@ function CreateSellForm() {
             <option>Bitcon</option>
             <option>Tether</option>
             <option>Ethereun</option>
+=======
+    <SellContainer>
+      <Form type="buy" onSubmit={handleSubmit(onSubmit)}>
+        <FormRow label="Select Currency" error={errors?.currency?.message}>
+          <Select {...register('currency', { required: 'select currency' })}>
+            <option value="" disabled selected>
+              Select Currency
+            </option>
+            <option>Bitcoin</option>
+>>>>>>> parent of 49283c7 (final)
           </Select>
         </FormRow>
 

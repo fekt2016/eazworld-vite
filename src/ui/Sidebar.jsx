@@ -60,10 +60,14 @@ function Sidebar({ sidebar, showSidebar }) {
         </ButtonIcon>
         <SectionTop>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <Logo type="small" img="/logo100.png" />
 =======
           <Logo type="small" img="/eazwhite1.png" />
 >>>>>>> parent of 5f192ef (email setting)
+=======
+          <Logo type="small" img="/4.png" />
+>>>>>>> parent of 49283c7 (final)
         </SectionTop>
         <AdminNav sidebar={sidebar} />
       </StyledSidebar>

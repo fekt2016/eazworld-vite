@@ -125,7 +125,11 @@ function Card({ name, image, color, sell, buy, stock }) {
           </StyledRate>
           <StyledRate>
             <span>SELLING: </span>
+<<<<<<< HEAD
             <span>&#8373;{sell}.00</span>
+=======
+            <span>&#8373;{sell}</span>
+>>>>>>> parent of 49283c7 (final)
             <Button size="small" variation="sell">
               <Link to="/sell">SELL</Link>
             </Button>

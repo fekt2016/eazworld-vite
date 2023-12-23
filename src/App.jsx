@@ -20,9 +20,19 @@ import UpdatePassword from './pages/UpdatePassword'
 import BuyCurrentOrder from './pages/BuyCurrentOrder'
 import Admin from './pages/Admin'
 import SellCurrentOrder from './pages/SellCurrentOrder'
+<<<<<<< HEAD
 import ManageOrder from './features/admin/ManageOrder'
 import Customers from './features/admin/Customers'
 import RateUpdate from './features/admin/RateUpdate'
+=======
+import ManageOrderbuy from './features/admin/ManageOrderBuy'
+import ManageOrderSell from './features/admin/ManageOrderSell'
+import Customers from './features/admin/Customers'
+import RateUpdate from './features/admin/RateUpdate'
+import Contact from './pages/Contact'
+import Blog from './pages/Blog'
+import Nav from './features/home/Nav'
+>>>>>>> parent of 49283c7 (final)
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -73,7 +83,12 @@ function App() {
             <Route path="history" element={<History />} />
             <Route path="prepaid" element={<Prepaid />} />
             <Route path="admin" element={<Admin />}>
+<<<<<<< HEAD
               <Route path="manage-order" element={<ManageOrder />} />
+=======
+              <Route path="buy-manage" element={<ManageOrderbuy />} />
+              <Route path="sell-manage" element={<ManageOrderSell />} />
+>>>>>>> parent of 49283c7 (final)
               <Route path="customers" element={<Customers />} />
               <Route path="rate-update" element={<RateUpdate />} />
             </Route>

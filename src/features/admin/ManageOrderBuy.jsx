@@ -1,7 +1,11 @@
 import Table from '../../ui/Table'
 import { useAllBuy } from '../buy/useAllBuy'
 import Spinner from '../../ui/Spinner'
+<<<<<<< HEAD
 import AdminBuyRow from './adminBuyRow'
+=======
+import AdminBuyRow from './AdminBuyRow'
+>>>>>>> parent of 49283c7 (final)
 
 function ManageOrderBuy() {
   const { data, isLoading, error } = useAllBuy()
@@ -23,6 +27,7 @@ function ManageOrderBuy() {
             <div>total am.</div>
             <div>payment</div>
             <div>status</div>
+            <div>email</div>
           </Table.Header>
 
           <Table.Body

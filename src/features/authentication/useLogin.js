@@ -10,7 +10,10 @@ export function useLogin() {
 	const { mutate: login, isLoading } = useMutation({
 		mutationFn: ({ email, password }) => loginApi({ email, password }),
 		onSuccess: (user) => {
+<<<<<<< HEAD
 			console.log(user);
+=======
+>>>>>>> parent of 49283c7 (final)
 			queryClient.setQueryData(["user"], user.user);
 			navigate("/dashboard", { replace: true });
 		},

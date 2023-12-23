@@ -2,6 +2,10 @@ import { styled } from 'styled-components'
 import Card from '../features/dashboard/Card'
 
 import { devicesMax } from '../styles/breakpoint'
+<<<<<<< HEAD
+=======
+import { useRate } from '../features/rate/useRate'
+>>>>>>> parent of 49283c7 (final)
 const StyledUl = styled.ul`
   padding: 1rem;
   display: grid;
