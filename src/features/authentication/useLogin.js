@@ -12,11 +12,15 @@ export function useLogin() {
 		onSuccess: (user) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			console.log(user);
 =======
 >>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
+=======
+			console.log(user);
+>>>>>>> parent of e3c562d (avatar)
 			queryClient.setQueryData(["user"], user.user);
 			navigate("/dashboard", { replace: true });
 		},
