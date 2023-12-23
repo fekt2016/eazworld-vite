@@ -74,6 +74,7 @@ const StyledLi = styled.li`
 `
 
 function MainNav({ sidebar }) {
+  const refresh = () => window.location.reload(true)
   const { logout, isLoading } = useLogout()
   return (
     <StyledNav>
@@ -93,6 +94,7 @@ function MainNav({ sidebar }) {
         </StyledLi>
         <StyledLi>
           <StyledNavLink
+            onClick={refresh}
             to="/buy"
             style={
               !sidebar
@@ -106,6 +108,7 @@ function MainNav({ sidebar }) {
         </StyledLi>
         <StyledLi>
           <StyledNavLink
+            onClick={refresh}
             to="/sell"
             style={
               !sidebar

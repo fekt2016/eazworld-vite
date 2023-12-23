@@ -152,6 +152,11 @@ function BuyCurrentOrder() {
       })
       return
     }
+<<<<<<< HEAD
+=======
+    const pay = currentData[0]
+    console.log(pay)
+>>>>>>> parent of 85fe006 (work start)
 
     createPayment(
       { phoneNum, amount, transaction, account, name },
