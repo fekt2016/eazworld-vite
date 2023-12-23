@@ -34,7 +34,16 @@ function Login() {
   return (
     <LoginLayout>
       <Container>
+<<<<<<< HEAD
         <Logo img="../../logo100.png" type="small" margin="bottom" />
+=======
+        <Logo
+          img="../../eaz1.png"
+          type="login"
+          // margin="bottom"
+          sizes="big"
+        />
+>>>>>>> parent of 5f192ef (email setting)
         <Heading as="h1">welcome back</Heading>
         <LoginForm />
       </Container>

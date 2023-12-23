@@ -20,6 +20,32 @@ const Img = styled.img`
     css`
       height: 3rem;
     `}
+<<<<<<< HEAD
+=======
+
+  ${(props) => props.type === 'login' && css``}
+`
+
+const Img = styled.img`
+
+
+    ${(props) =>
+      props.sizes === 'small' &&
+      css`
+        height: 10rem;
+      `}
+    ${(props) =>
+      props.sizes === 'big' &&
+      css`
+        height: 20rem;
+      `}
+    ${(props) =>
+      props.sizes === 'medium' &&
+      css`
+        height: 15rem;
+      `}
+
+>>>>>>> parent of 5f192ef (email setting)
 `
 
 function Logo({ type, img }) {

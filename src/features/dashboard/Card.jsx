@@ -125,7 +125,7 @@ function Card({ name, image, color, sell, buy, stock }) {
           </StyledRate>
           <StyledRate>
             <span>SELLING: </span>
-            <span>&#8373;{sell}</span>
+            <span>&#8373;{sell}.00</span>
             <Button size="small" variation="sell">
               <Link to="/sell">SELL</Link>
             </Button>

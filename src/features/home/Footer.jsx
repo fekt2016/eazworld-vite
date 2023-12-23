@@ -59,7 +59,11 @@ function Footer() {
   return (
     <StyledFooter>
       <AsideLogo>
+<<<<<<< HEAD
         <Imag src="/logo.png" alt="footer-log" />
+=======
+        <Imag src="/eaz2.png" alt="footer-log" />
+>>>>>>> parent of 5f192ef (email setting)
         <Media>
           <BsWhatsapp />
           <BsTwitter />

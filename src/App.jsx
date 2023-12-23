@@ -39,8 +39,13 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
+<<<<<<< HEAD
           <Route index element={<Navigate replace to="home" />} />
           <Route path="home" element={<Home />} />
+=======
+          <Route index element={<Navigate replace to="/home" />} />
+          <Route path="/home" element={<Home />} />
+>>>>>>> parent of 5f192ef (email setting)
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="recover-password" element={<RecoverPassword />} />

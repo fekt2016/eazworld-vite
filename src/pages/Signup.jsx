@@ -20,7 +20,13 @@ const SignupLayout = styled.main`
 function Signup() {
   return (
     <SignupLayout>
+<<<<<<< HEAD
       <Logo img="../../logo100.png" type="small" />
+=======
+      <Link to="/">
+        <Logo img="/eaz1.png" sizes="signup" />
+      </Link>
+>>>>>>> parent of 5f192ef (email setting)
       <Heading as="h1">sign up and trade</Heading>
       <SignupForm />
     </SignupLayout>

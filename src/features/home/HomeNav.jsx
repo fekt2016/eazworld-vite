@@ -160,12 +160,22 @@ function HomeNav() {
           </StyledUl>
         </StyledSideNav>
       )}
+<<<<<<< HEAD
       <StyledLeftContainer>
         <NavButton onClick={() => setIsOpen((open) => !open)}>
           {isOpen ? <HiOutlineXMark /> : <HiOutlineBars3 />}
         </NavButton>
         <Logo img="/logo67.png" type="small" />
       </StyledLeftContainer>
+=======
+
+      <NavButton onClick={() => setIsOpen((open) => !open)}>
+        {isOpen ? <HiOutlineXMark /> : <HiOutlineBars3 />}
+      </NavButton>
+      {/* <Logo img="../../../eaz1 50x50.png" sizes="small" type="nav" /> */}
+      <Img src="/eaz1.png" alt="logo" />
+
+>>>>>>> parent of 5f192ef (email setting)
       <StyledRightContainer>
         <StyledList>
           <StyledUl>
