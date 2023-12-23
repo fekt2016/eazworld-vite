@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { PAGE_SIZE } from "../utils/constants";
 >>>>>>> parent of 49283c7 (final)
@@ -9,6 +10,9 @@ import { PAGE_SIZE } from "../utils/constants";
 >>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 4c94207 (email setting)
+=======
+import { PAGE_SIZE } from "../utils/constants";
+>>>>>>> parent of 49283c7 (final)
 import supabase from "./supabase";
 
 export async function getSell() {
@@ -17,7 +21,10 @@ export async function getSell() {
 	if (error) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		console.error(error);
+=======
+>>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
 =======
@@ -58,9 +65,16 @@ export async function getCurrentUserSell() {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const { data, error } = await supabase
 		.from("sell")
 		.select("*")
+=======
+	let query = supabase
+		.from("sell")
+		.select("*", { count: "exact" })
+		.order("created_at", { ascending: false })
+>>>>>>> parent of 49283c7 (final)
 		.eq("user_id", user.id);
 
 	if (error) throw new Error("currency could not be loaded");

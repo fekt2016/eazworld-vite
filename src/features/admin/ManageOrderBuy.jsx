@@ -2,8 +2,12 @@
 import Table from '../../ui/Table'
 import { useAllBuy } from '../buy/useAllBuy'
 import Spinner from '../../ui/Spinner'
+<<<<<<< HEAD
 import AdminBuyRow from './adminBuyRow'
 =======
+>>>>>>> parent of 49283c7 (final)
+=======
+import AdminBuyRow from './AdminBuyRow'
 >>>>>>> parent of 49283c7 (final)
 
 function ManageOrderBuy() {

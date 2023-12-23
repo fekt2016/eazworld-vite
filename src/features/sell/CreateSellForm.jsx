@@ -22,10 +22,13 @@ import { useUser } from '../authentication/useUser'
 import { randomOrderId } from '../../utils/helpers'
 import SpinnerMini from '../../ui/SpinnerMini'
 
+<<<<<<< HEAD
 >>>>>>> parent of 49283c7 (final)
 =======
 // import { useUser } from '../authentication/useUser'
 >>>>>>> parent of 4c94207 (email setting)
+=======
+>>>>>>> parent of 49283c7 (final)
 const SellContainer = styled.div`
   display: flex;
   padding: 1rem;
@@ -155,12 +158,15 @@ function CreateSellForm() {
 <<<<<<< HEAD
             <option>Bitcoin</option>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
 =======
             <option>Bitcon</option>
 >>>>>>> parent of 4c94207 (email setting)
+=======
+>>>>>>> parent of 49283c7 (final)
           </Select>
         </FormRow>
 

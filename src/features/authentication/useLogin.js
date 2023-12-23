@@ -14,6 +14,7 @@ export function useLogin() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			console.log(user);
 =======
 >>>>>>> parent of 49283c7 (final)
@@ -24,6 +25,8 @@ export function useLogin() {
 >>>>>>> parent of e3c562d (avatar)
 =======
 >>>>>>> parent of 005e1ed (avatar)
+=======
+>>>>>>> parent of 49283c7 (final)
 			queryClient.setQueryData(["user"], user.user);
 			navigate("/dashboard", { replace: true });
 		},

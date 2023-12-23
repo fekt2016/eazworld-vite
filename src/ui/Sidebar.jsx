@@ -3,6 +3,13 @@ import Logo from '../ui/Logo'
 import MainNav from './MainNav'
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
 import ButtonIcon from './ButtonIcon'
+<<<<<<< HEAD
+=======
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import supabase from '../services/supabase'
+import AdminNav from '../features/admin/AdminNav'
+>>>>>>> parent of 49283c7 (final)
 
 const StyledSidebar = styled.aside`
   padding: 3.2rem 1.4rem;
@@ -62,6 +69,7 @@ function Sidebar({ sidebar, showSidebar }) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <Logo type="small" img="/logo100.png" />
 =======
           <Logo type="small" img="/eazwhite1.png" />
@@ -81,6 +89,9 @@ function Sidebar({ sidebar, showSidebar }) {
 =======
           <Logo type="small" img="/logo100.png" />
 >>>>>>> parent of 4c94207 (email setting)
+=======
+          <Logo type="small" img="/4.png" />
+>>>>>>> parent of 49283c7 (final)
         </SectionTop>
         <AdminNav sidebar={sidebar} />
       </StyledSidebar>

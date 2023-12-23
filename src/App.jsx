@@ -24,6 +24,7 @@ import SellCurrentOrder from './pages/SellCurrentOrder'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ManageOrder from './features/admin/ManageOrder'
 import Customers from './features/admin/Customers'
 import RateUpdate from './features/admin/RateUpdate'
@@ -39,6 +40,12 @@ import Customers from './features/admin/Customers'
 import RateUpdate from './features/admin/RateUpdate'
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+import ManageOrderbuy from './features/admin/ManageOrderBuy'
+import ManageOrderSell from './features/admin/ManageOrderSell'
+import Customers from './features/admin/Customers'
+import RateUpdate from './features/admin/RateUpdate'
+>>>>>>> parent of 49283c7 (final)
 import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import Nav from './features/home/Nav'
@@ -105,6 +112,7 @@ function App() {
             <Route path="history" element={<History />} />
             <Route path="prepaid" element={<Prepaid />} />
 <<<<<<< HEAD
+<<<<<<< HEAD
             <Route path="admin" element={<Admin />}>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -112,6 +120,9 @@ function App() {
               <Route path="manage-order" element={<ManageOrder />} />
 =======
 =======
+>>>>>>> parent of 49283c7 (final)
+=======
+            <Route path="admin" element={<Admin />}>
 >>>>>>> parent of 49283c7 (final)
               <Route path="buy-manage" element={<ManageOrderbuy />} />
               <Route path="sell-manage" element={<ManageOrderSell />} />
@@ -122,9 +133,12 @@ function App() {
               <Route path="customers" element={<Customers />} />
               <Route path="rate-update" element={<RateUpdate />} />
             </Route>
+<<<<<<< HEAD
 =======
             <Route path="admin" element={<Admin />} />
 >>>>>>> parent of 005e1ed (avatar)
+=======
+>>>>>>> parent of 49283c7 (final)
           </Route>
         </Routes>
       </BrowserRouter>
