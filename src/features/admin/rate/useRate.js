@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { getRate } from "../../services/apiRate";
+import { useQuery } from '@tanstack/react-query';
+import { getRate } from '../../../services/apiRate';
 
 export function useRate() {
 	const {
@@ -7,7 +7,7 @@ export function useRate() {
 		data: rate,
 		error,
 	} = useQuery({
-		queryKey: ["rate"],
+		queryKey: ['rate'],
 		queryFn: getRate,
 	});
 	return { isLoading, rate, error };

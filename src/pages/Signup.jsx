@@ -3,29 +3,30 @@ import styled from 'styled-components'
 import SignupForm from '../features/authentication/SignupForm'
 import Logo from '../ui/Logo'
 import Heading from '../ui/Heading'
+import { devicesMax } from '../styles/Breakpoint'
+import { Link } from 'react-router-dom'
+
 const SignupLayout = styled.main`
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 48rem;
-  align-content: center;
+  width: 50%;
+  margin: 5rem auto;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 3.2rem;
+  align-items: center;
   background-color: var(--color-grey-50);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+
+  @media ${devicesMax.md} {
+    width: 80%;
+  }
 `
 function Signup() {
   return (
     <SignupLayout>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <Logo img="../../logo100.png" type="small" />
-=======
       <Link to="/">
-        <Logo img="/eaz1.png" sizes="signup" />
+        <Logo img="/4.png" sizes="medium" />
       </Link>
->>>>>>> parent of 5f192ef (email setting)
-=======
-      <Logo img="../../logo100.png" type="small" />
->>>>>>> parent of 4c94207 (email setting)
       <Heading as="h1">sign up and trade</Heading>
       <SignupForm />
     </SignupLayout>

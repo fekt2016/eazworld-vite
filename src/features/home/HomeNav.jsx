@@ -1,6 +1,6 @@
-import { styled, css } from 'styled-components'
+import { css, styled } from 'styled-components'
 
-import Logo from '../../ui/Logo'
+// import Logo from '../../ui/Logo'
 import { NavLink } from 'react-router-dom'
 import { devicesMax, devicesMin } from '../../styles/breakpoint'
 import { HiOutlineBars3, HiOutlineXMark } from 'react-icons/hi2'
@@ -10,39 +10,33 @@ const sideNav = css`
   height: 50%;
   flex-direction: column;
   justify-content: space-evenly;
-  color: white;
+  color: var(--color-white-0);
 `
 
 const StyledNav = styled.nav`
-  padding: 1rem 5rem;
+  padding: 1rem;
   border-bottom: 1px solid var(--color-grey-100);
-
+  position: sticky;
+  top: 0;
   height: 7rem;
-<<<<<<< HEAD
-
-=======
-  z-index: 999;
+  /* z-index: 999; */
   background-color: var(--color-white-0);
->>>>>>> parent of 4c94207 (email setting)
   display: flex;
   justify-content: space-between;
   align-items: center;
 `
 
-const StyledLeftContainer = styled.div`
-  height: 100%;
-<<<<<<< HEAD
-=======
-  display: flex;
-  justify-content: center;
-  align-items: center;
->>>>>>> parent of 4c94207 (email setting)
-`
+// const StyledLeftContainer = styled.div`
+//   height: 100%;
+//   position: relative;
+//   background-color: red;
+// `
 const StyledRightContainer = styled.div`
   flex: 1;
 
   display: flex;
   justify-content: flex-end;
+  padding: 0 2rem;
 `
 const StyledSideNav = styled.div`
   height: 100vh;
@@ -145,6 +139,14 @@ const NavButton = styled.button`
   }
 `
 
+const Img = styled.img`
+  height: 12rem;
+  /* padding-top: 2rem; */
+  position: absolute;
+  top: -10px;
+  left: 20px;
+`
+
 function HomeNav() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -163,42 +165,21 @@ function HomeNav() {
               <NavLink to="/sell">sell</NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="/blog">blog</NavLink>
+              <NavLink to="home/blog">blog</NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="/contact">contact</NavLink>
+              <NavLink to="home/contact">contact</NavLink>
             </StyledLi>
           </StyledUl>
         </StyledSideNav>
       )}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 4c94207 (email setting)
-      <StyledLeftContainer>
-        <NavButton onClick={() => setIsOpen((open) => !open)}>
-          {isOpen ? <HiOutlineXMark /> : <HiOutlineBars3 />}
-        </NavButton>
-        <Logo img="/logo67.png" type="small" />
-      </StyledLeftContainer>
-<<<<<<< HEAD
-=======
 
       <NavButton onClick={() => setIsOpen((open) => !open)}>
         {isOpen ? <HiOutlineXMark /> : <HiOutlineBars3 />}
       </NavButton>
-      {/* <Logo img="../../../eaz1 50x50.png" sizes="small" type="nav" /> */}
-      <Img src="/eaz1.png" alt="logo" />
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 5f192ef (email setting)
-=======
->>>>>>> parent of 5f192ef (email setting)
-=======
->>>>>>> parent of 5f192ef (email setting)
-=======
->>>>>>> parent of 4c94207 (email setting)
+      <Img src="/4.png" alt="logo" />
+
       <StyledRightContainer>
         <StyledList>
           <StyledUl>

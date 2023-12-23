@@ -23,14 +23,8 @@
     "react-hot-toast": "^2.4.1",
     "react-icon": "^1.0.0",
     "react-icons": "^4.10.1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     "react-intersection-observer": "^9.5.3",
->>>>>>> parent of 4c94207 (email setting)
     "react-phone-number-input": "^3.3.7",
-=======
->>>>>>> parent of 005e1ed (avatar)
     "react-router-dom": "^6.14.2",
     "react-select": "^5.7.4",
     "styled-components": "^6.0.6",

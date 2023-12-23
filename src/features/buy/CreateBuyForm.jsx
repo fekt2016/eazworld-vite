@@ -9,26 +9,28 @@ import { DevTool } from '@hookform/devtools'
 import FormRow from '../../ui/FormRow'
 import { useNavigate } from 'react-router-dom'
 import { useCreateBuy } from '../buy/useCreateBuy'
-import { devicesMax } from '../../styles/breakpoint'
+import { devicesMax } from '../../styles/Breakpoint'
 import { useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { useUser } from '../authentication/useUser'
 import { randomOrderId } from '../../utils/helpers'
 
-const rate = import.meta.env.VITE_RATE
+const rate = import.meta.env.VITE_RATE_BUY
 
 const BuyContainer = styled.div`
   display: flex;
   padding: 1rem;
   gap: 10px;
+
+  @media ${devicesMax.md} {
+    flex-direction: column;
+  }
 `
 const Advert = styled.div`
   flex: 1;
 `
->>>>>>> parent of 49283c7 (final)
 
 const Select = styled.select`
-  flex-basis: 50rem;
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
   border: 1px solid
@@ -49,25 +51,18 @@ const StyledTerm = styled.div`
   width: 50%;
   text-align: center;
   padding: 1rem;
-  align-self: center;
-  box-shadow: var(--shadow-lg);
-
-  margin: 2rem;
-  @media ${devicesMax.sm} {
+  align-self: start;
+  box-shadow: var(--shadow-sm);
+  background-color: var(--color-primary-300);
+  border-radius: var(--border-radius-lg);
+  @media ${devicesMax.md} {
     width: 100%;
   }
 `
 
 function CreateBuyForm() {
-  const seq = (Math.floor(Math.random() * 10000) + 10000)
-    .toString()
-    .substring(1)
-
-  const orderId = `EW${seq}`
-
   const { createBuy, isCreating } = useCreateBuy()
   const { user } = useUser()
-  console.log(user.user_metadata.firstName)
 
   const navigate = useNavigate()
 
@@ -89,18 +84,19 @@ function CreateBuyForm() {
       {
         onSuccess: () => {
           reset()
-          navigate(`/buy-currentOrder/${orderId}`)
+          navigate(`/buy-currentOrder/${data.orderId}`)
         },
       },
     )
+
     emailjs
       .send(
         import.meta.env.VITE_YOUR_SERVICE_ID,
-        import.meta.env.VITE_YOUR_TEMPLATE_ID,
+        import.meta.env.VITE_YOUR_BUY_TEMPLATE_ID,
         {
           from_name: user.user_metadata.firstName,
-          recipient: user.email,
-          orderId,
+          recipient: user?.email,
+          orderId: data.orderId,
           currency: data.currency,
           amountGh: data.amountGh,
           amountUSD: data.amountUSD,
@@ -121,25 +117,31 @@ function CreateBuyForm() {
   }
 
   return (
-    <>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormRow label="Select Currency">
-          <Select {...register('currency')}>
-            <option value={''}>Select currency</option>
+    <BuyContainer>
+      <Form type="buy" onSubmit={handleSubmit(onSubmit)}>
+        <FormRow label="Select Currency" error={errors?.currency?.message}>
+          <Select
+            {...register('currency', {
+              required: 'select currency',
+            })}
+          >
+            <option value="" disabled selected>
+              Select Currency
+            </option>
             <option>Bitcoin</option>
-            <option>Tether</option>
           </Select>
         </FormRow>
         <FormRow error={errors?.amountUSD?.message} label="AmountUSD">
           <Input
             autoFocus
             type="number"
+            step="any"
             id="amountUSD"
             {...register('amountUSD', {
               required: 'Dollar amount is required',
               valueAsNumber: true,
               onChange: (evt) => {
-                const rate = 12
+                // const rate = import.meta.env.VITE_RATE
                 const miner = getValues('miner') * rate
                 const cedis = evt.target.value * rate
                 const total = cedis + miner
@@ -156,11 +158,12 @@ function CreateBuyForm() {
           <Input
             type="number"
             id="amountGh"
+            step="any"
             {...register('amountGh', {
               required: 'Cedis amount is required',
               valueAsNumber: true,
               onChange: (evt) => {
-                const rate = 12
+                // const rate = import.meta.env.VITE_RATE
                 const dollar = evt.target.value / rate
                 if (!isNaN(dollar)) {
                   setValue('amountUSD', dollar)
@@ -169,11 +172,12 @@ function CreateBuyForm() {
             })}
           />
         </FormRow>
-        <FormRow label="Miner">
+        <FormRow label="Miner" error={errors?.miner?.message}>
           <Select
             {...register('miner', {
+              required: 'select miners fee',
               onChange: (evt) => {
-                const rate = 12
+                // const rate = import.meta.env.VITE_RATE
                 const miner = evt.target.value * rate
                 const cedis = getValues('amountGh')
                 const total = miner + cedis
@@ -184,45 +188,46 @@ function CreateBuyForm() {
               },
             })}
           >
-<<<<<<< HEAD
-            <option value={0.5}>Select Miners fee</option>
-=======
             <option value="" disabled selected>
               Select Miners fee
             </option>
->>>>>>> parent of 9df51db (email setting)
-            <option>0.5</option>
-            <option>1.0</option>
+            <option>15</option>
+            <option>25</option>
           </Select>
         </FormRow>
         <FormRow label="TotalTopay">
           <Input
             type="number"
+            step="any"
             id="totalToPay"
             {...register('totalToPay', {
               required: 'total is required',
             })}
           />
         </FormRow>
-        <FormRow label="Payment method">
-          <Select {...register('payment')}>
-            <option disabled selected>
+        <FormRow label="Payment method" error={errors?.payment?.message}>
+          <Select
+            {...register('payment', {
+              required: 'select payment method',
+            })}
+          >
+            <option value="" disabled selected>
               Select Payment Method
             </option>
-            <option value="Mtn Mono">
-              MTN Momo <span>momo</span>
-              <img src="../../../mtn.png" alt="mtn" />
-            </option>
-            <option value="Voda cash">Voda cash</option>
-            <option value="At Money">At Money</option>
+            <option value="Mtn Momo">MTN Momo</option>
           </Select>
         </FormRow>
         <FormRow label="Wallet address" error={errors?.wallet?.message}>
           <Input
+            error={errors?.wallet?.message}
             type="text"
             id="wallet"
             {...register('wallet', {
               required: 'Wallet address required',
+              pattern: {
+                value: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/s,
+                message: 'check your wallet address',
+              },
             })}
           />
         </FormRow>
@@ -231,7 +236,7 @@ function CreateBuyForm() {
             type="hidden"
             id="status"
             {...register('status')}
-            defaultValue={'waiting payment'}
+            defaultValue={'add payment'}
           />
         </FormRow>
         <FormRow>
@@ -239,7 +244,15 @@ function CreateBuyForm() {
             type="hidden"
             id="orderId"
             {...register('orderId')}
-            defaultValue={`${orderId}`}
+            defaultValue={randomOrderId()}
+          />
+        </FormRow>
+        <FormRow>
+          <Input
+            type="hidden"
+            id="email"
+            {...register('email')}
+            defaultValue={user?.email}
           />
         </FormRow>
         <StyledTerm>
@@ -254,9 +267,10 @@ function CreateBuyForm() {
           </div>
         </FormRow>
       </Form>
+      <Advert>advert</Advert>
 
       <DevTool control={control} />
-    </>
+    </BuyContainer>
   )
 }
 

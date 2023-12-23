@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { devicesMax } from '../styles/breakpoint'
+import { devicesMax } from '../styles/Breakpoint'
 import { useParams } from 'react-router-dom'
 import Button from '../ui/Button'
 import { useQuery } from '@tanstack/react-query'
@@ -7,8 +7,7 @@ import { getCurrentSell } from '../services/apiSell'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import toast from 'react-hot-toast'
 
-import Spinner from '../ui/Spinner'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const StyledOrder = styled.div`
   background-color: var(--color-black-200);
@@ -93,63 +92,73 @@ const StyledP = styled.span`
 `
 
 function SellCurrentOrder() {
-  // const [value, setValue] = useState('')
   const [copied, setCopied] = useState(false)
-
   const { orderId: order_id } = useParams()
+  const [value, setValue] = useState('')
+  const [currentData, setCurrentData] = useState([])
+  const [btcValue, setBtcValue] = useState()
 
-  const { isLoading, data: sell } = useQuery({
+  const { data: sell } = useQuery({
     queryKey: ['sell'],
     queryFn: () => getCurrentSell(order_id),
   })
 
-  if (isLoading) return <Spinner />
-<<<<<<< HEAD
-  const { data: currentData } = sell
-  console.log(currentData)
-=======
+  useEffect(() => {
+    if (sell) {
+      const { data: currentData1 } = sell
+      setCurrentData(currentData1)
 
-  const { data: currentData } = sell
-  console.log(currentData)
+      const value = currentData1[0]
 
->>>>>>> parent of 4c94207 (email setting)
+      setValue(value.amountUSD)
+    }
+    async function btcRate() {
+      let rate = await fetch(
+        `https://blockchain.info/tobtc?currency=USD&value=${value}`,
+      )
+      let data = await rate.json()
+      setBtcValue(data)
+    }
+    btcRate()
+  }, [sell, value])
+
   return (
     <>
       <StyledOrder>
         <HeadingBox>
           <H4>Selling preview</H4>
         </HeadingBox>
-        {currentData.map((sell) => (
-          <DetailBox key={sell.orderId}>
+        {currentData?.map((sell) => (
+          <DetailBox key={sell?.orderId}>
             <TextBox>
               <h5>Thank you for your order!</h5>
               <p>The order confirmation has been sent to your email address.</p>
             </TextBox>
             <TextBox>
               <p>
-                You are selling <StyledP>{sell.amountUSD}USD</StyledP>
-                And will receive <StyledP>{sell.amountGh}GHS</StyledP> At{' '}
+                You are selling <StyledP>{sell?.amountUSD}USD</StyledP>
+                And will receive <StyledP>{sell?.amountGh}GHS</StyledP> At
                 <StyledP>12GHS</StyledP> per <StyledP>1 USD</StyledP>
               </p>
             </TextBox>
             <StyledDetail>
               <StyledSpan>Order Number: </StyledSpan>
-              {sell.orderId}
+              {sell?.orderId}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>SEND Amount</StyledSpan>
-              <span style={{ margin: '1rem' }}>0.00109853 BTC</span>
-              <CopyToClipboard onCopy={() => setCopied(true)} text={0.00109853}>
+              <span style={{ margin: '1rem' }}>{btcValue} BTC</span>
+              <CopyToClipboard onCopy={() => setCopied(true)} text={btcValue}>
                 <Button>Copy Code</Button>
               </CopyToClipboard>
               {copied ? toast.success('copied') : ''}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>to wallet address</StyledSpan>
-              <span style={{ margin: '1rem' }}>{sell.wallet}</span>
+              <span style={{ margin: '1rem' }}>{sell?.wallet}</span>
               <CopyToClipboard
                 onCopy={() => setCopied(true)}
-                text={sell.wallet}
+                text={sell?.wallet}
               >
                 <Button>Copy Address</Button>
               </CopyToClipboard>
@@ -157,15 +166,15 @@ function SellCurrentOrder() {
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>Account Type: </StyledSpan>
-              {sell.paymentType}
+              {sell?.paymentType}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>Phone Number: </StyledSpan>
-              {sell.mobile}
+              {sell?.mobile}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>Name: </StyledSpan>
-              {sell.name}
+              {sell?.name}
             </StyledDetail>
             <StyledDetail>
               <div>

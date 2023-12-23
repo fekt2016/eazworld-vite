@@ -1,0 +1,108 @@
+/* eslint react/prop-types: 0 */
+import styled from 'styled-components'
+import { formatDate } from '../../utils/helpers'
+
+import Table from '../../ui/Table'
+import { devicesMax } from '../../styles/breakpoint'
+import { Link } from 'react-router-dom'
+import { updateSell } from '../../services/apiSell'
+
+const Status = styled.button`
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-family: 'Sono';
+  color: white;
+  border: none;
+  background-color: ${(props) =>
+    props.status === 'processing' ? '#000' : '#ffc337'};
+  @media ${devicesMax.md} {
+    font-size: 1.2rem;
+  }
+`
+
+const Sell = styled.div`
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--color-grey-600);
+  font-family: 'Sono';
+  text-transform: capitalize;
+
+  @media ${devicesMax.md} {
+    font-size: 1.2rem;
+  }
+`
+
+const Price = styled.div`
+  font-family: 'Sono';
+  font-weight: 600;
+
+  @media ${devicesMax.md} {
+    display: none;
+  }
+`
+
+const Date = styled.div``
+const SellId = styled.div``
+
+function SellRow({ sell }) {
+  const {
+    id,
+    created_at: date,
+    orderId: buyId,
+    currency,
+    amountUSD,
+    payment,
+    status,
+  } = sell
+
+  function statusHandler() {
+    // console.log(userId)
+    // async function orderUser() {
+    //   const { data: users } = await supabase.from('users').select('*')
+    //   console.log(users)
+    // }
+    // orderUser()
+    updateSell(id)
+    // emailjs
+    //   .send(
+    //     import.meta.env.VITE_YOUR_SERVICE_ID,
+    //     import.meta.env.VITE_YOUR_BUY_TEMPLATE_ID,
+    //     {
+    //       // from_name: user.user_metadata.firstName,
+    //       // recipient: user?.email,
+    //       // orderId,
+    //       // currency: data.currency,
+    //       // amountGh: data.amountGh,
+    //       // amountUSD: data.amountUSD,
+    //       // Payment: data.payment,
+    //       // TotaltoPay: data.totalToPay,
+    //       // wallet: data.wallet,
+    //       // miner: data.miner,
+    //     },
+    //   )
+    //   .then(
+    //     (result) => {
+    //       console.log(result)
+    //     },
+    //     (error) => {
+    //       console.log(error.text)
+    //     },
+    //   )
+  }
+  return (
+    <>
+      <Table.Row columns="repeat(6, 1fr)">
+        <Date>{formatDate(date)}</Date>
+        <SellId>{buyId}</SellId>
+        <Sell>{currency}</Sell>
+        <Price>{amountUSD}</Price>
+        <Price>{payment}</Price>
+        <Status onClick={statusHandler}>
+          <Link>{status}</Link>
+        </Status>
+      </Table.Row>
+    </>
+  )
+}
+
+export default SellRow

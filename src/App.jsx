@@ -18,44 +18,15 @@ import ProtectedRoute from './ui/ProtectedRoute'
 import RecoverPassword from './pages/RecoverPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import BuyCurrentOrder from './pages/BuyCurrentOrder'
-import Admin from './pages/Admin'
 import SellCurrentOrder from './pages/SellCurrentOrder'
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import ManageOrder from './features/admin/ManageOrder'
-import Customers from './features/admin/Customers'
-import RateUpdate from './features/admin/RateUpdate'
-=======
-=======
->>>>>>> parent of 49283c7 (final)
-import ManageOrderbuy from './features/admin/ManageOrderBuy'
-import ManageOrderSell from './features/admin/ManageOrderSell'
-=======
-import ManageOrder from './features/admin/ManageOrder'
->>>>>>> parent of 4c94207 (email setting)
-import Customers from './features/admin/Customers'
-import RateUpdate from './features/admin/RateUpdate'
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import ManageOrderbuy from './features/admin/ManageOrderBuy'
 import ManageOrderSell from './features/admin/ManageOrderSell'
 import Customers from './features/admin/Customers'
-import RateUpdate from './features/admin/RateUpdate'
->>>>>>> parent of 49283c7 (final)
+import RateUpdate from './features/admin/rate/RateUpdate'
 import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import Nav from './features/home/Nav'
->>>>>>> parent of 49283c7 (final)
-=======
->>>>>>> parent of 5f192ef (email setting)
-=======
->>>>>>> parent of 5f192ef (email setting)
-=======
->>>>>>> parent of 005e1ed (avatar)
+import Admin from './pages/Admin'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -72,19 +43,13 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-<<<<<<< HEAD
-          <Route index element={<Navigate replace to="home" />} />
-          <Route path="home" element={<Home />} />
-=======
           <Route index element={<Navigate replace to="/home" />} />
-          <Route path="/home" element={<Home />} />
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 5f192ef (email setting)
-=======
->>>>>>> parent of 5f192ef (email setting)
-=======
->>>>>>> parent of 5f192ef (email setting)
+          <Route element={<Nav />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="blog" element={<Blog />} />
+          </Route>
+
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="recover-password" element={<RecoverPassword />} />
@@ -111,34 +76,12 @@ function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="history" element={<History />} />
             <Route path="prepaid" element={<Prepaid />} />
-<<<<<<< HEAD
-<<<<<<< HEAD
             <Route path="admin" element={<Admin />}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              <Route path="manage-order" element={<ManageOrder />} />
-=======
-=======
->>>>>>> parent of 49283c7 (final)
-=======
-            <Route path="admin" element={<Admin />}>
->>>>>>> parent of 49283c7 (final)
               <Route path="buy-manage" element={<ManageOrderbuy />} />
               <Route path="sell-manage" element={<ManageOrderSell />} />
->>>>>>> parent of 49283c7 (final)
-=======
-              <Route path="manage-order" element={<ManageOrder />} />
->>>>>>> parent of 4c94207 (email setting)
               <Route path="customers" element={<Customers />} />
               <Route path="rate-update" element={<RateUpdate />} />
             </Route>
-<<<<<<< HEAD
-=======
-            <Route path="admin" element={<Admin />} />
->>>>>>> parent of 005e1ed (avatar)
-=======
->>>>>>> parent of 49283c7 (final)
           </Route>
         </Routes>
       </BrowserRouter>

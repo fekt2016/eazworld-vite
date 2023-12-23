@@ -1,24 +1,29 @@
-// import styled from 'styled-components'
 import Table from '../../ui/Table'
 import { useAllBuy } from '../buy/useAllBuy'
 import Spinner from '../../ui/Spinner'
-<<<<<<< HEAD
-import AdminBuyRow from './adminBuyRow'
-=======
->>>>>>> parent of 49283c7 (final)
-=======
 import AdminBuyRow from './AdminBuyRow'
->>>>>>> parent of 49283c7 (final)
+import Stat from '../../ui/Stat'
+import { HiArrowUpOnSquareStack } from 'react-icons/hi2'
 
 function ManageOrderBuy() {
   const { data, isLoading, error } = useAllBuy()
 
   if (isLoading) return <Spinner />
   if (error) return 'An error has occured: ' + error.message
-  const { buy } = data
+
+  const { buy, count } = data
 
   return (
     <>
+      <div>
+        <Stat
+          // svgcolor="var(--color-yellow-700)"
+          title="Buy orders"
+          color="var(--color-yellow-100)"
+          icon={<HiArrowUpOnSquareStack />}
+          value={count}
+        />
+      </div>
       <div>
         <Table type="table" columns="repeat(9, 1fr)">
           <Table.Header role="row">
@@ -29,8 +34,8 @@ function ManageOrderBuy() {
             <div>amountGh</div>
             <div>total am.</div>
             <div>payment</div>
-            <div>status</div>
             <div>email</div>
+            <div>status</div>
           </Table.Header>
 
           <Table.Body

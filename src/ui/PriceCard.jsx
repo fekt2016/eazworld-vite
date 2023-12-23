@@ -2,8 +2,8 @@ import { styled } from 'styled-components'
 import Card from '../features/dashboard/Card'
 import Spinner from '../ui/Spinner'
 
-import { devicesMax } from '../styles/breakpoint'
 import { useRate } from '../features/rate/useRate'
+import { devicesMax } from '../styles/Breakpoint'
 const StyledUl = styled.ul`
   padding: 1rem;
   display: grid;

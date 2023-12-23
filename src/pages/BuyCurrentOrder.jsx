@@ -1,7 +1,7 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from '../ui/Modal'
 import Button from '../ui/Button'
 import Form from '../ui/Form'
@@ -9,12 +9,14 @@ import Input from '../ui/Input'
 import FormRow from '../ui/FormRow'
 import { useCreatePayment } from '../features/CurrentOrder/useCreatePayment'
 import SpinnerMini from '../ui/SpinnerMini'
-import { devicesMax } from '../styles/breakpoint'
+import { devicesMax } from '../styles/Breakpoint'
 import Select from '../ui/Select'
 import { useQuery } from '@tanstack/react-query'
 import Spinner from '../ui/Spinner'
+import emailjs from '@emailjs/browser'
 
 import { getCurrentBuy } from '../services/apibuy'
+import { useUser } from '../features/authentication/useUser'
 
 const StyledOrder = styled.div`
   background-color: var(--color-black-200);
@@ -91,7 +93,7 @@ const StyledBtn = styled.div`
   padding: 2rem;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 `
 const ToPay = styled.span`
@@ -126,6 +128,10 @@ const Error = styled.p`
   color: var(--color-red-700);
   text-align: center;
 `
+const H5 = styled.h5`
+  text-align: center;
+  text-transform: capitalize;
+`
 function BuyCurrentOrder() {
   const [phoneNum, setPhoneNum] = useState('')
   const [amount, setAmount] = useState('')
@@ -133,6 +139,9 @@ function BuyCurrentOrder() {
   const [account, setAccount] = useState('')
   const [name, setName] = useState('')
   const [error, setError] = useState()
+  const [orderId, setOrderId] = useState('')
+
+  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
   const { orderId: order_id } = useParams()
 
@@ -140,32 +149,25 @@ function BuyCurrentOrder() {
     queryKey: ['buy'],
     queryFn: () => getCurrentBuy(order_id),
   })
-
   const { createPayment, isCreating } = useCreatePayment()
+  const { user } = useUser()
+
+  if (isLoading) return <Spinner />
+  const { data: currentData } = buy
 
   function handleSubmit(e) {
     e.preventDefault()
-    if (!phoneNum || !amount || !transaction || !account || !name) {
+    if (!phoneNum || !amount || !transaction || !account || !name || !orderId) {
       setError({
         title: 'Invalid input',
         message: 'Please enter the credentials',
       })
       return
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     const pay = currentData[0]
-    console.log(pay)
-<<<<<<< HEAD
->>>>>>> parent of 85fe006 (work start)
-=======
->>>>>>> parent of 85fe006 (work start)
-=======
->>>>>>> parent of 4c94207 (email setting)
 
     createPayment(
-      { phoneNum, amount, transaction, account, name },
+      { phoneNum, amount, transaction, account, name, orderId },
 
       {
         onSettled: () => {
@@ -174,22 +176,41 @@ function BuyCurrentOrder() {
           setTransaction('')
           setAccount('')
           setName('')
+          setOrderId('')
         },
       },
     )
+    emailjs
+      .send(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_PAY_TEMPLATE_ID,
+        {
+          from_name: user.user_metadata.firstName,
+          recipient: user.email,
+          orderId: order_id,
+          currency: pay.currency,
+          amountGh: pay.amountGh,
+          amountUSD: pay.amountUSD,
+          Payment: pay.payment,
+          wallet: pay.wallet,
+          total: pay.totalToPay,
+          phoneNum,
+          amount,
+          transaction,
+          account,
+          name,
+        },
+      )
+      .then(
+        (result) => {
+          console.log(result)
+        },
+        (error) => {
+          console.log(error.text)
+        },
+      )
   }
 
-  if (isLoading) return <Spinner />
-  const { data: currentData } = buy
-<<<<<<< HEAD
-<<<<<<< HEAD
-  console.log(currentData)
-=======
-
->>>>>>> parent of 4c94207 (email setting)
-=======
-
->>>>>>> parent of 005e1ed (avatar)
   return (
     <>
       <StyledOrder>
@@ -197,49 +218,44 @@ function BuyCurrentOrder() {
           <H4>Buying preview</H4>
         </HeadingBox>
         {currentData?.map((item) => (
-          <DetailBox key={item.orderId}>
+          <DetailBox key={item?.orderId}>
             <TextBox>
               <h5>Thank you for your order!</h5>
               <p>The order confirmation has been sent to your email address.</p>
             </TextBox>
             <StyledDetail>
               <StyledSpan>Order Number: </StyledSpan>
-              {item.orderId}
+              {item?.orderId}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>Currency: </StyledSpan>
-              {item.currency}
+              {item?.currency}
             </StyledDetail>
             <StyledDetail>
-              <StyledSpan>Amount USD: </StyledSpan>${item.amountUSD}
+              <StyledSpan>Amount USD: </StyledSpan>${item?.amountUSD}
             </StyledDetail>
             <StyledDetail>
-              <StyledSpan>Amount Gh: </StyledSpan>&#8373;{item.amountGh}
+              <StyledSpan>Amount Gh: </StyledSpan>&#8373;{item?.amountGh}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>Sending fee: </StyledSpan>&#8373;
-<<<<<<< HEAD
-              {item.miner * 12}
-=======
-              {item?.miner * 12}
->>>>>>> parent of 4c94207 (email setting)
+              {item?.miner * 12.5}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>payment Type: </StyledSpan>
-              {item.payment}
+              {item?.payment}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>Wallet </StyledSpan>
-              {item.wallet}
+              {item?.wallet}
             </StyledDetail>
             <StyledPay>
-              Send payment to the Number:{' '}
+              Send payment to the Number:
               <SpanNum>0542011274 easyworldpc(Merchant)</SpanNum>
-              {'  '}
-              Total To pay: <ToPay>&#8373;{item.totalToPay}</ToPay>
+              Total To pay: <ToPay>&#8373;{item?.totalToPay}</ToPay>
             </StyledPay>
             <P>
-              Make your order Number {item.orderId} the reference when you are
+              Make your order Number {item?.orderId} the reference when you are
               sending the momo payment.
             </P>
             <P>For any other assistance contact 0244388190</P>
@@ -247,12 +263,17 @@ function BuyCurrentOrder() {
         ))}
 
         <StyledBtn>
+          <Link to="/history">
+            <Button>Order history</Button>
+          </Link>
+
           <Modal>
             <Modal.Open opens="pay">
               <Button>Add Payment</Button>
             </Modal.Open>
             <Modal.Window name="pay">
               <div>
+                <H5>payment for order Id: {order_id}</H5>
                 {error && <Error>{error.message}</Error>}
                 <Form onSubmit={handleSubmit}>
                   <FormRow label="Momo Number">
@@ -276,6 +297,7 @@ function BuyCurrentOrder() {
                   <FormRow label="Amount sent">
                     <Input
                       type="number"
+                      step="any"
                       onChange={(e) => setAmount(e.target.value)}
                     />
                   </FormRow>
@@ -284,6 +306,12 @@ function BuyCurrentOrder() {
                       type="number"
                       onChange={(e) => setTransaction(e.target.value)}
                       maxLength="11"
+                    />
+                  </FormRow>
+                  <FormRow label="Order Id">
+                    <Input
+                      type="text"
+                      onChange={(e) => setOrderId(e.target.value)}
                     />
                   </FormRow>
 

@@ -48,26 +48,26 @@ const StyledLeft = styled.div`
     css`
       background-color: var(--color-usdt-500);
     `}
-    ${(props) =>
-      props.type === 'doge' &&
-      css`
-        background-color: var(--color-doge-500);
-      `}
-      ${(props) =>
-        props.type === 'ethereum' &&
-        css`
-          background-color: var(--color-ethereum-500);
-        `}
-        ${(props) =>
-          props.type === 'litecoin' &&
-          css`
-            background-color: var(--color-litecoin-500);
-          `}
-          ${(props) =>
-            props.type === 'bitcsh' &&
-            css`
-              background-color: var(--color-bitcsh-500);
-            `}
+  ${(props) =>
+    props.type === 'doge' &&
+    css`
+      background-color: var(--color-doge-500);
+    `}
+  ${(props) =>
+    props.type === 'ethereum' &&
+    css`
+      background-color: var(--color-ethereum-500);
+    `}
+  ${(props) =>
+    props.type === 'litecoin' &&
+    css`
+      background-color: var(--color-litecoin-500);
+    `}
+  ${(props) =>
+    props.type === 'bitcsh' &&
+    css`
+      background-color: var(--color-bitcsh-500);
+    `}
 `
 const StyledRight = styled.div`
   flex: 1;
@@ -85,7 +85,7 @@ const StyledRate = styled.div`
   font-size: 1.3rem;
 `
 const StyledStock = styled.span`
-  padding: 2px;
+  padding: 5px;
   text-transform: capitalize;
   height: 2.5rem;
 
@@ -99,7 +99,7 @@ const StyledStock = styled.span`
       background-color: var(--color-bitcoin-500);
     `}
   ${(props) =>
-    props.type === 'outstock' &&
+    props.type === 'out stock' &&
     css`
       background-color: var(--color-red-500);
     `}
@@ -125,31 +125,7 @@ function Card({ name, image, color, sell, buy, stock }) {
           </StyledRate>
           <StyledRate>
             <span>SELLING: </span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <span>&#8373;{sell}.00</span>
-=======
             <span>&#8373;{sell}</span>
->>>>>>> parent of 49283c7 (final)
-=======
-            <span>&#8373;{sell}</span>
->>>>>>> parent of 49283c7 (final)
-=======
-            <span>&#8373;{sell}.00</span>
->>>>>>> parent of 5f192ef (email setting)
-=======
-            <span>&#8373;{sell}.00</span>
->>>>>>> parent of 5f192ef (email setting)
-=======
-            <span>&#8373;{sell}</span>
->>>>>>> parent of 4c94207 (email setting)
-=======
-            <span>&#8373;{sell}</span>
->>>>>>> parent of 49283c7 (final)
             <Button size="small" variation="sell">
               <Link to="/sell">SELL</Link>
             </Button>

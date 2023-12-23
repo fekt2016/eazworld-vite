@@ -2,20 +2,9 @@ import { styled } from 'styled-components'
 import Card from '../features/dashboard/Card'
 
 import { devicesMax } from '../styles/breakpoint'
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import { useRate } from '../features/rate/useRate'
->>>>>>> parent of 49283c7 (final)
-=======
-import { useRate } from '../features/rate/useRate'
->>>>>>> parent of 49283c7 (final)
-=======
->>>>>>> parent of 5f192ef (email setting)
-=======
->>>>>>> parent of 5f192ef (email setting)
+
+// import { useRate } from '../features/rate/useRate'
+
 const StyledUl = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);

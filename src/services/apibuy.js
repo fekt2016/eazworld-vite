@@ -1,26 +1,33 @@
-import supabase from "./supabase";
+import supabase from './supabase';
+import { PAGE_SIZE } from '../utils/constants';
 
 export async function getBuy() {
-	const { data: buy, error } = await supabase.from("buy").select("*");
+	const {
+		data: buy,
+		count,
+		error,
+	} = await supabase
+		.from('buy')
+		.select('*', { count: 'exact' })
+		.order('created_at', { ascending: false });
 
 	if (error) {
-		throw new Error("currency could not be loaded");
+		throw new Error('currency could not be loaded');
 	}
 
-	return { buy, error };
+	return { buy, count };
 }
 
 export async function createBuy(newBuy) {
-	const { data, error } = await supabase.from("buy").insert([newBuy]);
-
+	const { data, error } = await supabase.from('buy').insert([newBuy]);
 	if (error) {
-		throw new Error("currency could not be loaded");
+		throw new Error('currency could not be loaded');
 	}
 
 	return data;
 }
 
-export async function getCurrentUserBuy() {
+export async function getCurrentUserBuy({ page }) {
 	const {
 		data: { user },
 		error2,
@@ -28,38 +35,48 @@ export async function getCurrentUserBuy() {
 
 	if (error2) throw new Error(error.message);
 
-	const { data, error } = await supabase
-		.from("buy")
-		.select("*")
-<<<<<<< HEAD
-=======
-		.order("created_at", { ascending: false })
->>>>>>> parent of 4c94207 (email setting)
-		.eq("user_id", user.id);
+	let query = supabase
+		.from('buy')
+		.select('*', {
+			count: 'exact',
+		})
+		.order('created_at', { ascending: false })
+		.eq('user_id', user.id);
 
-	if (error) throw new Error("currency could not be loaded");
+	if (page) {
+		const from = (page - 1) * PAGE_SIZE;
+		const to = from + PAGE_SIZE - 1;
 
-	return data;
+		query = query.range(from, to);
+	}
+	const { data, error, count } = await query;
+
+	if (error) throw new Error('currency could not be loaded');
+
+	return { data, count };
 }
 
 export async function getCurrentBuy(id) {
 	const { data, error } = await supabase
-		.from("buy")
-		.select("*")
-		.eq("orderId", id);
+		.from('buy')
+		.select('*')
+		.eq('orderId', id);
 
-	if (error) throw new Error("there was an error");
+	if (error) throw new Error('there was an error');
 
 	return { data, error };
 }
 
-export async function updateBuy() {
+export async function updateBuy(id) {
 	const { data, error } = await supabase
-		.from("buy")
-		.update({ status: "payment" })
-		.eq("amountGh", 90);
+		.from('buy')
+		.update({ status: 'order completed' })
+		.eq('id', id)
+		.select();
 
-	if (error) throw new Error("buy could not be loaded");
-
+	if (error) throw new Error('buy could not be updated');
+	if (data) {
+		console.log(data);
+	}
 	return { data, error };
 }

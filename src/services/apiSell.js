@@ -1,61 +1,39 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import { PAGE_SIZE } from "../utils/constants";
->>>>>>> parent of 49283c7 (final)
-=======
-import { PAGE_SIZE } from "../utils/constants";
->>>>>>> parent of 49283c7 (final)
-=======
->>>>>>> parent of 4c94207 (email setting)
-=======
-import { PAGE_SIZE } from "../utils/constants";
->>>>>>> parent of 49283c7 (final)
-import supabase from "./supabase";
+import { PAGE_SIZE } from '../utils/constants';
+import supabase from './supabase';
 
 export async function getSell() {
-	const { data, error } = await supabase.from("sell").select("*");
+	const { data, error, count } = await supabase
+		.from('sell')
+		.select('*', { count: 'exact' });
 
 	if (error) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-		console.error(error);
-=======
->>>>>>> parent of 49283c7 (final)
-=======
->>>>>>> parent of 49283c7 (final)
-=======
->>>>>>> parent of 49283c7 (final)
-		throw new Error("currency could not be loaded");
+		throw new Error('currency could not be loaded');
 	}
-	return data;
+	return { data, count };
 }
 
 export async function createSell(newSell) {
-	const { data, error } = await supabase.from("sell").insert([newSell]);
+	const { data, error } = await supabase.from('sell').insert([newSell]);
 
 	if (error) {
 		console.error(error);
-		throw new Error("currency could not be loaded");
+		throw new Error('currency could not be loaded');
 	}
 
 	return data;
 }
 export async function getCurrentSell(id) {
 	const { data, error } = await supabase
-		.from("sell")
-		.select("*")
-		.eq("orderId", id);
+		.from('sell')
+		.select('*')
+		.eq('orderId', id);
 
-	if (error) throw new Error("there was an error");
+	if (error) throw new Error('there was an error');
 
 	return { data, error };
 }
 
-export async function getCurrentUserSell() {
+export async function getCurrentUserSell({ page }) {
 	const {
 		data: { user },
 		error2,
@@ -63,50 +41,33 @@ export async function getCurrentUserSell() {
 
 	if (error2) throw new Error(error.message);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const { data, error } = await supabase
-		.from("sell")
-		.select("*")
-=======
 	let query = supabase
-		.from("sell")
-		.select("*", { count: "exact" })
-		.order("created_at", { ascending: false })
->>>>>>> parent of 49283c7 (final)
-		.eq("user_id", user.id);
+		.from('sell')
+		.select('*', { count: 'exact' })
+		.order('created_at', { ascending: false })
+		.eq('user_id', user.id);
 
-	if (error) throw new Error("currency could not be loaded");
+	if (page) {
+		const from = (page - 1) * PAGE_SIZE;
+		const to = from + PAGE_SIZE - 1;
 
-	return data;
+		query = query.range(from, to);
+	}
 
-	let query = supabase
+	const { data, error, count } = await query;
 
-	const { data, error } = await supabase
->>>>>>> parent of 4c94207 (email setting)
-		.from("sell")
-		.select("*")
-		.order("created_at", { ascending: false })
-		.eq("user_id", user.id);
+	if (error) throw new Error('currency could not be loaded');
 
-	if (error) throw new Error("currency could not be loaded");
-
-<<<<<<< HEAD
 	return { data, count };
 }
 
 export async function updateSell(id) {
 	const { data, error } = await supabase
-		.from("sell")
-		.update({ status: "order completed" })
-		.eq("id", id)
+		.from('sell')
+		.update({ status: 'order completed' })
+		.eq('id', id)
 		.select();
 
-	if (error) throw new Error("sell could not be updated");
+	if (error) throw new Error('sell could not be updated');
 	return { data, error };
->>>>>>> parent of 49283c7 (final)
-=======
-	return data;
->>>>>>> parent of 4c94207 (email setting)
 }

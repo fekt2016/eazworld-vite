@@ -1,5 +1,5 @@
 import { styled } from 'styled-components'
-import { devicesMax } from '../../styles/breakpoint'
+import { devicesMax } from '../../styles/Breakpoint'
 
 import { BsWhatsapp, BsTwitter, BsInstagram, BsFacebook } from 'react-icons/bs'
 
@@ -59,23 +59,7 @@ function Footer() {
   return (
     <StyledFooter>
       <AsideLogo>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <Imag src="/logo.png" alt="footer-log" />
-=======
-        <Imag src="/eaz2.png" alt="footer-log" />
->>>>>>> parent of 5f192ef (email setting)
-=======
-        <Imag src="/eaz2.png" alt="footer-log" />
->>>>>>> parent of 5f192ef (email setting)
-=======
-        <Imag src="/eaz2.png" alt="footer-log" />
->>>>>>> parent of 5f192ef (email setting)
-=======
-        <Imag src="/logo.png" alt="footer-log" />
->>>>>>> parent of 4c94207 (email setting)
+        <Imag src="/2I.png" alt="footer-log" />
         <Media>
           <BsWhatsapp />
           <BsTwitter />

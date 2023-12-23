@@ -25,15 +25,23 @@
 // };
 
 export const formatCurrency = (value) =>
-	new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
+	new Intl.NumberFormat('en', { style: 'currency', currency: 'USD' }).format(
 		value
 	);
 
 export function formatDate(dateStr) {
-	return new Intl.DateTimeFormat("en", {
-		day: "numeric",
-		month: "short",
+	return new Intl.DateTimeFormat('en', {
+		day: 'numeric',
+		month: 'short',
 		// hour: "2-digit",
 		// minute: "2-digit",
 	}).format(new Date(dateStr));
 }
+
+export const randomOrderId = () => {
+	const seq = (Math.floor(Math.random() * 100000) + 100000)
+		.toString()
+		.substring(1);
+	const orderId = `EW${seq}`;
+	return orderId;
+};
