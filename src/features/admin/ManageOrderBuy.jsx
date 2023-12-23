@@ -2,12 +2,7 @@
 import Table from '../../ui/Table'
 import { useAllBuy } from '../buy/useAllBuy'
 import Spinner from '../../ui/Spinner'
-<<<<<<< HEAD
 import AdminBuyRow from './adminBuyRow'
-=======
-import AdminBuyRow from './AdminBuyRow'
-<<<<<<< HEAD
->>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
 
