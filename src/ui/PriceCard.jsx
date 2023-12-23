@@ -5,12 +5,15 @@ import { devicesMax } from '../styles/breakpoint'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { useRate } from '../features/rate/useRate'
 >>>>>>> parent of 49283c7 (final)
 =======
 import { useRate } from '../features/rate/useRate'
 >>>>>>> parent of 49283c7 (final)
+=======
+>>>>>>> parent of 5f192ef (email setting)
 =======
 >>>>>>> parent of 5f192ef (email setting)
 const StyledUl = styled.ul`

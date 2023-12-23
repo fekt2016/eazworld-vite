@@ -176,6 +176,9 @@ function HomeNav() {
       <Img src="/eaz1.png" alt="logo" />
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 5f192ef (email setting)
+=======
 >>>>>>> parent of 5f192ef (email setting)
 =======
 >>>>>>> parent of 5f192ef (email setting)

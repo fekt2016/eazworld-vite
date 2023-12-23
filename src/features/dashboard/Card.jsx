@@ -128,6 +128,7 @@ function Card({ name, image, color, sell, buy, stock }) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             <span>&#8373;{sell}.00</span>
 =======
             <span>&#8373;{sell}</span>
@@ -135,6 +136,9 @@ function Card({ name, image, color, sell, buy, stock }) {
 =======
             <span>&#8373;{sell}</span>
 >>>>>>> parent of 49283c7 (final)
+=======
+            <span>&#8373;{sell}.00</span>
+>>>>>>> parent of 5f192ef (email setting)
 =======
             <span>&#8373;{sell}.00</span>
 >>>>>>> parent of 5f192ef (email setting)
