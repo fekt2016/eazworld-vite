@@ -156,6 +156,9 @@ function BuyCurrentOrder() {
 =======
     const pay = currentData[0]
     console.log(pay)
+<<<<<<< HEAD
+>>>>>>> parent of 85fe006 (work start)
+=======
 >>>>>>> parent of 85fe006 (work start)
 
     createPayment(
