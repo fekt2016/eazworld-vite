@@ -5,6 +5,9 @@ import Spinner from '../../ui/Spinner'
 import AdminBuyRow from './adminBuyRow'
 =======
 import AdminBuyRow from './AdminBuyRow'
+<<<<<<< HEAD
+>>>>>>> parent of 49283c7 (final)
+=======
 >>>>>>> parent of 49283c7 (final)
 
 function ManageOrderBuy() {

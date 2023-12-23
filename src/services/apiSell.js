@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import { PAGE_SIZE } from "../utils/constants";
+>>>>>>> parent of 49283c7 (final)
 =======
 import { PAGE_SIZE } from "../utils/constants";
 >>>>>>> parent of 49283c7 (final)
@@ -9,7 +13,10 @@ export async function getSell() {
 
 	if (error) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		console.error(error);
+=======
+>>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
 		throw new Error("currency could not be loaded");

@@ -13,9 +13,15 @@ import Select from '../../ui/Select'
 import { useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { useUser } from '../authentication/useUser'
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
+=======
+import { randomOrderId } from '../../utils/helpers'
+import SpinnerMini from '../../ui/SpinnerMini'
+
+>>>>>>> parent of 49283c7 (final)
 const SellContainer = styled.div`
   display: flex;
   padding: 1rem;
@@ -117,6 +123,9 @@ function CreateSellForm() {
               Select Currency
             </option>
             <option>Bitcoin</option>
+<<<<<<< HEAD
+>>>>>>> parent of 49283c7 (final)
+=======
 >>>>>>> parent of 49283c7 (final)
           </Select>
         </FormRow>

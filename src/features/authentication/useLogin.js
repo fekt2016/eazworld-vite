@@ -11,7 +11,10 @@ export function useLogin() {
 		mutationFn: ({ email, password }) => loginApi({ email, password }),
 		onSuccess: (user) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			console.log(user);
+=======
+>>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
 			queryClient.setQueryData(["user"], user.user);

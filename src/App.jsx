@@ -21,10 +21,13 @@ import BuyCurrentOrder from './pages/BuyCurrentOrder'
 import Admin from './pages/Admin'
 import SellCurrentOrder from './pages/SellCurrentOrder'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ManageOrder from './features/admin/ManageOrder'
 import Customers from './features/admin/Customers'
 import RateUpdate from './features/admin/RateUpdate'
 =======
+=======
+>>>>>>> parent of 49283c7 (final)
 import ManageOrderbuy from './features/admin/ManageOrderBuy'
 import ManageOrderSell from './features/admin/ManageOrderSell'
 import Customers from './features/admin/Customers'
@@ -84,8 +87,11 @@ function App() {
             <Route path="prepaid" element={<Prepaid />} />
             <Route path="admin" element={<Admin />}>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <Route path="manage-order" element={<ManageOrder />} />
 =======
+=======
+>>>>>>> parent of 49283c7 (final)
               <Route path="buy-manage" element={<ManageOrderbuy />} />
               <Route path="sell-manage" element={<ManageOrderSell />} />
 >>>>>>> parent of 49283c7 (final)

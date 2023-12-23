@@ -3,6 +3,10 @@ import Card from '../features/dashboard/Card'
 
 import { devicesMax } from '../styles/breakpoint'
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import { useRate } from '../features/rate/useRate'
+>>>>>>> parent of 49283c7 (final)
 =======
 import { useRate } from '../features/rate/useRate'
 >>>>>>> parent of 49283c7 (final)
