@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Sell from './pages/Sell'
 import Buy from './pages/Buy'
 import Settings from './pages/Settings'
-// import History from './pages/History'
+import History from './pages/History'
 import PageNotFound from './pages/PageNotFound'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
@@ -19,10 +19,6 @@ import RecoverPassword from './pages/RecoverPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import BuyCurrentOrder from './pages/BuyCurrentOrder'
 import SellCurrentOrder from './pages/SellCurrentOrder'
-import ManageOrderbuy from './features/admin/ManageOrderBuy'
-import ManageOrderSell from './features/admin/ManageOrderSell'
-import Customers from './features/admin/Customers'
-import RateUpdate from './features/admin/rate/RateUpdate'
 import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import Nav from './features/home/Nav'
@@ -62,6 +58,7 @@ function App() {
               </ProtectedRoute>
             }
           >
+            <Route path="admin" element={<Admin />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="sell" element={<Sell />} />
             <Route path="buy" element={<Buy />} />
@@ -75,14 +72,8 @@ function App() {
             />
 
             <Route path="settings" element={<Settings />} />
-            {/* <Route path="history" element={<History />} /> */}
+            <Route path="history" element={<History />} />
             <Route path="prepaid" element={<Prepaid />} />
-            <Route path="admin" element={<Admin />}>
-              <Route path="buy-manage" element={<ManageOrderbuy />} />
-              <Route path="sell-manage" element={<ManageOrderSell />} />
-              <Route path="customers" element={<Customers />} />
-              <Route path="rate-update" element={<RateUpdate />} />
-            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

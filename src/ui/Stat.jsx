@@ -5,7 +5,9 @@ const StyledStat = styled.div`
   background-color: var(--color-white-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
 
+  margin-bottom: 2rem;
   padding: 1.6rem;
   display: grid;
   grid-template-columns: 6.4rem 1fr;
@@ -50,7 +52,7 @@ const Value = styled.p`
 function Stat({ icon, title, value, color, svgcolor }) {
   return (
     <StyledStat>
-      <Icon svgColor={svgcolor} color={color}>
+      <Icon svgcolor={svgcolor} color={color}>
         {icon}
       </Icon>
       <Title>{title}</Title>

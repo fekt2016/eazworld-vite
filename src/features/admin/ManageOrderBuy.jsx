@@ -17,9 +17,9 @@ function ManageOrderBuy() {
     <>
       <div>
         <Stat
-          // svgcolor="var(--color-yellow-700)"
+          svgcolor="var(--color-yellow-700)"
           title="Buy orders"
-          color="var(--color-yellow-100)"
+          color="#fef9c3"
           icon={<HiArrowUpOnSquareStack />}
           value={count}
         />

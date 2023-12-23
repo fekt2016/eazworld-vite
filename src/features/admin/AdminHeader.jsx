@@ -1,10 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useState } from 'react'
 import styled from 'styled-components'
-import Buyorder from './Buyorder'
+import ManageOrderBuy from './ManageOrderBuy'
+import ManageOrderSell from './ManageOrderSell'
 
 const StyledHeader = styled.header`
   /* color: var(--color-white-0); */
+
   margin: 2rem;
 `
 const StyledHead = styled.div`
@@ -47,34 +49,37 @@ function AdminHeader() {
   const [toggle, setToggle] = useState(1)
 
   return (
-    <StyledHeader>
-      <StyledHead>
-        <button onClick={() => setToggle(1)}>
-          <StyledBuy>
-            <span>Buy Order</span>
-            <span>0</span>
-          </StyledBuy>
-        </button>
-        <button onClick={() => setToggle(2)}>
-          <StyledSell>
-            <span>Sell Order</span>
-            <span>0</span>
-          </StyledSell>
-        </button>
-        <button onClick={() => setToggle(3)}>
-          <Rate>
-            <span>Rate form</span>
-          </Rate>
-        </button>
-      </StyledHead>
+    <>
+      <StyledHeader>
+        <StyledHead>
+          <button onClick={() => setToggle(1)}>
+            <StyledBuy>
+              <span>Buy Order</span>
+              <span>0</span>
+            </StyledBuy>
+          </button>
+          <button onClick={() => setToggle(2)}>
+            <StyledSell>
+              <span>Sell Order</span>
+              <span>0</span>
+            </StyledSell>
+          </button>
+          <button onClick={() => setToggle(3)}>
+            <Rate>
+              <span>Rate form</span>
+            </Rate>
+          </button>
+        </StyledHead>
+      </StyledHeader>
+
       {toggle === 1 && (
         <Main>
-          <Buyorder />
+          <ManageOrderBuy />
         </Main>
       )}
       {toggle === 2 && (
         <Main>
-          <div>sell order</div>
+          <ManageOrderSell />
         </Main>
       )}
       {toggle === 3 && (
@@ -82,7 +87,7 @@ function AdminHeader() {
           <div>rate form</div>
         </Main>
       )}
-    </StyledHeader>
+    </>
   )
 }
 
