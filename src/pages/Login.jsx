@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import LoginForm from '../features/authentication/LoginForm'
 import Logo from '../ui/Logo'
 import Heading from '../ui/Heading'
-import { devicesMax } from '../styles/Breakpoint'
+import { devicesMax } from '../styles/breakpoint'
 
 const LoginLayout = styled.main`
   min-height: 100vh;
