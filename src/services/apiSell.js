@@ -80,9 +80,9 @@ export async function getCurrentUserSell() {
 	if (error) throw new Error("currency could not be loaded");
 
 	return data;
-=======
+
 	let query = supabase
-=======
+
 	const { data, error } = await supabase
 >>>>>>> parent of 4c94207 (email setting)
 		.from("sell")
