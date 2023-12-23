@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Sell from './pages/Sell'
 import Buy from './pages/Buy'
 import Settings from './pages/Settings'
-import History from './pages/History'
+// import History from './pages/History'
 import PageNotFound from './pages/PageNotFound'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
@@ -63,6 +63,8 @@ function App() {
             }
           >
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="sell" element={<Sell />} />
+            <Route path="buy" element={<Buy />} />
             <Route
               path="buy-currentOrder/:orderId"
               element={<BuyCurrentOrder />}
@@ -71,10 +73,9 @@ function App() {
               path="sell-currentOrder/:orderId"
               element={<SellCurrentOrder />}
             />
-            <Route path="sell" element={<Sell />} />
-            <Route path="buy" element={<Buy />} />
+
             <Route path="settings" element={<Settings />} />
-            <Route path="history" element={<History />} />
+            {/* <Route path="history" element={<History />} /> */}
             <Route path="prepaid" element={<Prepaid />} />
             <Route path="admin" element={<Admin />}>
               <Route path="buy-manage" element={<ManageOrderbuy />} />

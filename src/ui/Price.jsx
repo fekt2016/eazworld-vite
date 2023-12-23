@@ -6,6 +6,8 @@ import { devicesMax } from '../styles/breakpoint'
 // import { useRate } from '../features/rate/useRate'
 
 const StyledUl = styled.ul`
+  width: 90%;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;

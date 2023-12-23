@@ -13,28 +13,16 @@ const StyledDashboardLayout = styled.div`
 `
 
 const Main = styled.main`
-<<<<<<< HEAD
-<<<<<<< HEAD
+  width: 100%;
   padding: 8rem 2rem 20rem 8rem;
-
-=======
-  /* padding: 8rem 2rem 20rem 8rem; */
-  padding-left: 8rem;
-  padding-right: 8rem;
->>>>>>> parent of 4c94207 (email setting)
-=======
-  padding: 8rem;
->>>>>>> parent of 005e1ed (avatar)
+  margin: 0 auto;
+  /* padding: 1rem 8rem 20rem 8rem; */
   display: flex;
   flex-direction: column;
-
   justify-content: space-between;
-  background-color: var(--color-grey-50);
-  width: 100%;
 
   @media ${devicesMax.md} {
-    padding: 4rem 2rem 2rem 9rem;
-    align-items: center;
+    padding-right: 2rem;
   }
 `
 

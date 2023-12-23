@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import SignupForm from '../features/authentication/SignupForm'
 import Logo from '../ui/Logo'
 import Heading from '../ui/Heading'
-import { devicesMax } from '../styles/Breakpoint'
+import { devicesMax } from '../styles/breakpoint'
 import { Link } from 'react-router-dom'
 
 const SignupLayout = styled.main`

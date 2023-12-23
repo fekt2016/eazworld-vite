@@ -4,16 +4,16 @@ import Input from '../../ui/Input'
 import Form from '../../ui/Form'
 import Button from '../../ui/Button'
 import { useForm } from 'react-hook-form'
-
 import { DevTool } from '@hookform/devtools'
 import FormRow from '../../ui/FormRow'
 import { useNavigate } from 'react-router-dom'
 import { useCreateBuy } from '../buy/useCreateBuy'
-import { devicesMax } from '../../styles/Breakpoint'
+import { devicesMax } from '../../styles/breakpoint'
 import { useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { useUser } from '../authentication/useUser'
 import { randomOrderId } from '../../utils/helpers'
+import Select from '../../ui/Select'
 
 const rate = import.meta.env.VITE_RATE_BUY
 
@@ -30,23 +30,23 @@ const Advert = styled.div`
   flex: 1;
 `
 
-const Select = styled.select`
-  font-size: 1.4rem;
-  padding: 0.8rem 1.2rem;
-  border: 1px solid
-    ${(props) =>
-      props.type === 'white'
-        ? 'var(--color-grey-100)'
-        : 'var(--color-grey-300)'};
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-grey-0);
-  font-weight: 500;
-  box-shadow: var(--shadow-sm);
-  @media ${devicesMax.md} {
-    width: 100%;
-    flex-basis: auto;
-  }
-`
+// const Select = styled.select`
+//   font-size: 1.4rem;
+//   padding: 0.8rem 1.2rem;
+//   border: 1px solid
+//     ${(props) =>
+//       props.type === 'white'
+//         ? 'var(--color-grey-100)'
+//         : 'var(--color-grey-300)'};
+//   border-radius: var(--border-radius-sm);
+//   background-color: var(--color-grey-0);
+//   font-weight: 500;
+//   box-shadow: var(--shadow-sm);
+//   @media ${devicesMax.md} {
+//     width: 100%;
+//     flex-basis: auto;
+//   }
+// `
 const StyledTerm = styled.div`
   width: 50%;
   text-align: center;

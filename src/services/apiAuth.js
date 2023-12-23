@@ -1,4 +1,4 @@
-import supabase, { supabaseUrl } from "./supabase";
+import supabase, { supabaseUrl } from './supabase';
 
 export async function signup({ firstName, lastName, email, password, phone }) {
 	const { data, error } = await supabase.auth.signUp({
@@ -9,7 +9,7 @@ export async function signup({ firstName, lastName, email, password, phone }) {
 				firstName,
 				lastName,
 				phone,
-				avatar: "",
+				avatar: '',
 			},
 		},
 	});
@@ -24,6 +24,7 @@ export async function login({ email, password }) {
 	if (error) {
 		throw new Error(error.message);
 	}
+	console.log(data);
 	return data;
 }
 
@@ -67,29 +68,19 @@ export async function updateCurrentUser({
 	const fileName = `avatar-${data.user.id}-${Math.random()}`;
 
 	const { error: storageError } = await supabase.storage
-		.from("avatars")
+		.from('avatars')
 		.upload(fileName, avatar);
 
 	if (storageError) throw new Error(error.message);
 
 	const { data: updatedUser, error: error2 } = supabase.auth.updateUser({
 		data: {
-			avatar: `${supabaseUrl}storage/v1/object/public/avatars/${fileName}`,
+			avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
 		},
 	});
 
 	if (error2) throw new Error(error.message);
 	return updatedUser;
-}
-
-export async function emailLink(email) {
-	const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-		redirectTo: "http://localhost:5173/update-password",
-	});
-
-	if (error) throw new Error(error.message);
-
-	return data;
 }
 
 export async function resetPassword({ email, password }) {
@@ -98,5 +89,27 @@ export async function resetPassword({ email, password }) {
 		password,
 	});
 	if (error) throw new Error(error.message);
+	return data;
+}
+
+export async function emailLink(email) {
+	console.log(email);
+	const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+	if (error) throw new Error(error.message);
+	return data;
+}
+
+export async function getUser(id) {
+	const { data, error } = await supabase
+		.from('users')
+		.select('*')
+		.eq('id', id)
+		.single();
+
+	if (error) {
+		throw new Error('user not found');
+	}
+
 	return data;
 }
