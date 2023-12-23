@@ -1,5 +1,5 @@
 import { styled } from 'styled-components'
-import { devicesMax } from '../../styles/Breakpoint'
+import { devicesMax } from '../../styles/breakpoint'
 
 import { BsWhatsapp, BsTwitter, BsInstagram, BsFacebook } from 'react-icons/bs'
 
