@@ -1,9 +1,10 @@
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import supabase from '../services/supabase'
 import { useEffect, useState } from 'react'
 import Row from '../ui/Row'
 import Heading from '../ui/Heading'
 import styled from 'styled-components'
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -24,6 +25,9 @@ import Stats from '../ui/Stats'
 =======
 >>>>>>> parent of 4c94207 (email setting)
 // import AdminHeader from '../features/admin/AdminHeader'
+=======
+import AdminHeader from '../features/admin/AdminHeader'
+>>>>>>> parent of 005e1ed (avatar)
 
 const StyledAdmin = styled.div`
   background-color: var(--color-grey-200);
@@ -94,6 +98,7 @@ function Admin() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div>
         <Outlet />
       </div>
@@ -114,6 +119,9 @@ function Admin() {
         <Outlet />
       </div>
 >>>>>>> parent of 4c94207 (email setting)
+=======
+      <AdminHeader />
+>>>>>>> parent of 005e1ed (avatar)
     </StyledAdmin>
   )
 }

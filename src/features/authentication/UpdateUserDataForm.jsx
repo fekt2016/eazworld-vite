@@ -41,11 +41,10 @@ function UpdateUserDataForm() {
   return (
     <Form onSubmit={handleSubmit}>
       <FormRow label="email">
-        <Input disabled={isUpdating} value={email} type="email" id="email" />
+        <Input disabled value={email} type="email" id="email" />
       </FormRow>
       <FormRow label="First Name">
         <Input
-          disabled={isUpdating}
           type="text"
           id="firstName"
           value={firstName}
@@ -54,7 +53,6 @@ function UpdateUserDataForm() {
       </FormRow>
       <FormRow label="Last Name">
         <Input
-          disabled={isUpdating}
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -64,7 +62,6 @@ function UpdateUserDataForm() {
 
       <FormRow label="Avatar image">
         <FileInput
-          disabled={isUpdating}
           type="file"
           id="avatar"
           accept="image/*"
@@ -72,9 +69,7 @@ function UpdateUserDataForm() {
         />
       </FormRow>
       <FormRow>
-        <Button disabled={isUpdating}>
-          {isUpdating ? <SpinnerMini /> : 'Update account'}
-        </Button>
+        <Button>{isUpdating ? <SpinnerMini /> : 'Update account'}</Button>
       </FormRow>
     </Form>
   )

@@ -3,10 +3,6 @@ import Logo from '../ui/Logo'
 import MainNav from './MainNav'
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
 import ButtonIcon from './ButtonIcon'
-import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import supabase from '../services/supabase'
-import AdminNav from '../features/admin/AdminNav'
 
 const StyledSidebar = styled.aside`
   padding: 3.2rem 1.4rem;
@@ -28,6 +24,7 @@ const SectionTop = styled.div`
 `
 
 function Sidebar({ sidebar, showSidebar }) {
+<<<<<<< HEAD
   const [user, setUser] = useState('')
   const navigate = useNavigate()
 
@@ -127,5 +124,27 @@ function Sidebar({ sidebar, showSidebar }) {
       </StyledSidebar>
     )
   }
+=======
+  return (
+    <StyledSidebar style={!sidebar ? { width: '60px' } : { width: ' 24rem' }}>
+      <ButtonIcon
+        type="navIcon"
+        onClick={showSidebar}
+        style={!sidebar ? { left: '62px' } : { left: '220px' }}
+      >
+        {sidebar ? (
+          <HiChevronLeft style={{ color: 'white' }} />
+        ) : (
+          <HiChevronRight style={{ color: 'white' }} />
+        )}
+      </ButtonIcon>
+      <SectionTop>
+        <Logo type="small" img="/logo100.png" />
+      </SectionTop>
+      <MainNav sidebar={sidebar} />
+    </StyledSidebar>
+  )
+>>>>>>> parent of 005e1ed (avatar)
 }
+
 export default Sidebar

@@ -3,6 +3,7 @@ import Sidebar from '../../ui/Sidebar'
 import DashHeader from './DashHeader'
 import { styled } from 'styled-components'
 import { useState } from 'react'
+import { devicesMax } from '../../styles/breakpoint'
 
 const StyledDashboardLayout = styled.div`
   width: 100vw;
@@ -13,6 +14,7 @@ const StyledDashboardLayout = styled.div`
 
 const Main = styled.main`
 <<<<<<< HEAD
+<<<<<<< HEAD
   padding: 8rem 2rem 20rem 8rem;
 
 =======
@@ -20,10 +22,20 @@ const Main = styled.main`
   padding-left: 8rem;
   padding-right: 8rem;
 >>>>>>> parent of 4c94207 (email setting)
+=======
+  padding: 8rem;
+>>>>>>> parent of 005e1ed (avatar)
   display: flex;
   flex-direction: column;
+
   justify-content: space-between;
   background-color: var(--color-grey-50);
+  width: 100%;
+
+  @media ${devicesMax.md} {
+    padding: 4rem 2rem 2rem 9rem;
+    align-items: center;
+  }
 `
 
 const StyledP = styled.p`

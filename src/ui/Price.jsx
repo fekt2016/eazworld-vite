@@ -17,7 +17,6 @@ import { useRate } from '../features/rate/useRate'
 =======
 >>>>>>> parent of 5f192ef (email setting)
 const StyledUl = styled.ul`
-  padding: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
@@ -28,15 +27,13 @@ const StyledUl = styled.ul`
   }
   @media ${devicesMax.md} {
     gap: 15px;
-
-    width: 100%;
   }
   @media ${devicesMax.sm} {
     grid-template-columns: 1fr;
   }
 `
 
-function PriceCard() {
+function Price() {
   return (
     <StyledUl>
       <Card
@@ -91,4 +88,4 @@ function PriceCard() {
   )
 }
 
-export default PriceCard
+export default Price

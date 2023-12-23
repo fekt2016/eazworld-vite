@@ -4,7 +4,6 @@ import Button from '../../ui/Button'
 import { useState } from 'react'
 import FormRowVertical from '../../ui/FormRowVertical'
 import { emailLink } from '../../services/apiAuth'
-// import supabase from '../../services/supabase'
 
 function RecoverForm() {
   const [email, setEmail] = useState('')

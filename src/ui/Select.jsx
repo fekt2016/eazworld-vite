@@ -21,7 +21,7 @@ import { devicesMax } from '../styles/breakpoint'
 // `
 
 const Select = styled.select`
-  /* flex-basis: 50rem; */
+  flex-basis: 50rem;
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
   border: 1px solid

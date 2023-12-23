@@ -28,7 +28,7 @@ const Advert = styled.div`
 >>>>>>> parent of 49283c7 (final)
 
 const Select = styled.select`
-  /* flex-basis: 50rem; */
+  flex-basis: 50rem;
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
   border: 1px solid
@@ -49,11 +49,11 @@ const StyledTerm = styled.div`
   width: 50%;
   text-align: center;
   padding: 1rem;
-  align-self: start;
-  box-shadow: var(--shadow-sm);
-  background-color: var(--color-primary-300);
-  border-radius: var(--border-radius-lg);
-  @media ${devicesMax.md} {
+  align-self: center;
+  box-shadow: var(--shadow-lg);
+
+  margin: 2rem;
+  @media ${devicesMax.sm} {
     width: 100%;
   }
 `
@@ -125,9 +125,7 @@ function CreateBuyForm() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Select Currency">
           <Select {...register('currency')}>
-            <option disabled selected>
-              Select currency
-            </option>
+            <option value={''}>Select currency</option>
             <option>Bitcoin</option>
             <option>Tether</option>
           </Select>
@@ -225,7 +223,6 @@ function CreateBuyForm() {
             id="wallet"
             {...register('wallet', {
               required: 'Wallet address required',
-              pattern: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/,
             })}
           />
         </FormRow>

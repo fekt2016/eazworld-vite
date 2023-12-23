@@ -13,8 +13,6 @@ import { devicesMax } from '../../styles/breakpoint'
 
 const StyledBtn = styled(NavLink)`
   padding: 0.5rem 1.5rem;
-  text-decoration: underline;
-  color: var(--color-primary-700);
 
   &:hover {
     text-decoration-line: underline;
@@ -26,13 +24,13 @@ const StyledFooter = styled.div`
 `
 const PassSpan = styled.span`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 15px;
+  right: 30px;
   z-index: 1000;
   cursor: pointer;
 
   @media ${devicesMax.md} {
-    top: 40px;
+    top: 60px;
     right: 20px;
   }
 `
@@ -41,7 +39,6 @@ function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [visible, setVisible] = useState(false)
-  // const [passwordError, setPasswordError] = useState('')
 
   const { login, isLoading } = useLogin()
 
@@ -60,13 +57,13 @@ function LoginForm() {
   }
 
   return (
-    <Form type="login" onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <FormRow label="Email address">
         <Input
           type="email"
           id="email"
           // This makes this form better for password managers
-          autoComplete="email"
+          autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
@@ -76,6 +73,7 @@ function LoginForm() {
         <Input
           type={visible ? 'text' : 'password'}
           id="password"
+          autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
@@ -83,7 +81,6 @@ function LoginForm() {
         <PassSpan onClick={() => setVisible((s) => !s)}>
           {visible ? <HiMiniEye /> : <HiMiniEyeSlash />}
         </PassSpan>
-        {/* <span>{passwordError}</span> */}
       </FormRow>
       <FormRow>
         <Button size="large" disabled={isLoading}>

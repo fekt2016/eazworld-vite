@@ -38,9 +38,21 @@ const Price = styled.div`
     display: none;
   }
 `
+// const Price1 = styled.div`
+//   font-family: 'Sono';
+//   font-weight: 600;
+// `
 
-const Date = styled.div``
-const SellId = styled.div``
+const Date = styled.div`
+  @media ${devicesMax.md} {
+    display: none;
+  }
+`
+const SellId = styled.div`
+  @media ${devicesMax.md} {
+    display: none;
+  }
+`
 
 function SellRow({ sell }) {
   const {
@@ -62,6 +74,15 @@ function SellRow({ sell }) {
         <Status>
           <Link to={`/sell-currentOrder/${buyId}`}>{status}</Link>
         </Status>
+
+        {/* <Menus.Menu>
+          <Menus.Toggle id={buyId} />
+          <Menus.List id={buyId}>
+            {buyId}
+            <Price1>&#8373;{amountUSD}</Price1>
+            <Price1>&#36;{amountUSD}</Price1>
+          </Menus.List>
+        </Menus.Menu> */}
       </Table.Row>
     </>
   )

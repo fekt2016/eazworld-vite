@@ -23,6 +23,7 @@ import SellCurrentOrder from './pages/SellCurrentOrder'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ManageOrder from './features/admin/ManageOrder'
 import Customers from './features/admin/Customers'
 import RateUpdate from './features/admin/RateUpdate'
@@ -46,6 +47,8 @@ import Nav from './features/home/Nav'
 >>>>>>> parent of 5f192ef (email setting)
 =======
 >>>>>>> parent of 5f192ef (email setting)
+=======
+>>>>>>> parent of 005e1ed (avatar)
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -101,6 +104,7 @@ function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="history" element={<History />} />
             <Route path="prepaid" element={<Prepaid />} />
+<<<<<<< HEAD
             <Route path="admin" element={<Admin />}>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -118,6 +122,9 @@ function App() {
               <Route path="customers" element={<Customers />} />
               <Route path="rate-update" element={<RateUpdate />} />
             </Route>
+=======
+            <Route path="admin" element={<Admin />} />
+>>>>>>> parent of 005e1ed (avatar)
           </Route>
         </Routes>
       </BrowserRouter>

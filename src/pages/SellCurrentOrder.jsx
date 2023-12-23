@@ -119,7 +119,7 @@ function SellCurrentOrder() {
         <HeadingBox>
           <H4>Selling preview</H4>
         </HeadingBox>
-        {currentData?.map((sell) => (
+        {currentData.map((sell) => (
           <DetailBox key={sell.orderId}>
             <TextBox>
               <h5>Thank you for your order!</h5>

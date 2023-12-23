@@ -182,10 +182,14 @@ function BuyCurrentOrder() {
   if (isLoading) return <Spinner />
   const { data: currentData } = buy
 <<<<<<< HEAD
+<<<<<<< HEAD
   console.log(currentData)
 =======
 
 >>>>>>> parent of 4c94207 (email setting)
+=======
+
+>>>>>>> parent of 005e1ed (avatar)
   return (
     <>
       <StyledOrder>
