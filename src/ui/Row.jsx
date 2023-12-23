@@ -15,6 +15,20 @@ const Row = styled.div`
         flex-direction: column;
       }
     `}
+<<<<<<< HEAD
+=======
+${(props) =>
+  props.type === 'buy' &&
+  css`
+    background-image: linear-gradient(to bottom right, #6366f1, #83c9ff);
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
+    @media ${devicesMax.md} {
+      flex-direction: column;
+    }
+  `}
+>>>>>>> parent of 4c94207 (email setting)
   ${(props) =>
     props.type === 'vertical' &&
     css`

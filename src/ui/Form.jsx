@@ -38,7 +38,10 @@ const Form = styled.form`
       width: 50%;
       /* Box */
       box-shadow: var(--shadow-lg);
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 4c94207 (email setting)
       @media ${devicesMax.md} {
         padding: 2.4rem 1rem;
         width: 100%;

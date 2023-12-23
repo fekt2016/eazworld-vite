@@ -62,6 +62,7 @@ function Footer() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Imag src="/logo.png" alt="footer-log" />
 =======
         <Imag src="/eaz2.png" alt="footer-log" />
@@ -72,6 +73,9 @@ function Footer() {
 =======
         <Imag src="/eaz2.png" alt="footer-log" />
 >>>>>>> parent of 5f192ef (email setting)
+=======
+        <Imag src="/logo.png" alt="footer-log" />
+>>>>>>> parent of 4c94207 (email setting)
         <Media>
           <BsWhatsapp />
           <BsTwitter />

@@ -31,6 +31,10 @@ export async function getCurrentUserBuy() {
 	const { data, error } = await supabase
 		.from("buy")
 		.select("*")
+<<<<<<< HEAD
+=======
+		.order("created_at", { ascending: false })
+>>>>>>> parent of 4c94207 (email setting)
 		.eq("user_id", user.id);
 
 	if (error) throw new Error("currency could not be loaded");

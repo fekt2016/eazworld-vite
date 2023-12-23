@@ -129,6 +129,7 @@ function Card({ name, image, color, sell, buy, stock }) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             <span>&#8373;{sell}.00</span>
 =======
             <span>&#8373;{sell}</span>
@@ -142,6 +143,9 @@ function Card({ name, image, color, sell, buy, stock }) {
 =======
             <span>&#8373;{sell}.00</span>
 >>>>>>> parent of 5f192ef (email setting)
+=======
+            <span>&#8373;{sell}</span>
+>>>>>>> parent of 4c94207 (email setting)
             <Button size="small" variation="sell">
               <Link to="/sell">SELL</Link>
             </Button>

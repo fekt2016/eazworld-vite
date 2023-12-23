@@ -21,12 +21,16 @@ function Signup() {
   return (
     <SignupLayout>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <Logo img="../../logo100.png" type="small" />
 =======
       <Link to="/">
         <Logo img="/eaz1.png" sizes="signup" />
       </Link>
 >>>>>>> parent of 5f192ef (email setting)
+=======
+      <Logo img="../../logo100.png" type="small" />
+>>>>>>> parent of 4c94207 (email setting)
       <Heading as="h1">sign up and trade</Heading>
       <SignupForm />
     </SignupLayout>

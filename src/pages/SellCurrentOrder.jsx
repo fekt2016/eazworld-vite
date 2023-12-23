@@ -104,8 +104,15 @@ function SellCurrentOrder() {
   })
 
   if (isLoading) return <Spinner />
+<<<<<<< HEAD
   const { data: currentData } = sell
   console.log(currentData)
+=======
+
+  const { data: currentData } = sell
+  console.log(currentData)
+
+>>>>>>> parent of 4c94207 (email setting)
   return (
     <>
       <StyledOrder>

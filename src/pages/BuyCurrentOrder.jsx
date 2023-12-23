@@ -153,6 +153,7 @@ function BuyCurrentOrder() {
       return
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     const pay = currentData[0]
     console.log(pay)
@@ -160,6 +161,8 @@ function BuyCurrentOrder() {
 >>>>>>> parent of 85fe006 (work start)
 =======
 >>>>>>> parent of 85fe006 (work start)
+=======
+>>>>>>> parent of 4c94207 (email setting)
 
     createPayment(
       { phoneNum, amount, transaction, account, name },
@@ -178,7 +181,11 @@ function BuyCurrentOrder() {
 
   if (isLoading) return <Spinner />
   const { data: currentData } = buy
+<<<<<<< HEAD
   console.log(currentData)
+=======
+
+>>>>>>> parent of 4c94207 (email setting)
   return (
     <>
       <StyledOrder>
@@ -207,7 +214,11 @@ function BuyCurrentOrder() {
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>Sending fee: </StyledSpan>&#8373;
+<<<<<<< HEAD
               {item.miner * 12}
+=======
+              {item?.miner * 12}
+>>>>>>> parent of 4c94207 (email setting)
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>payment Type: </StyledSpan>

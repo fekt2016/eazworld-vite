@@ -12,8 +12,14 @@ const StyledDashboardLayout = styled.div`
 `
 
 const Main = styled.main`
+<<<<<<< HEAD
   padding: 8rem 2rem 20rem 8rem;
 
+=======
+  /* padding: 8rem 2rem 20rem 8rem; */
+  padding-left: 8rem;
+  padding-right: 8rem;
+>>>>>>> parent of 4c94207 (email setting)
   display: flex;
   flex-direction: column;
   justify-content: space-between;

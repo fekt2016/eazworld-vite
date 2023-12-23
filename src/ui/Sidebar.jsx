@@ -64,6 +64,7 @@ function Sidebar({ sidebar, showSidebar }) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <Logo type="small" img="/logo100.png" />
 =======
           <Logo type="small" img="/eazwhite1.png" />
@@ -80,6 +81,9 @@ function Sidebar({ sidebar, showSidebar }) {
 =======
           <Logo type="small" img="/eazwhite1.png" />
 >>>>>>> parent of 5f192ef (email setting)
+=======
+          <Logo type="small" img="/logo100.png" />
+>>>>>>> parent of 4c94207 (email setting)
         </SectionTop>
         <AdminNav sidebar={sidebar} />
       </StyledSidebar>
@@ -104,6 +108,7 @@ function Sidebar({ sidebar, showSidebar }) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <Logo type="small" img="/logo100.png" />
 =======
           <Logo img="/eaz1.png" sizes={!sidebar ? '' : 'medium'} />
@@ -114,6 +119,9 @@ function Sidebar({ sidebar, showSidebar }) {
 =======
           <Logo img="/eaz1.png" sizes={!sidebar ? '' : 'medium'} />
 >>>>>>> parent of 5f192ef (email setting)
+=======
+          <Logo type="small" img="/logo100.png" />
+>>>>>>> parent of 4c94207 (email setting)
         </SectionTop>
         <MainNav sidebar={sidebar} />
       </StyledSidebar>

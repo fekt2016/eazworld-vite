@@ -18,7 +18,12 @@ const StyledNav = styled.nav`
   border-bottom: 1px solid var(--color-grey-100);
 
   height: 7rem;
+<<<<<<< HEAD
 
+=======
+  z-index: 999;
+  background-color: var(--color-white-0);
+>>>>>>> parent of 4c94207 (email setting)
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,6 +31,12 @@ const StyledNav = styled.nav`
 
 const StyledLeftContainer = styled.div`
   height: 100%;
+<<<<<<< HEAD
+=======
+  display: flex;
+  justify-content: center;
+  align-items: center;
+>>>>>>> parent of 4c94207 (email setting)
 `
 const StyledRightContainer = styled.div`
   flex: 1;
@@ -161,12 +172,16 @@ function HomeNav() {
         </StyledSideNav>
       )}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 4c94207 (email setting)
       <StyledLeftContainer>
         <NavButton onClick={() => setIsOpen((open) => !open)}>
           {isOpen ? <HiOutlineXMark /> : <HiOutlineBars3 />}
         </NavButton>
         <Logo img="/logo67.png" type="small" />
       </StyledLeftContainer>
+<<<<<<< HEAD
 =======
 
       <NavButton onClick={() => setIsOpen((open) => !open)}>
@@ -182,6 +197,8 @@ function HomeNav() {
 >>>>>>> parent of 5f192ef (email setting)
 =======
 >>>>>>> parent of 5f192ef (email setting)
+=======
+>>>>>>> parent of 4c94207 (email setting)
       <StyledRightContainer>
         <StyledList>
           <StyledUl>

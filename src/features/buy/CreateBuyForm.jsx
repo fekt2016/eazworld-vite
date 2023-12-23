@@ -13,8 +13,6 @@ import { devicesMax } from '../../styles/breakpoint'
 import { useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { useUser } from '../authentication/useUser'
-<<<<<<< HEAD
-=======
 import { randomOrderId } from '../../utils/helpers'
 
 const rate = import.meta.env.VITE_RATE
@@ -23,10 +21,6 @@ const BuyContainer = styled.div`
   display: flex;
   padding: 1rem;
   gap: 10px;
-
-  @media ${devicesMax.md} {
-    flex-direction: column;
-  }
 `
 const Advert = styled.div`
   flex: 1;

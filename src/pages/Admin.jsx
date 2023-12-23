@@ -6,6 +6,7 @@ import Heading from '../ui/Heading'
 import styled from 'styled-components'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of 49283c7 (final)
@@ -20,35 +21,27 @@ import Stats from '../ui/Stats'
 >>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
+=======
+>>>>>>> parent of 4c94207 (email setting)
 // import AdminHeader from '../features/admin/AdminHeader'
 
 const StyledAdmin = styled.div`
   background-color: var(--color-grey-200);
 `
-const StyledBox = styled.div`
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: space-around;
-  padding: 1rem;
-`
-// const Box = styled.div`
-// cursor: pointer;
-// background-color: var(--color-white-0);
-//   ${(props) => props.type === 'buy' && css``}
-//   ${(props) => props.type === 'sell' && css``}
-//   ${(props) => props.type === 'user' && css``}
-//   ${(props) => props.type === 'rate' && css``}
-// `
+
 function Admin() {
   const [user, setUser] = useState('')
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   // const [toggle, setToggle] = useState(1)
 >>>>>>> parent of 49283c7 (final)
 =======
   // const [toggle, setToggle] = useState(1)
 >>>>>>> parent of 49283c7 (final)
+=======
+>>>>>>> parent of 4c94207 (email setting)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -61,6 +54,7 @@ function Admin() {
       setUser(user)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
       if (user.role === 'user') return navigate('/dashboard')
@@ -69,6 +63,8 @@ function Admin() {
 
       if (user.role === 'user') return navigate('/dashboard')
 >>>>>>> parent of 49283c7 (final)
+=======
+>>>>>>> parent of 4c94207 (email setting)
     }
 
     getUser()
@@ -76,19 +72,26 @@ function Admin() {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 4c94207 (email setting)
   if (user?.role !== 'admin') {
     return navigate('/dashboard')
   }
 
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
+=======
+>>>>>>> parent of 4c94207 (email setting)
   return (
     <StyledAdmin>
       <Row>
         <Heading as="h1">admin dashboard</Heading>
       </Row>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       <div>
@@ -106,6 +109,11 @@ function Admin() {
 >>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
+=======
+      <div>
+        <Outlet />
+      </div>
+>>>>>>> parent of 4c94207 (email setting)
     </StyledAdmin>
   )
 }

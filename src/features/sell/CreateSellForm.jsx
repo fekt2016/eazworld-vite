@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import Select from '../../ui/Select'
 import { useEffect } from 'react'
 import emailjs from '@emailjs/browser'
+<<<<<<< HEAD
 import { useUser } from '../authentication/useUser'
 <<<<<<< HEAD
 
@@ -22,13 +23,13 @@ import { randomOrderId } from '../../utils/helpers'
 import SpinnerMini from '../../ui/SpinnerMini'
 
 >>>>>>> parent of 49283c7 (final)
+=======
+// import { useUser } from '../authentication/useUser'
+>>>>>>> parent of 4c94207 (email setting)
 const SellContainer = styled.div`
   display: flex;
   padding: 1rem;
   gap: 10px;
-  @media ${devicesMax.md} {
-    flex-direction: column;
-  }
 `
 const Advert = styled.div`
   flex: 1;
@@ -55,8 +56,13 @@ function CreateSellForm() {
   const orderId = `EW${seq}`
 
   const { createSell, isCreating } = useCreateSell()
+<<<<<<< HEAD
   const { user } = useUser()
   console.log(user.user_metadata.firstName)
+=======
+  // const { user } = useUser()
+  // console.log(user.user_metadata.firstName)
+>>>>>>> parent of 4c94207 (email setting)
   const navigate = useNavigate()
 
   const {
@@ -72,7 +78,6 @@ function CreateSellForm() {
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
   function onSubmit(data) {
-    console.log(data)
     createSell(
       { ...data },
       {
@@ -82,6 +87,7 @@ function CreateSellForm() {
         },
       },
     )
+<<<<<<< HEAD
     emailjs
       .send(
         import.meta.env.VITE_YOUR_SERVICE_ID,
@@ -104,6 +110,30 @@ function CreateSellForm() {
           console.log(error.text)
         },
       )
+=======
+    // emailjs
+    //   .send(
+    //     import.meta.env.VITE_YOUR_SERVICE_ID,
+    //     import.meta.env.VITE_YOUR_TEMPLAT_BUY_ID,
+    //     {
+    //       from_name: user.user_metadata.firstName,
+    //       recipient: user.email,
+    //       orderId,
+    //       currency: data.currency,
+    //       amountGh: data.amountGh,
+    //       amountUSD: data.amountUSD,
+    //       Payment: data.payment,
+    //     },
+    //   )
+    //   .then(
+    //     (result) => {
+    //       console.log(result)
+    //     },
+    //     (error) => {
+    //       console.log(error.text)
+    //     },
+    //   )
+>>>>>>> parent of 4c94207 (email setting)
   }
   return (
 <<<<<<< HEAD
@@ -116,17 +146,21 @@ function CreateSellForm() {
             <option>Ethereun</option>
 =======
     <SellContainer>
-      <Form type="buy" onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Select Currency" error={errors?.currency?.message}>
           <Select {...register('currency', { required: 'select currency' })}>
             <option value="" disabled selected>
               Select Currency
             </option>
+<<<<<<< HEAD
             <option>Bitcoin</option>
 <<<<<<< HEAD
 >>>>>>> parent of 49283c7 (final)
 =======
 >>>>>>> parent of 49283c7 (final)
+=======
+            <option>Bitcon</option>
+>>>>>>> parent of 4c94207 (email setting)
           </Select>
         </FormRow>
 
@@ -177,8 +211,23 @@ function CreateSellForm() {
             <option value="At Money">At Money</option>
           </Select>
         </FormRow>
+<<<<<<< HEAD
         <FormRow label="Mobile Number" error={errors?.mobile?.message}>
           <Input type="number" id="mobile" {...register('mobile')} />
+=======
+        <FormRow label="Payment Number" error={errors?.mobile?.message}>
+          <Input
+            type="tel"
+            id="mobile"
+            {...register('mobile', {
+              required: 'Your mobile number is required',
+              pattern: {
+                value: /^(([2][3][3])|[0])?\d{9}$/,
+                message: 'check your number',
+              },
+            })}
+          />
+>>>>>>> parent of 4c94207 (email setting)
         </FormRow>
         <FormRow label="Mobile Name" error={errors?.name?.message}>
           <Input type="text" id="name" {...register('name')} />
