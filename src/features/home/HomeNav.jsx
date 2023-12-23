@@ -175,6 +175,9 @@ function HomeNav() {
       {/* <Logo img="../../../eaz1 50x50.png" sizes="small" type="nav" /> */}
       <Img src="/eaz1.png" alt="logo" />
 
+<<<<<<< HEAD
+>>>>>>> parent of 5f192ef (email setting)
+=======
 >>>>>>> parent of 5f192ef (email setting)
       <StyledRightContainer>
         <StyledList>

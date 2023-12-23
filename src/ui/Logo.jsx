@@ -45,6 +45,9 @@ const Img = styled.img`
         height: 15rem;
       `}
 
+<<<<<<< HEAD
+>>>>>>> parent of 5f192ef (email setting)
+=======
 >>>>>>> parent of 5f192ef (email setting)
 `
 

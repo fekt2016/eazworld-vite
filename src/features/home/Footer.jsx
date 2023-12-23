@@ -60,7 +60,11 @@ function Footer() {
     <StyledFooter>
       <AsideLogo>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Imag src="/logo.png" alt="footer-log" />
+=======
+        <Imag src="/eaz2.png" alt="footer-log" />
+>>>>>>> parent of 5f192ef (email setting)
 =======
         <Imag src="/eaz2.png" alt="footer-log" />
 >>>>>>> parent of 5f192ef (email setting)

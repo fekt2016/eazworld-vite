@@ -32,10 +32,13 @@ import ManageOrderbuy from './features/admin/ManageOrderBuy'
 import ManageOrderSell from './features/admin/ManageOrderSell'
 import Customers from './features/admin/Customers'
 import RateUpdate from './features/admin/RateUpdate'
+<<<<<<< HEAD
 import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import Nav from './features/home/Nav'
 >>>>>>> parent of 49283c7 (final)
+=======
+>>>>>>> parent of 5f192ef (email setting)
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,6 +61,9 @@ function App() {
 =======
           <Route index element={<Navigate replace to="/home" />} />
           <Route path="/home" element={<Home />} />
+<<<<<<< HEAD
+>>>>>>> parent of 5f192ef (email setting)
+=======
 >>>>>>> parent of 5f192ef (email setting)
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
