@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { devicesMax } from '../styles/Breakpoint'
+import { devicesMax } from '../styles/breakpoint'
 import { useParams } from 'react-router-dom'
 import Button from '../ui/Button'
 import { useQuery } from '@tanstack/react-query'
