@@ -15,6 +15,7 @@ import { useUser } from '../authentication/useUser'
 import { randomOrderId } from '../../utils/helpers'
 import Select from '../../ui/Select'
 import { useMiner } from '../miner/useMiner'
+import Spinner from '../../ui/Spinner'
 
 const rate = import.meta.env.VITE_RATE_BUY
 
@@ -100,10 +101,10 @@ function CreateBuyForm() {
         },
       )
   }
-  if (isLoading) return <p>Loading...</p>
-  console.log(data)
+  if (isLoading) return <Spinner />
+
   const mine = data[0]
-  console.log(mine)
+
   return (
     <BuyContainer>
       <Form type="buy" onSubmit={handleSubmit(onSubmit)}>

@@ -43,7 +43,7 @@ function SignupForm() {
   }
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form type="signup" onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Fisrt Name" error={errors?.firstName?.message}>
           <Input
             disabled={isLoading}
@@ -76,10 +76,7 @@ function SignupForm() {
           />
         </FormRow>
 
-        <FormRow
-          label="Password (min 8 characters)"
-          error={errors?.password?.message}
-        >
+        <FormRow label="Password (min 8)" error={errors?.password?.message}>
           <Input
             disabled={isLoading}
             type="password"

@@ -55,7 +55,7 @@ const StepContainer = styled.div`
         grid-column-end: 4;
         grid-row-start: 1;
         grid-row-end: 3;
-        background-image: url('../../../public/back.jpeg');
+        background-image: url('../../../back.jpeg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

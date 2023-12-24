@@ -6,9 +6,8 @@ const StyledFormRow = styled.div`
   justify-content: space-between;
   position: relative;
 
-  gap: 2.4rem;
-
-  padding: 0.5rem 0;
+  padding: 1rem;
+  gap: 1rem;
 
   &:first-child {
     padding-top: 0;
@@ -27,6 +26,9 @@ const StyledFormRow = styled.div`
     justify-content: flex-end;
     gap: 1.2rem;
   }
+  @media ${devicesMax.lg} {
+    width: 100%;
+  }
   @media ${devicesMax.md} {
     width: 100%;
     flex-direction: column;
@@ -34,7 +36,7 @@ const StyledFormRow = styled.div`
 `
 const Label = styled.label`
   font-weight: 500;
-  width: 15rem;
+  width: 35rem;
 `
 const Error = styled.span`
   font-size: 1.4rem;

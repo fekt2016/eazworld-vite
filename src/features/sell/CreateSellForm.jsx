@@ -152,8 +152,6 @@ function CreateSellForm() {
             <option value="MTN Momo">MTN Momo</option>
             <option value="Vodafone cash">Vodafone cash</option>
             <option value="At Money">At Money</option>
-            <option>GT bank</option>
-            <option>Eco Bank</option>
           </Select>
         </FormRow>
         <FormRow label="Payment Number" error={errors?.mobile?.message}>

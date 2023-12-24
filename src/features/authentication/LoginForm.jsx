@@ -57,7 +57,7 @@ function LoginForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form type="login" onSubmit={handleSubmit}>
       <FormRow label="Email address">
         <Input
           type="email"

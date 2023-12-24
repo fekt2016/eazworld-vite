@@ -22,18 +22,17 @@ const Container = styled.div`
   border-radius: 7px;
   width: 40%;
   padding: 6rem 2rem;
-  /* height: 70vh; */
 
   @media ${devicesMax.lg} {
     width: 70%;
     padding: 1rem;
   }
-  /* @media ${devicesMax.md} {
+  @media ${devicesMax.md} {
     width: 65%;
   }
   @media ${devicesMax.sm} {
-    width: 85%;
-  } */
+    width: 90%;
+  }
 `
 
 function Login() {

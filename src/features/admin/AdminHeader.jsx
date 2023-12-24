@@ -3,6 +3,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import ManageOrderBuy from './ManageOrderBuy'
 import ManageOrderSell from './ManageOrderSell'
+import ManageRate from './rate/ManageRate'
 
 const StyledHeader = styled.header`
   /* color: var(--color-white-0); */
@@ -84,7 +85,7 @@ function AdminHeader() {
       )}
       {toggle === 3 && (
         <Main>
-          <div>rate form</div>
+          <ManageRate />
         </Main>
       )}
     </>
