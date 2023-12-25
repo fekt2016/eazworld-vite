@@ -40,6 +40,7 @@ function App() {
       <GlobalStyles />
 
       <BrowserRouter>
+        <Whatsapp />
         <Routes>
           <Route index element={<Navigate replace to="/home" />} />
           <Route element={<Nav />}>
@@ -78,7 +79,6 @@ function App() {
             <Route path="prepaid" element={<Prepaid />} />
           </Route>
         </Routes>
-        <Whatsapp />
       </BrowserRouter>
 
       <Toaster
