@@ -23,6 +23,7 @@ import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import Nav from './features/home/Nav'
 import Admin from './pages/Admin'
+import Whatsapp from './ui/whatsapp'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +38,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
+
       <BrowserRouter>
         <Routes>
           <Route index element={<Navigate replace to="/home" />} />
@@ -76,7 +78,9 @@ function App() {
             <Route path="prepaid" element={<Prepaid />} />
           </Route>
         </Routes>
+        <Whatsapp />
       </BrowserRouter>
+
       <Toaster
         position="top-center"
         gutter={12}

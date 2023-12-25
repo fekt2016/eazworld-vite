@@ -1,13 +1,13 @@
-import { createGlobalStyle } from "styled-components";
-import { devicesMax } from "./breakpoint";
+import { createGlobalStyle } from 'styled-components';
+import { devicesMax } from './breakpoint';
 
 const breakpoints = {
-	xs: "320px",
-	sm: "640px",
-	md: "768px",
-	lg: "1024px",
-	xl: "1280px",
-	"2xl": "1536px",
+	xs: '320px',
+	sm: '640px',
+	md: '768px',
+	lg: '1024px',
+	xl: '1280px',
+	'2xl': '1536px',
 };
 
 export const devices = {
@@ -16,7 +16,7 @@ export const devices = {
 	md: `(min-width: ${breakpoints.md})`,
 	lg: `(min-width: ${breakpoints.lg})`,
 	xl: `(min-width: ${breakpoints.xl})`,
-	"2xl": `(min-width: ${breakpoints["2xl"]})`,
+	'2xl': `(min-width: ${breakpoints['2xl']})`,
 };
 
 const GlobalStyles = createGlobalStyle`:root {
@@ -85,6 +85,10 @@ const GlobalStyles = createGlobalStyle`:root {
   --color-ethereum-500:#9eb6b8;
   --color-litecoin-500:#aae4ff;
   --color-bitcsh-500:#b6d990;
+  --color-whatsapp-100:#25D366;
+  --color-whatsapp-700:#128C7E;
+
+
 
   --color--blue-100: #e0f2fe;
   --color-blue-700: #0369a1;

@@ -1,13 +1,12 @@
 import { styled } from 'styled-components'
 import Card from '../features/dashboard/Card'
+import Spinner from '../ui/Spinner'
 
 import { devicesMax } from '../styles/breakpoint'
-
-// import { useRate } from '../features/rate/useRate'
+import { useRate } from '../features/admin/rate/useRate'
 
 const StyledUl = styled.ul`
-  width: 90%;
-  margin: 0 auto;
+  padding: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
@@ -18,65 +17,35 @@ const StyledUl = styled.ul`
   }
   @media ${devicesMax.md} {
     gap: 15px;
+
+    width: 100%;
   }
   @media ${devicesMax.sm} {
     grid-template-columns: 1fr;
   }
 `
 
-function Price() {
+function PriceCard() {
+  const { isLoading, rate } = useRate()
+
+  if (isLoading) return <Spinner />
+  const { data: currentRate } = rate
+
   return (
     <StyledUl>
-      <Card
-        color="btc"
-        name="Bitcoin"
-        image="../../bitcoin.png"
-        sell="11.75"
-        buy="11.00"
-        stock="instock"
-      />
-      <Card
-        color="usdt"
-        name="Usdt"
-        image="../../tether-cryptocurrency.256x253.png"
-        sell="11.70"
-        buy="10.90"
-        stock="outstock"
-      />
-      <Card
-        color="doge"
-        name="doge"
-        image="../../dogecoin-cryptocurrency.256x253.png"
-        sell="11.75"
-        buy="11.00"
-        stock="instock"
-      />
-      <Card
-        color="ethereum"
-        name="ethereum"
-        image="../../ethereum-cryptocurrency.256x253.png"
-        sell="11.75"
-        buy="11.00"
-        stock="outstock"
-      />
-      <Card
-        color="litecoin"
-        name="litecoin"
-        image="../../litecoin-cryptocurrency.256x253.png"
-        buy="10.90"
-        sell="00.00"
-        stock="outstock"
-      />
-      <Card
-        color="bitcsh"
-        name="bitcoin-cash"
-        image="../../bitcoin-cash-cryptocurrency.256x253.png"
-        sell="11.00"
-        buy="11.75"
-        stock="instock"
-      />
+      {currentRate.map((rate) => (
+        <Card
+          key={rate.currency}
+          color={rate.color}
+          name={rate.currency}
+          sell={rate.sell}
+          buy={rate.buy}
+          stock={rate.stock}
+          image={rate.image}
+        />
+      ))}
     </StyledUl>
   )
 }
 
-export default Price
+export default PriceCard
