@@ -68,13 +68,12 @@ const GlobalStyles = createGlobalStyle`:root {
   --color-green-700: #15803d;
 
   //used
+  --color-sec-800:#b08f3a;
   --color-sec-700: #ffc337;
-  --color-yellow-700: #a16207;
-  --color-silver-100: #e5e7eb;
-  --color-silver-700: #374151;
-  --color-indigo-100: #e0e7ff;
+
+
   //used
-  --color-indigo-700: #4338ca;
+
 
   --color-bitcoin-300: #fff6e1;
   --color-bitcoin-500:#ffecbf;
@@ -86,6 +85,18 @@ const GlobalStyles = createGlobalStyle`:root {
   --color-ethereum-500:#9eb6b8;
   --color-litecoin-500:#aae4ff;
   --color-bitcsh-500:#b6d990;
+
+  --color--blue-100: #e0f2fe;
+  --color-blue-700: #0369a1;
+  --color-green-100: #dcfce7;
+  --color-green-700: #15803d;
+  --color-yellow-100: #fef9c3;
+  --color-yellow-700: #a16207;
+  --color-silver-100: #e5e7eb;
+  --color-silver-700: #374151;
+  --color-indigo-100: #e0e7ff;
+  --color-indigo-700: #4338ca;
+
 
 
 //used

@@ -13,8 +13,6 @@ const Timer = () => {
   const { logout } = useLogout()
   const [delay, setDelay] = useState(600)
 
-  // const [text, setText] = useState('start')
-
   const minutes = Math.floor(delay / 60)
   const seconds = Math.floor(delay % 60)
   useEffect(() => {

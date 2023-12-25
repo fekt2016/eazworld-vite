@@ -3,7 +3,15 @@ import { useAllBuy } from '../buy/useAllBuy'
 import Spinner from '../../ui/Spinner'
 import AdminBuyRow from './AdminBuyRow'
 import Stat from '../../ui/Stat'
-import { HiArrowUpOnSquareStack } from 'react-icons/hi2'
+import { GiPayMoney } from 'react-icons/gi'
+import Pagination from '../../ui/Pagination'
+import styled from 'styled-components'
+import { devicesMax } from '../../styles/breakpoint'
+const StyledD = styled.div`
+  @media ${devicesMax.md} {
+    display: none;
+  }
+`
 
 function ManageOrderBuy() {
   const { data, isLoading, error } = useAllBuy()
@@ -19,8 +27,8 @@ function ManageOrderBuy() {
         <Stat
           svgcolor="var(--color-yellow-700)"
           title="Buy orders"
-          color="#fef9c3"
-          icon={<HiArrowUpOnSquareStack />}
+          color="var(--color-yellow-100)"
+          icon={<GiPayMoney />}
           value={count}
         />
       </div>
@@ -29,11 +37,11 @@ function ManageOrderBuy() {
           <Table.Header role="row">
             <div>date</div>
             <div>id</div>
-            <div>currency</div>
-            <div>amountUsd</div>
-            <div>amountGh</div>
-            <div>total am.</div>
-            <div>payment</div>
+            <StyledD>currency</StyledD>
+            <StyledD>amountUsd</StyledD>
+            <StyledD>amountGh</StyledD>
+            <StyledD>total am.</StyledD>
+            <StyledD>payment</StyledD>
             <div>email</div>
             <div>status</div>
           </Table.Header>
@@ -42,7 +50,9 @@ function ManageOrderBuy() {
             data={buy}
             render={(buy) => <AdminBuyRow key={buy.id} buy={buy} />}
           />
-          <Table.Footer></Table.Footer>
+          <Table.Footer>
+            <Pagination count={count} />
+          </Table.Footer>
         </Table>
       </div>
     </>

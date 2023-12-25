@@ -1,4 +1,4 @@
-import { HiArrowUpOnSquareStack } from 'react-icons/hi2'
+import { MdOutlineRateReview } from 'react-icons/md'
 import RateRow from './RateRow'
 import Stat from '../../../ui/Stat'
 import Table from '../../../ui/Table'
@@ -15,10 +15,10 @@ function ManageRate() {
     <>
       <div>
         <Stat
-          // svgcolor="var(--color-yellow-700)"
-          title="rate"
-          color="var(--color-yellow-100)"
-          icon={<HiArrowUpOnSquareStack />}
+          svgcolor="var(--color-indigo-700)"
+          title="rate update"
+          color="var(--color-indigo-100)"
+          icon={<MdOutlineRateReview />}
         />
       </div>
       <div>

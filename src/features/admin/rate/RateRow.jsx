@@ -11,7 +11,6 @@ import Modal from '../../../ui/Modal'
 import { useForm } from 'react-hook-form'
 import { useUpdateRate } from './useUpdateRate'
 import SpinnerMini from '../../../ui/SpinnerMini'
-// import { useUpdateRate } from './useUpdateRate'
 
 const Buy = styled.div`
   font-size: 1.6rem;
@@ -43,6 +42,7 @@ function RateRow({ rate }) {
   const { updateRate, isUpdating } = useUpdateRate()
 
   const { id, created_at: date, currency, buy, sell, stock } = rate
+
   const { register, handleSubmit } = useForm()
   function onSubmit(data) {
     updateRate({ newRate: { ...data }, id })

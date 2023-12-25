@@ -3,6 +3,7 @@ import { devicesMax } from '../styles/breakpoint'
 
 const Row = styled.div`
   display: flex;
+ padding: 1rem;;
 
 
   ${(props) =>
@@ -15,8 +16,7 @@ const Row = styled.div`
         flex-direction: column;
       }
     `}
-<<<<<<< HEAD
-=======
+
 ${(props) =>
   props.type === 'buy' &&
   css`
@@ -28,7 +28,7 @@ ${(props) =>
       flex-direction: column;
     }
   `}
->>>>>>> parent of 4c94207 (email setting)
+
   ${(props) =>
     props.type === 'vertical' &&
     css`

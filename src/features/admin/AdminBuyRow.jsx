@@ -31,6 +31,7 @@ const Buy = styled.div`
   text-transform: capitalize;
   @media ${devicesMax.md} {
     font-size: 1.2rem;
+    display: none;
   }
 `
 
@@ -98,7 +99,7 @@ function AdminBuyRow({ buy }) {
 
   return (
     <>
-      <Table.Row columns="repeat(7, 1fr)">
+      <Table.Row columns="repeat(9, 1fr)">
         <Date>{formatDate(date)}</Date>
         <BuyId>
           <Link to={`/currentOrder/${buyId}`}>{buyId}</Link>
@@ -108,10 +109,10 @@ function AdminBuyRow({ buy }) {
         <Price>&#8373;{amountGh}</Price>
         <Price>&#8373;{totalToPay}</Price>
         <Payment>{payment}</Payment>
+        <div>{email}</div>
         <Status status={status} onClick={statusHandler}>
           {status}
         </Status>
-        <div>{email}</div>
       </Table.Row>
     </>
   )

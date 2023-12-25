@@ -6,6 +6,7 @@ import Pagination from '../../ui/Pagination'
 import styled from 'styled-components'
 import { devicesMax } from '../../styles/breakpoint'
 import Menus from '../../ui/Menus'
+import { useSearchParams } from 'react-router-dom'
 
 const StyledAmount = styled.div`
   @media ${devicesMax.md} {
@@ -30,9 +31,29 @@ const SellId = styled.div`
 
 function SellTable() {
   const { isLoading, data: sell, error } = useSell()
+  const [searchParams] = useSearchParams()
 
   if (isLoading) return <Spinner />
   if (error) return 'An error has occured: ' + error.message
+  const { data, count } = sell
+
+  const filterValue = searchParams.get('sell-order') || 'all'
+
+  //FILTER
+  let filteredSell
+  if (filterValue === 'all') filteredSell = data
+  if (filterValue === 'order-completed')
+    filteredSell = data.filter((s) => s.status === 'order completed')
+  if (filterValue === 'processing')
+    filteredSell = data.filter((s) => s.status === 'processing')
+
+  //SORTING
+  const sortBy = searchParams.get('sortBy') || 'startDate-asc'
+  const [field, direction] = sortBy.split('-')
+  const modifier = direction === 'asc' ? 1 : -1
+  const sortedSell = filteredSell.sort(
+    (a, b) => (a[field] - b[field]) * modifier,
+  )
 
   return (
     <Menus>
@@ -46,11 +67,11 @@ function SellTable() {
           <div>status</div>
         </Table.Header>
         <Table.Body
-          data={sell}
+          data={sortedSell}
           render={(sell) => <SellRow key={sell.id} sell={sell} />}
         />
         <Table.Footer>
-          <Pagination count={5} />
+          <Pagination count={count} />
         </Table.Footer>
       </Table>
     </Menus>

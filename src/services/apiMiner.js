@@ -6,3 +6,19 @@ export async function getMiners() {
 
 	return miner;
 }
+
+export async function updateMiners(id, newFee) {
+	const { data, error } = await supabase
+		.from('miner')
+		.update({ ...newFee })
+		.eq('id', id)
+		.select()
+		.order('created_at', { ascending: false })
+		.single();
+
+	if (error) {
+		console.error(error);
+		throw new Error('mine could not be updated');
+	}
+	return data;
+}

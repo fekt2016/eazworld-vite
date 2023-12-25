@@ -6,6 +6,7 @@ import Table from '../../ui/Table'
 import { devicesMax } from '../../styles/breakpoint'
 import { Link } from 'react-router-dom'
 import { updateSell } from '../../services/apiSell'
+import emailjs from '@emailjs/browser'
 
 const Status = styled.button`
   font-size: 1.6rem;
@@ -29,6 +30,7 @@ const Sell = styled.div`
 
   @media ${devicesMax.md} {
     font-size: 1.2rem;
+    display: none;
   }
 `
 
@@ -42,61 +44,61 @@ const Price = styled.div`
 `
 
 const Date = styled.div``
-const SellId = styled.div``
+const SellId = styled.div`
+  display: none;
+`
 
 function SellRow({ sell }) {
   const {
     id,
     created_at: date,
-    orderId: buyId,
+    orderId: sellId,
     currency,
     amountUSD,
-    payment,
+    amountGh,
+    mobile,
     status,
+    email,
+    payment,
+    name,
   } = sell
 
   function statusHandler() {
-    // console.log(userId)
-    // async function orderUser() {
-    //   const { data: users } = await supabase.from('users').select('*')
-    //   console.log(users)
-    // }
-    // orderUser()
     updateSell(id)
-    // emailjs
-    //   .send(
-    //     import.meta.env.VITE_YOUR_SERVICE_ID,
-    //     import.meta.env.VITE_YOUR_BUY_TEMPLATE_ID,
-    //     {
-    //       // from_name: user.user_metadata.firstName,
-    //       // recipient: user?.email,
-    //       // orderId,
-    //       // currency: data.currency,
-    //       // amountGh: data.amountGh,
-    //       // amountUSD: data.amountUSD,
-    //       // Payment: data.payment,
-    //       // TotaltoPay: data.totalToPay,
-    //       // wallet: data.wallet,
-    //       // miner: data.miner,
-    //     },
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result)
-    //     },
-    //     (error) => {
-    //       console.log(error.text)
-    //     },
-    //   )
+    emailjs
+      .send(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_SELL_TEMPLATE_ID,
+        {
+          recipient: email,
+          orderId: sellId,
+          currency: currency,
+          amountGh: amountGh,
+          amountUSD: amountUSD,
+          mobile: mobile,
+          name: name,
+        },
+      )
+      .then(
+        (result) => {
+          console.log(result)
+        },
+        (error) => {
+          console.log(error.text)
+        },
+      )
   }
   return (
     <>
       <Table.Row columns="repeat(6, 1fr)">
         <Date>{formatDate(date)}</Date>
-        <SellId>{buyId}</SellId>
+        <SellId>{sellId}</SellId>
         <Sell>{currency}</Sell>
         <Price>{amountUSD}</Price>
         <Price>{payment}</Price>
+        <div>{mobile}</div>
+        <div>{email}</div>
+
         <Status onClick={statusHandler}>
           <Link>{status}</Link>
         </Status>

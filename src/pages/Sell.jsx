@@ -1,4 +1,3 @@
-// import SellTable from '../features/sell/SellTable'
 import Heading from '../ui/Heading'
 import Row from '../ui/Row'
 import CreateSellForm from '../features/sell/CreateSellForm'

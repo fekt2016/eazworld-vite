@@ -9,9 +9,8 @@ import BuyTableOperations from '../features/buy/BuyTableOperations'
 import SellTableOperations from '../features/sell/SellTableOperations'
 import { NavLink } from 'react-router-dom'
 
+const StyledContainer = styled.div``
 const StyledBtn = styled.div`
-  /* width: 35%; */
-
   display: flex;
   gap: 20px;
   justify-content: space-between;
@@ -23,7 +22,7 @@ function History() {
   const [toggle, setToggle] = useState(1)
 
   return (
-    <>
+    <StyledContainer>
       <Row>
         <Row type="horizontal">
           <StyledBtn>
@@ -60,7 +59,7 @@ function History() {
         {toggle === 1 && <BuyTable />}
         {toggle === 2 && <SellTable />}
       </Row>
-    </>
+    </StyledContainer>
   )
 }
 

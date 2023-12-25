@@ -21,7 +21,7 @@ const rate = import.meta.env.VITE_RATE_BUY
 
 const BuyContainer = styled.div`
   display: flex;
-  padding: 1rem;
+  padding: 2rem;
   gap: 10px;
 
   @media ${devicesMax.md} {

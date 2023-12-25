@@ -1,6 +1,7 @@
 import { styled } from 'styled-components'
 import HeaderMenu from './HeaderMenu'
 import UserAvatar from '../authentication/UserAvatar'
+import Timer from '../../ui/Timer'
 
 const StyledHeader = styled.header`
   border-bottom: 1px solid var(--color-grey-100);
@@ -11,22 +12,24 @@ const StyledHeader = styled.header`
   justify-content: flex-end;
   padding-right: 4rem;
   position: sticky;
+  top: 0;
+  background-color: var(--color-white-0);
+  z-index: 100;
 `
-
-const StyledRight = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
+const P = styled.p`
+  font-size: 0.8rem;
 `
 
 function DashHeader() {
   return (
     <>
       <StyledHeader>
-        <StyledRight>
-          <UserAvatar />
-          <HeaderMenu />
-        </StyledRight>
+        <UserAvatar />
+        <HeaderMenu />
+        <div>
+          <Timer />
+          <P>TimeOut</P>
+        </div>
       </StyledHeader>
     </>
   )
