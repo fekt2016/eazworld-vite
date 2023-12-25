@@ -130,7 +130,6 @@ function CreateBuyForm() {
               required: 'Dollar amount is required',
               valueAsNumber: true,
               onChange: (evt) => {
-                // const rate = import.meta.env.VITE_RATE
                 const miner = getValues('miner') * rate
                 const cedis = evt.target.value * rate
                 const total = cedis + miner
@@ -166,7 +165,6 @@ function CreateBuyForm() {
             {...register('miner', {
               required: 'select miners fee',
               onChange: (evt) => {
-                // const rate = import.meta.env.VITE_RATE
                 const miner = evt.target.value * rate
                 const cedis = getValues('amountGh')
                 const total = miner + cedis
