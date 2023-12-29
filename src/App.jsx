@@ -48,7 +48,6 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="blog" element={<Blog />} />
           </Route>
-
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="recover-password" element={<RecoverPassword />} />

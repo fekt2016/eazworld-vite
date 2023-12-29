@@ -3,9 +3,18 @@ import { devicesMax } from '../styles/breakpoint'
 
 const Row = styled.div`
   display: flex;
- padding: 1rem;;
 
 
+${(props) =>
+  props.type === 'contact' &&
+  css`
+    justify-content: flex-start;
+    align-items: center;
+
+    @media ${devicesMax.md} {
+      flex-direction: column;
+    }
+  `}
   ${(props) =>
     props.type === 'horizontal' &&
     css`

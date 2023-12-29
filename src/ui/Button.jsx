@@ -33,10 +33,10 @@ const variations = {
   `,
   secondary: css`
     color: var(--color-white-0);
-    background: var(--color-black-900);
+    background: var(--color-sec-800);
 
     &:hover {
-      background-color: var(--color-grey-50);
+      background-color: var(--color-sec-500);
       color: var(--color-black-900);
     }
   `,

@@ -69,6 +69,7 @@ const GlobalStyles = createGlobalStyle`:root {
 
   //used
   --color-sec-800:#b08f3a;
+  --color-sec-500:#d0b56f;
   --color-sec-700: #ffc337;
 
 

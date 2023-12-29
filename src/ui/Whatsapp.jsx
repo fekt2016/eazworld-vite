@@ -6,6 +6,7 @@ const Container = styled.div`
   position: fixed;
   right: 2px;
   bottom: 2px;
+  z-index: 999999;
 
   display: flex;
   flex-direction: column;
@@ -15,7 +16,7 @@ const Container = styled.div`
 const Icon = styled(FaWhatsappSquare)`
   font-size: 4rem;
   color: var(--color-whatsapp-100);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
 `
 
 const StyledLink = styled(Link)``

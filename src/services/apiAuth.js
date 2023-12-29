@@ -11,6 +11,7 @@ export async function signup({ firstName, lastName, email, password, phone }) {
 				phone,
 				avatar: '',
 			},
+			emailRedirectTo: 'https//eazworld.com/login',
 		},
 	});
 	if (error) throw new Error(error.message);
