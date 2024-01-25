@@ -23,7 +23,6 @@ import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import Nav from './features/home/Nav'
 import Admin from './pages/Admin'
-import Whatsapp from './ui/whatsapp'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,7 +39,6 @@ function App() {
       <GlobalStyles />
 
       <BrowserRouter>
-        <Whatsapp />
         <Routes>
           <Route index element={<Navigate replace to="/home" />} />
           <Route element={<Nav />}>

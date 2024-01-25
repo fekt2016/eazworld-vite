@@ -8,6 +8,7 @@ import Footer from '../features/home/Footer'
 import NewSteps from '../features/home/NewSteps'
 import Safe from '../features/home/Safe'
 import CookieConsent from 'react-cookie-consent'
+import Whatsapp from '../ui/Whatsapp'
 
 function Home() {
   return (
@@ -31,6 +32,7 @@ function Home() {
         This website uses cookies to enhance the user experience.{' '}
         <span style={{ fontSize: '10px' }}>This bit of text is smaller :O</span>
       </CookieConsent>
+      <Whatsapp />
     </>
   )
 }
