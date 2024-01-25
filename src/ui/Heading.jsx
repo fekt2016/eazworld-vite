@@ -9,7 +9,7 @@ const Heading = styled.h1`
       font-weight: 600;
       text-transform: capitalize;
       text-align: center;
-
+      font-family: 'Lato', Courier, monospace;
       @media ${devicesMax.md} {
         font-size: 2.5rem;
       }

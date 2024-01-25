@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 import styled from 'styled-components'
-import { formatDate } from '../../utils/helpers'
+import { formatTime } from '../../utils/helpers'
 
 import Table from '../../ui/Table'
 import { devicesMax } from '../../styles/breakpoint'
@@ -66,7 +66,7 @@ function SellRow({ sell }) {
   return (
     <>
       <Table.Row columns="repeat(6, 1fr)">
-        <Date>{formatDate(date)}</Date>
+        <Date>{formatTime(date)}</Date>
         <SellId>{buyId}</SellId>
         <Sell>{currency}</Sell>
         <Price>{amountUSD}</Price>

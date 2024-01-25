@@ -72,7 +72,6 @@ function App() {
               path="sell-currentOrder/:orderId"
               element={<SellCurrentOrder />}
             />
-
             <Route path="settings" element={<Settings />} />
             <Route path="history" element={<History />} />
             <Route path="prepaid" element={<Prepaid />} />

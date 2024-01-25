@@ -3,15 +3,20 @@ import Input from '../../ui/Input'
 import Button from '../../ui/Button'
 import { useState } from 'react'
 import FormRowVertical from '../../ui/FormRowVertical'
-import { emailLink } from '../../services/apiAuth'
+import supabase from '../../services/supabase'
+// import { emailLink } from '../../services/apiAuth'
 
 function RecoverForm() {
   const [email, setEmail] = useState('')
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     console.log(email)
-    emailLink(email)
+    let { data, error } = await supabase.auth.resetPasswordForEmail(
+      'mapag25220@wuzak.com',
+    )
+    // emailLink(email)
+    console.log(data, error)
   }
   return (
     <Form onSubmit={handleSubmit}>

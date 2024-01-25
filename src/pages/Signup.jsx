@@ -27,7 +27,7 @@ function Signup() {
       <Link to="/">
         <Logo img="/4.png" sizes="medium" />
       </Link>
-      <Heading as="h1">sign up and trade</Heading>
+      <Heading as="h1">sign up</Heading>
       <SignupForm />
     </SignupLayout>
   )

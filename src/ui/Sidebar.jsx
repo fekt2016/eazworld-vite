@@ -37,8 +37,15 @@ function Sidebar({ sidebar, showSidebar }) {
 
       if (!session.session) return navigate('/login')
 
-      const { data: user } = await supabase.from('users').select('*').single()
-      setUser(user)
+      const { session: data } = session
+      const { user: curUser } = data
+
+      const { data: user } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', curUser.id)
+
+      setUser(user[0])
     }
 
     getUser()

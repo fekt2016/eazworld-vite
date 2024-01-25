@@ -7,6 +7,7 @@ import { GiPayMoney } from 'react-icons/gi'
 import Pagination from '../../ui/Pagination'
 import styled from 'styled-components'
 import { devicesMax } from '../../styles/breakpoint'
+
 const StyledD = styled.div`
   @media ${devicesMax.md} {
     display: none;
@@ -33,17 +34,15 @@ function ManageOrderBuy() {
         />
       </div>
       <div>
-        <Table type="table" columns="repeat(9, 1fr)">
+        <Table type="table" columns="repeat(7, 1fr)">
           <Table.Header role="row">
-            <div>date</div>
-            <div>id</div>
-            <StyledD>currency</StyledD>
+            <StyledD>date</StyledD>
+            <StyledD>id</StyledD>
             <StyledD>amountUsd</StyledD>
-            <StyledD>amountGh</StyledD>
             <StyledD>total am.</StyledD>
-            <StyledD>payment</StyledD>
-            <div>email</div>
-            <div>status</div>
+            <StyledD>wallet</StyledD>
+            <StyledD>email</StyledD>
+            <StyledD>status</StyledD>
           </Table.Header>
 
           <Table.Body

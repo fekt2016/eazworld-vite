@@ -140,6 +140,7 @@ function BuyCurrentOrder() {
   const [name, setName] = useState('')
   const [error, setError] = useState()
   const [orderId, setOrderId] = useState('')
+  const [isDisabled, setIsDisabled] = useState(false)
 
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
@@ -209,6 +210,7 @@ function BuyCurrentOrder() {
           console.log(error.text)
         },
       )
+    setIsDisabled(true)
   }
 
   return (
@@ -316,7 +318,9 @@ function BuyCurrentOrder() {
                   </FormRow>
 
                   <FormRow>
-                    <Button>{isCreating ? <SpinnerMini /> : 'Submit'}</Button>
+                    <Button disabled={isDisabled}>
+                      {isCreating ? <SpinnerMini /> : 'Submit'}
+                    </Button>
                   </FormRow>
                 </Form>
               </div>

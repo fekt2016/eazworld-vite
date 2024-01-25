@@ -30,12 +30,14 @@ export const formatCurrency = (value) =>
 	);
 
 export function formatDate(dateStr) {
-	return new Intl.DateTimeFormat('en', {
+	const date = new Intl.DateTimeFormat('en', {
 		day: 'numeric',
 		month: 'short',
-		// hour: "2-digit",
-		// minute: "2-digit",
+		hour: '2-digit',
+		minute: '2-digit',
 	}).format(new Date(dateStr));
+
+	return date;
 }
 
 export const randomOrderId = () => {
@@ -45,3 +47,30 @@ export const randomOrderId = () => {
 	const orderId = `EW${seq}`;
 	return orderId;
 };
+
+export function formatTime(date) {
+	const at = Number(new Date(date));
+	const dateNow = Number(new Date());
+
+	const calcDayspassed = (date1, date2) =>
+		Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+	const daysPassed = calcDayspassed(dateNow, at);
+
+	if (daysPassed === 0) return 'Today';
+	if (daysPassed === 1) return 'Yesterday';
+	if (daysPassed <= 7) return `${daysPassed} days ago`;
+	// else {
+	// 	// const now = new Date(date);
+	// 	// const day = `${now.getDate()}`.padStart(2, 0);
+	// 	// const month = `${now.getMonth() + 1}`.padStart(2, 0);
+	// 	// const year = now.getFullYear();
+	// 	// return `${day}/${month}/${year}`;
+	// }
+	return new Intl.DateTimeFormat('en', {
+		day: 'numeric',
+		month: 'short',
+		hour: '2-digit',
+		minute: '2-digit',
+	}).format(new Date(date));
+}

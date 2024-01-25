@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 import styled from 'styled-components'
-import { formatDate } from '../../utils/helpers'
+import { formatTime } from '../../utils/helpers'
 import Table from '../../ui/Table'
 import { devicesMax } from '../../styles/breakpoint'
 import { Link } from 'react-router-dom'
@@ -72,7 +72,7 @@ function BuyRow({ buy }) {
   return (
     <>
       <Table.Row columns="repeat(7, 1fr)">
-        <Date>{formatDate(date)}</Date>
+        <Date>{formatTime(date)}</Date>
         <BuyId>
           <Link to={`/currentOrder/${buyId}`}>{buyId}</Link>
         </BuyId>

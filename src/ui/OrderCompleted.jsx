@@ -95,10 +95,7 @@ function OrderPage() {
       <StyledBox>
         <span>Order No.: EW9774778</span>
       </StyledBox>
-      <Img
-        src="../../public/bitcoin-cash-cryptocurrency.256x253.png"
-        alt="btc"
-      />
+      <Img src="../../bitcoin-cash-cryptocurrency.256x253.png" alt="btc" />
       <StyledP>
         <p>Wallet address to receive fund</p>
       </StyledP>

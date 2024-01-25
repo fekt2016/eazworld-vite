@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { formatDate } from '../../utils/helpers'
+import { formatTime } from '../../utils/helpers'
 import Table from '../../ui/Table'
 import { devicesMax } from '../../styles/breakpoint'
 import { Link } from 'react-router-dom'
@@ -23,17 +23,17 @@ const Status = styled.button`
   }
 `
 
-const Buy = styled.div`
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--color-grey-600);
-  font-family: 'Sono';
-  text-transform: capitalize;
-  @media ${devicesMax.md} {
-    font-size: 1.2rem;
-    display: none;
-  }
-`
+// const Buy = styled.div`
+//   font-size: 1.6rem;
+//   font-weight: 600;
+//   color: var(--color-grey-600);
+//   font-family: 'Sono';
+//   text-transform: capitalize;
+//   @media ${devicesMax.md} {
+//     font-size: 1.2rem;
+//     display: none;
+//   }
+// `
 
 const Price = styled.div`
   font-family: 'Sono';
@@ -45,8 +45,14 @@ const Price = styled.div`
 `
 
 const Payment = styled.div`
+  overflow: hidden;
+
   @media ${devicesMax.md} {
     display: none;
+  }
+
+  &:hover {
+    overflow: visible;
   }
 `
 const Date = styled.div``
@@ -58,7 +64,6 @@ function AdminBuyRow({ buy }) {
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
   const {
     id,
-    created_at: date,
     orderId: buyId,
     amountUSD,
     amountGh,
@@ -99,17 +104,17 @@ function AdminBuyRow({ buy }) {
 
   return (
     <>
-      <Table.Row columns="repeat(9, 1fr)">
-        <Date>{formatDate(date)}</Date>
+      <Table.Row columns="repeat(7, 1fr)">
+        <Date>{formatTime(buy.created_at)}</Date>
         <BuyId>
           <Link to={`/currentOrder/${buyId}`}>{buyId}</Link>
         </BuyId>
-        <Buy>{currency}</Buy>
+        {/* <Buy>{currency}</Buy> */}
         <Price>&#36;{amountUSD}</Price>
-        <Price>&#8373;{amountGh}</Price>
+        {/* <Price>&#8373;{amountGh}</Price> */}
         <Price>&#8373;{totalToPay}</Price>
-        <Payment>{payment}</Payment>
-        <div>{email}</div>
+        <Payment>{wallet}</Payment>
+        <Payment>{email}</Payment>
         <Status status={status} onClick={statusHandler}>
           {status}
         </Status>

@@ -11,7 +11,8 @@ export async function signup({ firstName, lastName, email, password, phone }) {
 				phone,
 				avatar: '',
 			},
-			emailRedirectTo: 'https//eazworld.com/login',
+			emailRedirectTo:
+				'https//eazworld.com/login?message=Congratulations! Your email now is confirmed.',
 		},
 	});
 	if (error) throw new Error(error.message);
@@ -25,7 +26,6 @@ export async function login({ email, password }) {
 	if (error) {
 		throw new Error(error.message);
 	}
-	console.log(data);
 	return data;
 }
 
@@ -95,10 +95,6 @@ export async function resetPassword({ email, password }) {
 
 export async function emailLink(email) {
 	console.log(email);
-	const { data, error } = await supabase.auth.resetPasswordForEmail(email);
-
-	if (error) throw new Error(error.message);
-	return data;
 }
 
 export async function getUser(id) {
