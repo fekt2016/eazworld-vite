@@ -1,5 +1,7 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/eazworld/public_html/eazworld
-    - /bin/cp -a * $DEPLOYPATH #Copy specific file to destination from root
+   deployment:
+  tasks:
+    - export DEPLOYPATH=/home/eazworld/public_html/
+    - /bin/cp index.html $DEPLOYPATH
 
