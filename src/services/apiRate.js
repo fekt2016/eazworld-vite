@@ -22,3 +22,9 @@ export async function updateRate(id, newRate) {
 	}
 	return data;
 }
+
+export async function getRAateByCol() {
+	const { data, error } = await supabase.from('rate').select();
+
+	return { data, error };
+}

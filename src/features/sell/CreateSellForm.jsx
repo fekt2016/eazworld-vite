@@ -10,26 +10,35 @@ import FormRow from '../../ui/FormRow'
 import { devicesMax } from '../../styles/breakpoint'
 import { useNavigate } from 'react-router-dom'
 import Select from '../../ui/Select'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import { useUser } from '../authentication/useUser'
 import { randomOrderId } from '../../utils/helpers'
 import SpinnerMini from '../../ui/SpinnerMini'
+import News from '../../ui/News'
+import supabase from '../../services/supabase'
 
-const rate = import.meta.env.VITE_RATE_SELL
+// const rate = import.meta.env.VITE_RATE_SELL
 
 const SellContainer = styled.div`
   display: flex;
-  padding: 1rem;
+  justify-content: center;
+  align-items: stretch;
   gap: 10px;
+  padding: 6rem;
+
   @media ${devicesMax.md} {
+    padding: 2rem;
     flex-direction: column;
   }
+
+  @media ${devicesMax.sm} {
+    padding: 1rem;
+  }
 `
-const Advert = styled.div`
-  flex: 1;
-`
+
 const StyledTerm = styled.div`
+  margin-top: 2rem;
   width: 50%;
   text-align: center;
   padding: 1rem;
@@ -37,6 +46,7 @@ const StyledTerm = styled.div`
   box-shadow: var(--shadow-sm);
   background-color: var(--color-primary-300);
   border-radius: var(--border-radius-lg);
+
   @media ${devicesMax.md} {
     width: 100%;
   }
@@ -45,8 +55,24 @@ const StyledTerm = styled.div`
 function CreateSellForm() {
   const { createSell, isCreating } = useCreateSell()
   const { user } = useUser()
+  const [rate, setRate] = useState(0)
 
   const navigate = useNavigate()
+  useEffect(() => {
+    const fetchRate = async function () {
+      const { data, error } = await supabase
+        .from('rate')
+        .select('*')
+        .eq('currency', 'bitcoin')
+      if (error) {
+        console.log(error)
+      }
+      const rate = data[0]
+      if (rate) setRate(rate.sell)
+    }
+
+    fetchRate()
+  }, [])
 
   const {
     register,
@@ -189,49 +215,49 @@ function CreateSellForm() {
             <option>Merchant</option>
           </Select>
         </FormRow>
-        <FormRow>
-          <Input
-            type="hidden"
-            id="status"
-            {...register('status')}
-            defaultValue={'processing'}
-          />
-        </FormRow>
-        <FormRow>
-          <Input
-            type="hidden"
-            id="orderId"
-            {...register('orderId')}
-            defaultValue={randomOrderId()}
-          />
-        </FormRow>
-        <FormRow>
-          <Input
-            type="hidden"
-            id="wallet"
-            {...register('wallet')}
-            defaultValue={'bc1q73rd9uh6279pp2tcew5t0e5s72wr6d4pyxsrsw'}
-          />
-        </FormRow>
-        <FormRow>
-          <Input
-            type="hidden"
-            id="email"
-            {...register('email')}
-            defaultValue={user?.email}
-          />
-        </FormRow>
+
+        <Input
+          type="hidden"
+          id="status"
+          {...register('status')}
+          defaultValue={'processing'}
+        />
+
+        <Input
+          type="hidden"
+          id="orderId"
+          {...register('orderId')}
+          defaultValue={randomOrderId()}
+        />
+
+        <Input
+          type="hidden"
+          id="wallet"
+          {...register('wallet')}
+          defaultValue={'bc1q73rd9uh6279pp2tcew5t0e5s72wr6d4pyxsrsw'}
+        />
+
+        <Input
+          type="hidden"
+          id="email"
+          {...register('email')}
+          defaultValue={user?.email}
+        />
+
         <StyledTerm>
-          <strong>Selling Terms: </strong>By clicking the order button is that
-          you have agreed that all information provide are correct and you
-          should be held liable detail s submitted
+          <strong>Selling Terms: </strong>By clicking the order button, you have
+          agreed that all information provide are correct and you should be held
+          liable detail s submitted
         </StyledTerm>
 
         <FormRow>
-          <Button>{isCreating ? <SpinnerMini /> : 'Place an Order'}</Button>
+          <Button disabled={isCreating}>
+            {isCreating ? <SpinnerMini /> : 'Place an Order'}
+          </Button>
         </FormRow>
       </Form>
-      <Advert>advert</Advert>
+      <News />
+
       <DevTool control={control} />
     </SellContainer>
   )

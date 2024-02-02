@@ -4,6 +4,7 @@ import { formatTime } from '../../utils/helpers'
 import Table from '../../ui/Table'
 import { devicesMax } from '../../styles/breakpoint'
 import { Link } from 'react-router-dom'
+// import Menus from '../../ui/Menus'
 
 const Status = styled.button`
   font-size: 1rem;
@@ -84,13 +85,12 @@ function BuyRow({ buy }) {
         <Status>
           <Link to={`/buy-currentOrder/${buyId}`}>{status}</Link>
         </Status>
-
         {/* <Menus.Menu>
           <Menus.Toggle id={buyId} />
           <Menus.List id={buyId}>
             {buyId}
-            <Price1>&#8373;{amountGh}</Price1>
-            <Price1>&#36;{amountUSD}</Price1>
+            <div>&#8373;{amountGh}</div>
+            <div>&#36;{amountUSD}</div>
             <Menus.Button>Duplicate</Menus.Button>
             <Menus.Button>edit</Menus.Button>
             <Menus.Button>delete</Menus.Button>

@@ -9,6 +9,7 @@ const Form = styled.form`
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
 
+
   ${(props) =>
     props.type === 'regular' &&
     css`
@@ -34,25 +35,18 @@ const Form = styled.form`
     props.type === 'signup' &&
     css`
       width: 100%;
-
       padding: 2rem;
-      /* Box */
-
-      @media ${devicesMax.md} {
-        /* padding: 6rem; */
-      }
     `}
-    ${(props) =>
-      props.type === 'buy' &&
-      css`
+  ${(props) =>
+    props.type === 'buy' &&
+    css`
         flex: 2;
-        padding: 2rem;
-        /* Box */
-        box-shadow: var(--shadow-lg);
-
-        @media ${devicesMax.md} {
-          padding: 2.4rem 1rem;
-          width: 100%;
+        padding: 4rem;
+        box-shadow: var(--shadow-md);
+        background-color: var(--color-white-0);
+        padding: 2.4rem 1rem;
+        width: 100%;
+        order: 2;
         }
       `}
 

@@ -7,6 +7,7 @@ import ManageRate from './rate/ManageRate'
 import { devicesMax } from '../../styles/breakpoint'
 import Customers from '../admin/Customers'
 import Miner from './mine/Miner'
+import Payment from './Payment'
 
 const StyledHeader = styled.header`
   background-color: var(--color-white-0);
@@ -40,6 +41,12 @@ const Btn = styled.button`
         background-color: var(--color-indigo-100);
         color: var(--color-indigo-700);
       `}
+      ${(props) =>
+        props.type === 'pay' &&
+        css`
+          background-color: var(--color-red-500);
+          color: var(--color-red-700);
+        `}
 `
 
 const Main = styled.div`
@@ -66,6 +73,9 @@ function AdminHeader() {
         <Btn type="rate" onClick={() => setToggle(4)}>
           Customers
         </Btn>
+        <Btn type="pay" onClick={() => setToggle(5)}>
+          Payment
+        </Btn>
       </StyledHeader>
 
       {toggle === 1 && (
@@ -88,6 +98,11 @@ function AdminHeader() {
       {toggle === 4 && (
         <Main>
           <Customers />
+        </Main>
+      )}
+      {toggle === 5 && (
+        <Main>
+          <Payment />
         </Main>
       )}
     </>

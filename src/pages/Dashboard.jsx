@@ -36,7 +36,7 @@ function Dashboard() {
 
     getUser()
   }, [navigate])
-  console.log(user)
+
   return (
     <>
       <Row type="horizontal">

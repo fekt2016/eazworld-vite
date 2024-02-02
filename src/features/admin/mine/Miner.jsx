@@ -15,7 +15,6 @@ function Miner() {
   if (isLoading) return <p>loading...</p>
   console.log(miner)
   const value = miner[0]
-  console.log(value.id)
 
   function onSubmit(data) {
     console.log(data)

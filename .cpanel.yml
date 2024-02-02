@@ -2,6 +2,6 @@ deployment:
   tasks:
    deployment:
   tasks:
-    - export DEPLOYPATH=/home/eazworld/public_html/
+    - export DEPLOYPATH=/home2/eazworld/public_html/
     - /bin/cp index.html $DEPLOYPATH
 

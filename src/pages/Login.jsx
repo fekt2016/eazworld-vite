@@ -10,13 +10,14 @@ const LoginLayout = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-grey-50);
+  background-color: var(--color-black-900);
 `
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--color-white-0);
 
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 7px;

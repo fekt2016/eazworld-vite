@@ -3,36 +3,42 @@ import styled from 'styled-components'
 import Input from '../../ui/Input'
 import Form from '../../ui/Form'
 import Button from '../../ui/Button'
+import Spinner from '../../ui/Spinner'
+import FormRow from '../../ui/FormRow'
+import emailjs from '@emailjs/browser'
+import Select from '../../ui/Select'
+import supabase from '../../services/supabase'
+
 import { useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
-import FormRow from '../../ui/FormRow'
 import { useNavigate } from 'react-router-dom'
 import { useCreateBuy } from '../buy/useCreateBuy'
 import { devicesMax } from '../../styles/breakpoint'
-import { useEffect } from 'react'
-import emailjs from '@emailjs/browser'
+import { useEffect, useState } from 'react'
 import { useUser } from '../authentication/useUser'
 import { randomOrderId } from '../../utils/helpers'
-import Select from '../../ui/Select'
 import { useMiner } from '../miner/useMiner'
-import Spinner from '../../ui/Spinner'
 
-const rate = import.meta.env.VITE_RATE_BUY
+import News from '../../ui/News'
 
 const BuyContainer = styled.div`
   display: flex;
-  padding: 2rem;
+  justify-content: center;
+  align-items: stretch;
   gap: 10px;
-
+  padding: 2rem 6rem;
+  background-color: aliceblue;
   @media ${devicesMax.md} {
+    padding: 2rem;
     flex-direction: column;
   }
-`
-const Advert = styled.div`
-  flex: 1;
+  @media ${devicesMax.sm} {
+    padding: 1rem;
+  }
 `
 
 const StyledTerm = styled.div`
+  margin-top: 2rem;
   width: 50%;
   text-align: center;
   padding: 1rem;
@@ -49,8 +55,25 @@ function CreateBuyForm() {
   const { createBuy, isCreating } = useCreateBuy()
   const { user } = useUser()
   const { isLoading, data } = useMiner()
+  const [rate, setRate] = useState(0)
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchRate = async function () {
+      const { data, error } = await supabase
+        .from('rate')
+        .select('*')
+        .eq('currency', 'bitcoin')
+      if (error) {
+        console.log(error)
+      }
+      const rate = data[0]
+      if (rate) setRate(rate.buy)
+    }
+
+    fetchRate()
+  }, [])
 
   const {
     register,
@@ -125,15 +148,16 @@ function CreateBuyForm() {
             autoFocus
             type="number"
             step="any"
+            min="10"
             id="amountUSD"
             {...register('amountUSD', {
               required: 'Dollar amount is required',
               valueAsNumber: true,
+              min: 10,
               onChange: (evt) => {
                 const miner = getValues('miner') * rate
                 const cedis = evt.target.value * rate
                 const total = cedis + miner
-
                 if (!isNaN(cedis && total)) {
                   setValue('amountGh', cedis)
                   setValue('totalToPay', total)
@@ -150,11 +174,18 @@ function CreateBuyForm() {
             {...register('amountGh', {
               required: 'Cedis amount is required',
               valueAsNumber: true,
+              min: 125,
               onChange: (evt) => {
-                // const rate = import.meta.env.VITE_RATE
                 const dollar = evt.target.value / rate
+                const miner = getValues('miner') * rate
+                const total = dollar + miner
+
                 if (!isNaN(dollar)) {
                   setValue('amountUSD', dollar)
+                  setValue('totalToPay', total)
+                }
+                if (evt.target.value === 0) {
+                  setValue('amountUSD', 0)
                 }
               },
             })}
@@ -218,30 +249,28 @@ function CreateBuyForm() {
             })}
           />
         </FormRow>
-        <FormRow>
-          <Input
-            type="hidden"
-            id="status"
-            {...register('status')}
-            defaultValue={'add payment'}
-          />
-        </FormRow>
-        <FormRow>
-          <Input
-            type="hidden"
-            id="orderId"
-            {...register('orderId')}
-            defaultValue={randomOrderId()}
-          />
-        </FormRow>
-        <FormRow>
-          <Input
-            type="hidden"
-            id="email"
-            {...register('email')}
-            defaultValue={user?.email}
-          />
-        </FormRow>
+
+        <Input
+          type="hidden"
+          id="status"
+          {...register('status')}
+          defaultValue={'add payment'}
+        />
+
+        <Input
+          type="hidden"
+          id="orderId"
+          {...register('orderId')}
+          defaultValue={randomOrderId()}
+        />
+
+        <Input
+          type="hidden"
+          id="email"
+          {...register('email')}
+          defaultValue={user?.email}
+        />
+
         <StyledTerm>
           <strong>Buying Terms: </strong>
           By clicking the order button, You have agreed that all information
@@ -250,11 +279,17 @@ function CreateBuyForm() {
         </StyledTerm>
         <FormRow>
           <div>
-            <Button>{isCreating ? 'Submitting' : 'Place an Order'}</Button>
+            {rate === 0 ? (
+              ''
+            ) : (
+              <Button disabled={isCreating}>
+                {isCreating ? 'Submitting' : 'Place an Order'}
+              </Button>
+            )}
           </div>
         </FormRow>
       </Form>
-      <Advert>advert</Advert>
+      <News />
 
       <DevTool control={control} />
     </BuyContainer>

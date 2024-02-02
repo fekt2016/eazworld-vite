@@ -12,7 +12,7 @@ const StyledLi = styled.li`
   padding: 2rem;
   position: relative;
   border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
 
   display: flex;
   justify-content: end;

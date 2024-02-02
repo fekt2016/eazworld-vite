@@ -10,16 +10,17 @@ const StyledDashboardLayout = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  background-color: var(--color-grey-00);
 `
 
 const Main = styled.main`
   width: 100%;
   padding: 8rem 2rem 20rem 8rem;
   margin: 0 auto;
-  /* padding: 1rem 8rem 20rem 8rem; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: var(--color-grey-00);
 
   @media ${devicesMax.md} {
     padding-right: 2rem;

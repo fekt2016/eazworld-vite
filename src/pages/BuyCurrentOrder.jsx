@@ -22,6 +22,9 @@ const StyledOrder = styled.div`
   background-color: var(--color-black-200);
   border-radius: 7px;
   overflow: hidden;
+  background-color: red;
+
+  display: flex;
 `
 const HeadingBox = styled.div`
   background-color: var(--color-black-950);
@@ -216,117 +219,122 @@ function BuyCurrentOrder() {
   return (
     <>
       <StyledOrder>
-        <HeadingBox>
-          <H4>Buying preview</H4>
-        </HeadingBox>
-        {currentData?.map((item) => (
-          <DetailBox key={item?.orderId}>
-            <TextBox>
-              <h5>Thank you for your order!</h5>
-              <p>The order confirmation has been sent to your email address.</p>
-            </TextBox>
-            <StyledDetail>
-              <StyledSpan>Order Number: </StyledSpan>
-              {item?.orderId}
-            </StyledDetail>
-            <StyledDetail>
-              <StyledSpan>Currency: </StyledSpan>
-              {item?.currency}
-            </StyledDetail>
-            <StyledDetail>
-              <StyledSpan>Amount USD: </StyledSpan>${item?.amountUSD}
-            </StyledDetail>
-            <StyledDetail>
-              <StyledSpan>Amount Gh: </StyledSpan>&#8373;{item?.amountGh}
-            </StyledDetail>
-            <StyledDetail>
-              <StyledSpan>Sending fee: </StyledSpan>&#8373;
-              {item?.miner * 12.5}
-            </StyledDetail>
-            <StyledDetail>
-              <StyledSpan>payment Type: </StyledSpan>
-              {item?.payment}
-            </StyledDetail>
-            <StyledDetail>
-              <StyledSpan>Wallet </StyledSpan>
-              {item?.wallet}
-            </StyledDetail>
-            <StyledPay>
-              Send payment to the Number:
-              <SpanNum>0542011274 easyworldpc(Merchant)</SpanNum>
-              Total To pay: <ToPay>&#8373;{item?.totalToPay}</ToPay>
-            </StyledPay>
-            <P>
-              Make your order Number {item?.orderId} the reference when you are
-              sending the momo payment.
-            </P>
-            <P>For any other assistance contact 0244388190</P>
-          </DetailBox>
-        ))}
+        <div>
+          <HeadingBox>
+            <H4>Buying preview</H4>
+          </HeadingBox>
+          {currentData?.map((item) => (
+            <DetailBox key={item?.orderId}>
+              <TextBox>
+                <h5>Thank you for your order!</h5>
+                <p>
+                  The order confirmation has been sent to your email address.
+                </p>
+              </TextBox>
+              <StyledDetail>
+                <StyledSpan>Order Number: </StyledSpan>
+                {item?.orderId}
+              </StyledDetail>
+              <StyledDetail>
+                <StyledSpan>Currency: </StyledSpan>
+                {item?.currency}
+              </StyledDetail>
+              <StyledDetail>
+                <StyledSpan>Amount USD: </StyledSpan>${item?.amountUSD}
+              </StyledDetail>
+              <StyledDetail>
+                <StyledSpan>Amount Gh: </StyledSpan>&#8373;{item?.amountGh}
+              </StyledDetail>
+              <StyledDetail>
+                <StyledSpan>Sending fee: </StyledSpan>&#8373;
+                {item?.miner * 12.5}
+              </StyledDetail>
+              <StyledDetail>
+                <StyledSpan>payment Type: </StyledSpan>
+                {item?.payment}
+              </StyledDetail>
+              <StyledDetail>
+                <StyledSpan>Wallet </StyledSpan>
+                {item?.wallet}
+              </StyledDetail>
+              <StyledPay>
+                Send payment to the Number:
+                <SpanNum>0542011274 easyworldpc(Merchant)</SpanNum>
+                Total To pay: <ToPay>&#8373;{item?.totalToPay}</ToPay>
+              </StyledPay>
+              <P>
+                Make your order Number {item?.orderId} the reference when you
+                are sending the momo payment.
+              </P>
+              <P>For any other assistance contact 0244388190</P>
+            </DetailBox>
+          ))}
 
-        <StyledBtn>
-          <Link to="/history">
-            <Button>Order history</Button>
-          </Link>
+          <StyledBtn>
+            <Link to="/history">
+              <Button>Order history</Button>
+            </Link>
 
-          <Modal>
-            <Modal.Open opens="pay">
-              <Button>Add Payment</Button>
-            </Modal.Open>
-            <Modal.Window name="pay">
-              <div>
-                <H5>payment for order Id: {order_id}</H5>
-                {error && <Error>{error.message}</Error>}
-                <Form onSubmit={handleSubmit}>
-                  <FormRow label="Momo Number">
-                    <Input
-                      type="tel"
-                      onChange={(e) => setPhoneNum(e.target.value)}
-                    />
-                  </FormRow>
-                  <FormRow label="Momo Name">
-                    <Input
-                      type="text"
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </FormRow>
-                  <FormRow label="Account Type">
-                    <Select onChange={(e) => setAccount(e.target.value)}>
-                      <option>Merchant</option>
-                      <option>Subscriber</option>
-                    </Select>
-                  </FormRow>
-                  <FormRow label="Amount sent">
-                    <Input
-                      type="number"
-                      step="any"
-                      onChange={(e) => setAmount(e.target.value)}
-                    />
-                  </FormRow>
-                  <FormRow label="Transaction No.">
-                    <Input
-                      type="number"
-                      onChange={(e) => setTransaction(e.target.value)}
-                      maxLength="11"
-                    />
-                  </FormRow>
-                  <FormRow label="Order Id">
-                    <Input
-                      type="text"
-                      onChange={(e) => setOrderId(e.target.value)}
-                    />
-                  </FormRow>
+            <Modal>
+              <Modal.Open opens="pay">
+                <Button>Add Payment</Button>
+              </Modal.Open>
+              <Modal.Window name="pay">
+                <div>
+                  <H5>payment for order Id: {order_id}</H5>
+                  {error && <Error>{error.message}</Error>}
+                  <Form onSubmit={handleSubmit}>
+                    <FormRow label="Momo Number">
+                      <Input
+                        type="tel"
+                        onChange={(e) => setPhoneNum(e.target.value)}
+                      />
+                    </FormRow>
+                    <FormRow label="Momo Name">
+                      <Input
+                        type="text"
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </FormRow>
+                    <FormRow label="Account Type">
+                      <Select onChange={(e) => setAccount(e.target.value)}>
+                        <option>Merchant</option>
+                        <option>Subscriber</option>
+                      </Select>
+                    </FormRow>
+                    <FormRow label="Amount sent">
+                      <Input
+                        type="number"
+                        step="any"
+                        onChange={(e) => setAmount(e.target.value)}
+                      />
+                    </FormRow>
+                    <FormRow label="Transaction No.">
+                      <Input
+                        type="number"
+                        onChange={(e) => setTransaction(e.target.value)}
+                        maxLength="11"
+                      />
+                    </FormRow>
+                    <FormRow label="Order Id">
+                      <Input
+                        type="text"
+                        onChange={(e) => setOrderId(e.target.value)}
+                      />
+                    </FormRow>
 
-                  <FormRow>
-                    <Button disabled={isDisabled}>
-                      {isCreating ? <SpinnerMini /> : 'Submit'}
-                    </Button>
-                  </FormRow>
-                </Form>
-              </div>
-            </Modal.Window>
-          </Modal>
-        </StyledBtn>
+                    <FormRow>
+                      <Button disabled={isDisabled}>
+                        {isCreating ? <SpinnerMini /> : 'Submit'}
+                      </Button>
+                    </FormRow>
+                  </Form>
+                </div>
+              </Modal.Window>
+            </Modal>
+          </StyledBtn>
+        </div>
+        <div> test form</div>
       </StyledOrder>
     </>
   )

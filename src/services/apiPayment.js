@@ -1,22 +1,29 @@
-import supabase from "./supabase";
+import supabase from './supabase';
 
-// export async function getPayment() {
-// 	const { data: payment, error } = await supabase.from("payment").select("*");
+export async function getPayment() {
+	const {
+		data: payment,
+		error,
+		count,
+	} = await supabase
+		.from('payment')
+		.select('*', { count: 'exact' })
+		.order('created_at', { ascending: false });
 
-// 	if (error) {
-// 		console.log(error);
-// 		throw new Error("Payment could not be loaded");
-// 	}
+	if (error) {
+		console.log(error);
+		throw new Error('Payment could not be loaded');
+	}
 
-// 	return { payment, error };
-// }
+	return { payment, error, count };
+}
 
 export async function createPayment(newBuy) {
-	const { data, error } = await supabase.from("payment").insert([newBuy]);
+	const { data, error } = await supabase.from('payment').insert([newBuy]);
 
 	if (error) {
 		console.error(error);
-		throw new Error("Payment could not be loaded");
+		throw new Error('Payment could not be loaded');
 	}
 
 	return data;

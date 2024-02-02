@@ -43,10 +43,7 @@ function OrderDetails() {
         <span>SEND EXTACTLY: </span>
         <span>0.0033756 BTC</span>
       </StyledSend>
-      <Img
-        src="../../public/bitcoin-cash-cryptocurrency.256x253.png"
-        alt="btc"
-      />
+      <Img src="../../bitcoin-cash-cryptocurrency.256x253.png" alt="btc" />
       <Address>
         Bitcoin: bc1qmml275jpgxrmqm3qpy95vhxxpym0tz7sz0r8zg
         <Button variation="secondary" href="">
