@@ -18,22 +18,17 @@ import SpinnerMini from '../../ui/SpinnerMini'
 import News from '../../ui/News'
 import supabase from '../../services/supabase'
 
-// const rate = import.meta.env.VITE_RATE_SELL
-
 const SellContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: stretch;
   gap: 10px;
-  padding: 6rem;
 
   @media ${devicesMax.md} {
-    padding: 2rem;
     flex-direction: column;
   }
 
   @media ${devicesMax.sm} {
-    padding: 1rem;
   }
 `
 

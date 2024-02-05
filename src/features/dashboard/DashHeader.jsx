@@ -4,6 +4,7 @@ import UserAvatar from '../authentication/UserAvatar'
 import Timer from '../../ui/Timer'
 
 const StyledHeader = styled.header`
+  width: 100vw;
   border-bottom: 1px solid var(--color-grey-100);
   height: 7rem;
   display: flex;
@@ -22,16 +23,14 @@ const P = styled.p`
 
 function DashHeader() {
   return (
-    <>
-      <StyledHeader>
-        <UserAvatar />
-        <HeaderMenu />
-        <div>
-          <Timer />
-          <P>TimeOut</P>
-        </div>
-      </StyledHeader>
-    </>
+    <StyledHeader>
+      <UserAvatar />
+      <HeaderMenu />
+      <div>
+        <Timer />
+        <P>TimeOut</P>
+      </div>
+    </StyledHeader>
   )
 }
 

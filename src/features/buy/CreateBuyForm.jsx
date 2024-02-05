@@ -26,8 +26,8 @@ const BuyContainer = styled.div`
   justify-content: center;
   align-items: stretch;
   gap: 10px;
-  padding: 2rem 6rem;
-  background-color: aliceblue;
+  /* padding: 2rem 6rem; */
+
   @media ${devicesMax.md} {
     padding: 2rem;
     flex-direction: column;

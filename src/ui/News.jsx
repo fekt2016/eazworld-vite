@@ -1,44 +1,22 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { IoMdClose } from 'react-icons/io'
+
 import Heading from '../ui/Heading'
 import TestCard from './TestCard'
 
 import { useTest } from '../features/test/useTest'
-
-// const datalist = [
-//   {
-//     id: '001',
-//     name: 'yussif umar',
-//     image: '../../avatar.png',
-//     msg: 'i am really happy with your work',
-//     loc: 'accra',
-//   },
-//   {
-//     id: '003',
-//     name: 'sahada',
-//     image: '../../avatar.png',
-//     msg: 'great work',
-//     loc: 'nima',
-//   },
-// ]
+import CloseIcon from './CloseIcon'
 
 const StyledNews = styled.div`
   position: relative;
-
+  background-color: var(--color--blue-100);
   color: var(--color-grey-900);
   flex: 1;
   border-radius: 10px;
   padding: 2rem;
   order: 1;
 `
-const Icon = styled(IoMdClose)`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 3rem;
-  cursor: pointer;
-`
+
 const TextBox = styled.div`
   margin-bottom: 1rem;
   background-color: var(--color-blue-700);
@@ -47,7 +25,6 @@ const TextBox = styled.div`
   color: var(--color-blue-100);
 `
 const TestBox = styled.div`
-  background-color: var(--color-grey-200);
   padding: 1rem;
   border-radius: 10px;
 `
@@ -68,7 +45,7 @@ function News() {
   if (close === false)
     return (
       <StyledNews>
-        <Icon onClick={() => setClose(true)} />
+        <CloseIcon onClick={() => setClose(true)} />
         <HeadingBox>
           <Heading as="h4">urgent notice</Heading>
         </HeadingBox>
@@ -81,8 +58,7 @@ function News() {
           {dataList.map((item) => (
             <TestCard
               key={item.id}
-              name={item.name}
-              image={item.image}
+              fullName={item.fullName}
               msg={item.msg}
               loc={item.loc}
             />

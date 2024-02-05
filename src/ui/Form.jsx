@@ -10,26 +10,26 @@ const Form = styled.form`
   border-radius: var(--border-radius-md);
 
 
+
   ${(props) =>
     props.type === 'regular' &&
     css`
       padding: 2.4rem 4rem;
-
       width: 70%;
       @media ${devicesMax.md} {
         padding: 2.4rem 1rem;
       }
     `}
-    ${(props) =>
-      props.type === 'login' &&
-      css`
-        padding: 2.4rem 4rem;
-        width: 100%;
+  ${(props) =>
+    props.type === 'login' &&
+    css`
+      padding: 2.4rem 4rem;
+      width: 100%;
 
-        @media ${devicesMax.md} {
-          padding: 2.4rem 1rem;
-        }
-      `}
+      @media ${devicesMax.md} {
+        padding: 2.4rem 1rem;
+      }
+    `}
 
   ${(props) =>
     props.type === 'signup' &&
@@ -49,6 +49,13 @@ const Form = styled.form`
         order: 2;
         }
       `}
+  ${(props) =>
+    props.type === 'test' &&
+    css`
+      width: 100%;
+      background-color: var(--color-white-0);
+      padding: 2rem;
+    `}
 
 `
 Form.defaultProps = {

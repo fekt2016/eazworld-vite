@@ -6,7 +6,6 @@ import ButtonIcon from './ButtonIcon'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import supabase from '../services/supabase'
-// import AdminNav from '../features/admin/AdminNav'
 
 const StyledSidebar = styled.aside`
   padding: 3.2rem 1.4rem;
@@ -52,28 +51,6 @@ function Sidebar({ sidebar, showSidebar }) {
   }, [navigate, user])
 
   if (user?.role === 'admin') null
-
-  // {
-  //   return (
-  //     <StyledSidebar style={!sidebar ? { width: '60px' } : { width: ' 24rem' }}>
-  //       <ButtonIcon
-  //         type="navIcon"
-  //         onClick={showSidebar}
-  //         style={!sidebar ? { left: '62px' } : { left: '220px' }}
-  //       >
-  //         {sidebar ? (
-  //           <HiChevronLeft style={{ color: 'white' }} />
-  //         ) : (
-  //           <HiChevronRight style={{ color: 'white' }} />
-  //         )}
-  //       </ButtonIcon>
-  //       <SectionTop>
-  //         <Logo type="small" img="/4.png" />
-  //       </SectionTop>
-  //       <AdminNav sidebar={sidebar} />
-  //     </StyledSidebar>
-  //   )
-  // }
 
   if (user?.role === 'user') {
     return (

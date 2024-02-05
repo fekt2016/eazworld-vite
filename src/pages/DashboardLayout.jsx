@@ -1,29 +1,34 @@
 import { Outlet } from 'react-router-dom'
-import Sidebar from '../../ui/Sidebar'
-import DashHeader from './DashHeader'
+import Sidebar from '../ui/Sidebar'
+import DashHeader from '../features/dashboard/DashHeader'
 import { styled } from 'styled-components'
 import { useState } from 'react'
-import { devicesMax } from '../../styles/breakpoint'
+import { devicesMax } from '../styles/breakpoint'
 
 const StyledDashboardLayout = styled.div`
-  width: 100vw;
   display: flex;
+
   flex-direction: column;
+  align-items: stretch;
   position: relative;
-  background-color: var(--color-grey-00);
+  background-color: var(--color-grey-100);
 `
 
 const Main = styled.main`
-  width: 100%;
-  padding: 8rem 2rem 20rem 8rem;
-  margin: 0 auto;
+  padding: 0rem 2rem 0rem 8rem;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--color-grey-00);
 
   @media ${devicesMax.md} {
-    padding-right: 2rem;
+    padding-right: 1rem;
+    padding-left: 7rem;
+  }
+  @media ${devicesMax.md} {
+    padding-right: 0.5rem;
+    padding-left: 6rem;
   }
 `
 
@@ -48,8 +53,8 @@ function DashboardLayout() {
       />
       <Main>
         <Outlet />
+        <StyledP> &#169;2000 copyright eazworld All rights reserved</StyledP>
       </Main>
-      <StyledP> &#169;2000 copyright eazworld All rights reserved</StyledP>
     </StyledDashboardLayout>
   )
 }
