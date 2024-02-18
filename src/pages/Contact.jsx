@@ -9,6 +9,7 @@ import Button from '../ui/Button'
 import Address from '../ui/Address'
 import Social from '../ui/Social'
 import Support from '../ui/Support'
+import Maps from '../ui/Maps'
 
 const Container = styled.div`
   width: 100vw;
@@ -26,7 +27,7 @@ const Box = styled.div`
   background-color: var(--color-white-0);
   border-radius: 50px;
   overflow: hidden;
-  padding: 2rem;
+
   ${(props) =>
     props.type === 'form' &&
     css`
@@ -94,8 +95,8 @@ function Contact() {
         <Box type="address">
           <Address />
         </Box>
-        <Box type="map" style={{ height: '500px', width: '762.66px' }}>
-          {/* <Maps /> */}
+        <Box type="map">
+          <Maps />
         </Box>
         <Box type="social">
           <Social />

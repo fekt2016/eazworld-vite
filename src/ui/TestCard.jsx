@@ -3,20 +3,26 @@ import Heading from './Heading'
 import { useUser } from '../features/authentication/useUser'
 
 const Card = styled.div`
-  font-size: 1.2rem;
+  height: 8rem;
+  flex: 1;
+  font-size: 1.1rem;
   display: flex;
   justify-content: start;
   align-items: center;
+  display: flex;
   background-color: var(--color-green-100);
+
+  margin: 10px;
   padding: 1rem;
   text-transform: capitalize;
   border-radius: 10px;
+
   &:not(:last-child) {
     margin-bottom: 1rem;
   }
 `
 const Img = styled.img`
-  height: 5rem;
+  height: 4rem;
   margin-right: 2rem;
 `
 const Loc = styled.p`

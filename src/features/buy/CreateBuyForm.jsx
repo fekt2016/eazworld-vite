@@ -127,6 +127,7 @@ function CreateBuyForm() {
   if (isLoading) return <Spinner />
 
   const mine = data[0]
+  console.log(mine)
 
   return (
     <BuyContainer>

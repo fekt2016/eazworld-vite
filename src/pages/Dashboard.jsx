@@ -5,6 +5,12 @@ import Row from '../ui/Row'
 import supabase from '../services/supabase'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTest } from '../features/test/useTest'
+import TestCard from '../ui/TestCard'
+import Spinner from '../ui/Spinner'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 const StyledLink = styled(Link)`
   background-color: black;
@@ -12,10 +18,27 @@ const StyledLink = styled(Link)`
   color: var(--color-white-0);
   padding: 1rem;
 `
-
+const Test = styled.div`
+  padding: 3rem;
+  background-color: var(--color-black-200);
+`
 function Dashboard() {
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 2000,
+    cssEase: 'linear',
+    pauseOnHover: true,
+  }
+
   const [user, setUser] = useState('')
   const navigate = useNavigate()
+
+  const { data: dataList, isLoading } = useTest()
 
   useEffect(() => {
     const getUser = async () => {
@@ -37,6 +60,8 @@ function Dashboard() {
     getUser()
   }, [navigate])
 
+  if (isLoading) return <Spinner />
+
   return (
     <>
       <Row type="horizontal">
@@ -48,6 +73,18 @@ function Dashboard() {
       <Row>
         <PriceCard />
       </Row>
+      <Test>
+        <Slider {...settings}>
+          {dataList.map((item) => (
+            <TestCard
+              key={item.id}
+              fullName={item.fullName}
+              msg={item.msg}
+              loc={item.loc}
+            />
+          ))}
+        </Slider>
+      </Test>
     </>
   )
 }
