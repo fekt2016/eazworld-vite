@@ -18,6 +18,10 @@ const StyledHeader = styled.header`
   @media ${devicesMax.md} {
     font-size: 1rem;
   }
+  @media ${devicesMax.sm} {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 `
 const Btn = styled.button`
   padding: 0.5rem 1rem;

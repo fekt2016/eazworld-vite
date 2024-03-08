@@ -157,6 +157,11 @@ html {
   @media ${devicesMax.md} {
     font-size: 60%;
   }
+  @media ${devicesMax.sm} {
+    font-size: 55%;
+    width: 100vw;
+    background-color: blue;
+  }
 }
 
 body {

@@ -23,18 +23,6 @@ const Status = styled.button`
   }
 `
 
-// const Buy = styled.div`
-//   font-size: 1.6rem;
-//   font-weight: 600;
-//   color: var(--color-grey-600);
-//   font-family: 'Sono';
-//   text-transform: capitalize;
-//   @media ${devicesMax.md} {
-//     font-size: 1.2rem;
-//     display: none;
-//   }
-// `
-
 const Price = styled.div`
   font-family: 'Sono';
   font-weight: 600;
@@ -50,6 +38,13 @@ const Payment = styled.div`
   @media ${devicesMax.md} {
     display: none;
   }
+
+  &:hover {
+    overflow: visible;
+  }
+`
+const Wallet = styled.div`
+  overflow: hidden;
 
   &:hover {
     overflow: visible;
@@ -103,23 +98,24 @@ function AdminBuyRow({ buy }) {
   }
 
   return (
-    <>
-      <Table.Row columns="repeat(7, 1fr)">
-        <Date>{formatTime(buy.created_at)}</Date>
-        <BuyId>
-          <Link to={`/currentOrder/${buyId}`}>{buyId}</Link>
-        </BuyId>
-        {/* <Buy>{currency}</Buy> */}
-        <Price>&#36;{amountUSD}</Price>
-        {/* <Price>&#8373;{amountGh}</Price> */}
-        <Price>&#8373;{totalToPay}</Price>
-        <Payment>{wallet}</Payment>
-        <Payment>{email}</Payment>
-        <Status status={status} onClick={statusHandler}>
-          {status}
-        </Status>
-      </Table.Row>
-    </>
+    <Table.Row columns="repeat(8, 1fr)">
+      <Date>{formatTime(buy.created_at)}</Date>
+      <BuyId>
+        <Link to={`/currentOrder/${buyId}`}>{buyId}</Link>
+      </BuyId>
+      <Price>&#36;{amountUSD}</Price>
+      <Price>&#8373;{totalToPay}</Price>
+      <Wallet>{wallet}</Wallet>
+      <Payment>{email}</Payment>
+      <Status
+        status={status}
+        onClick={statusHandler}
+        disabled={status === 'order completed'}
+      >
+        {status}
+      </Status>
+      <button>delete</button>
+    </Table.Row>
   )
 }
 

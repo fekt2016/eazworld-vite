@@ -5,6 +5,7 @@ import AdminHeader from '../features/admin/AdminHeader'
 
 const StyledAdmin = styled.div`
   background-color: var(--color-grey-200);
+  padding: 1rem;
 `
 
 function Admin() {

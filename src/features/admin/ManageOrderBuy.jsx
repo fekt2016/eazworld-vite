@@ -34,7 +34,7 @@ function ManageOrderBuy() {
         />
       </div>
       <div>
-        <Table type="table" columns="repeat(7, 1fr)">
+        <Table type="table" columns="repeat(8, 1fr)">
           <Table.Header role="row">
             <StyledD>date</StyledD>
             <StyledD>id</StyledD>

@@ -11,10 +11,15 @@ const StyledItem = styled.li`
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
+  transition: all 0.4s ease;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &:hover {
+    transform: scale(1.4);
+  }
 `
 const StyledHeader = styled.header`
   display: flex;
@@ -70,9 +75,9 @@ const StyledPer = styled.span`
   font-size: 1.8rem;
 `
 
-function RateItem({ cryp }) {
+function RateItem({ cryp, inview }) {
   return (
-    <StyledItem>
+    <StyledItem inview={inview}>
       <StyledHeader>
         <StyledIma src={cryp.image} alt={cryp.id} />
         <StyledNavBuy href="/">buy</StyledNavBuy>

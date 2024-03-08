@@ -59,7 +59,7 @@ function Footer() {
   return (
     <StyledFooter>
       <AsideLogo>
-        <Imag src="/2I.png" alt="footer-log" />
+        <Imag src="/2.png" alt="footer-log" />
         <Media>
           <BsWhatsapp />
           <BsTwitter />

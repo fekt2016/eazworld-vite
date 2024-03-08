@@ -42,7 +42,7 @@ const StepContainer = styled.div`
       transform: scale(0.5);
 
       ${(props) =>
-        props.inView &&
+        props.inview &&
         css`
           transform: scale(1);
           opacity: 1;
@@ -62,7 +62,7 @@ const StepContainer = styled.div`
         transform: translateY(50%);
 
         ${(props) =>
-          props.inView &&
+          props.inview &&
           css`
             transform: translateY(0);
             opacity: 1;
@@ -78,7 +78,7 @@ const StepContainer = styled.div`
 
 
             ${(props) =>
-              props.inView &&
+              props.inview &&
               css`
                 width: 100%;
                 opacity: 1;
@@ -150,25 +150,25 @@ function NewSteps() {
   const { ref: stepRef, inView } = useInView()
   return (
     <Step ref={stepRef}>
-      <StepContainer inView={inView} type="create">
+      <StepContainer inview={inView} type="create">
         <Heading as="h2">create an account</Heading>
         <IconContainer>
           <AccountTree />
         </IconContainer>
       </StepContainer>
-      <StepContainer inView={inView} type="place">
+      <StepContainer inview={inView} type="place">
         <Heading as="h2">place an order</Heading>
         <IconContainer>
           <BoxArrowDown />
         </IconContainer>
       </StepContainer>
-      <StepContainer inView={inView} type="order">
+      <StepContainer inview={inView} type="order">
         <Heading as="h2">Complete an order</Heading>
         <IconContainer>
           <ThumbUp />
         </IconContainer>
       </StepContainer>
-      <StepContainer inView={inView} type="send">
+      <StepContainer inview={inView} type="send">
         <Heading as="h2">send payment</Heading>
         <IconContainer>
           <CheckFill />

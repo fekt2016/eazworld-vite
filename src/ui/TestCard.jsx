@@ -9,7 +9,6 @@ const Card = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  display: flex;
   background-color: var(--color-green-100);
 
   margin: 10px;

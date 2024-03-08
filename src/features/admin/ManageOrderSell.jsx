@@ -8,7 +8,7 @@ import Pagination from '../../ui/Pagination'
 import styled from 'styled-components'
 
 const StyledD = styled.div`
-  display: none;
+  /* display: none; */
 `
 
 function ManageOrderSell() {

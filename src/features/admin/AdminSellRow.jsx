@@ -45,7 +45,7 @@ const Price = styled.div`
 
 const Date = styled.div``
 const SellId = styled.div`
-  display: none;
+  /* display: none; */
 `
 
 function SellRow({ sell }) {
@@ -90,7 +90,7 @@ function SellRow({ sell }) {
   }
   return (
     <>
-      <Table.Row columns="repeat(6, 1fr)">
+      <Table.Row columns="repeat(8, 1fr)">
         <Date>{formatDate(date)}</Date>
         <SellId>{sellId}</SellId>
         <Sell>{currency}</Sell>
