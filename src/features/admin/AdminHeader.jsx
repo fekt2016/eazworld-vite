@@ -13,6 +13,7 @@ const StyledHeader = styled.header`
   background-color: var(--color-white-0);
   padding: 2rem;
   display: flex;
+  justify-content: space-between;
   gap: 2rem;
 
   @media ${devicesMax.md} {
@@ -39,23 +40,23 @@ const Btn = styled.button`
       background-color: var(--color-blue-100);
       color: var(--color-blue-700);
     `}
-    ${(props) =>
-      props.type === 'rate' &&
-      css`
-        background-color: var(--color-indigo-100);
-        color: var(--color-indigo-700);
-      `}
-      ${(props) =>
-        props.type === 'pay' &&
-        css`
-          background-color: var(--color-red-500);
-          color: var(--color-red-700);
-        `}
+  ${(props) =>
+    props.type === 'rate' &&
+    css`
+      background-color: var(--color-indigo-100);
+      color: var(--color-indigo-700);
+    `}
+  ${(props) =>
+    props.type === 'pay' &&
+    css`
+      background-color: var(--color-red-500);
+      color: var(--color-red-700);
+    `}
 `
 
 const Main = styled.div`
   background-color: var(--color-white-0);
-  margin: 2rem;
+  margin: 2rem 0;
   padding: 2rem;
 `
 function AdminHeader() {
