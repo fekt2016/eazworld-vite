@@ -72,16 +72,19 @@ export async function updateBuy(id) {
 		.from('buy')
 		.update({ status: 'order completed' })
 		.eq('id', id)
-		.select();
+		.select()
+		.single();
 
 	if (error) throw new Error('buy could not be updated');
-	if (data) {
-		console.log(data);
-	}
+
 	return { data, error };
 }
 
 export async function deleteBuy(id) {
-	const { error } = await supabase.from('buy').delete().eq('id', id);
+	console.log(id);
+
+	const { data, error } = await supabase.from('buy').delete().eq('id', id);
 	if (error) throw new Error('buy could not be updated');
+
+	return data;
 }

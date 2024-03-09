@@ -88,7 +88,6 @@ function Dashboard() {
   }, [navigate])
 
   if (isLoading) return <Spinner />
-  console.log(dataList)
 
   return (
     <>

@@ -160,7 +160,6 @@ html {
   @media ${devicesMax.sm} {
     font-size: 55%;
     width: 100vw;
-    background-color: blue;
   }
 }
 

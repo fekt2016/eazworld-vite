@@ -6,18 +6,17 @@ import Button from '../../../ui/Button'
 import Heading from '../../../ui/Heading'
 import { useMiners } from './useMiners'
 import { useUpdateMiners } from './useUpdateMiners'
+import Spinner from '../../../ui/Spinner'
 
 function Miner() {
   const { register, handleSubmit } = useForm()
   const { miner, isLoading } = useMiners()
   const { updateMiners } = useUpdateMiners()
 
-  if (isLoading) return <p>loading...</p>
-  console.log(miner)
+  if (isLoading) return <Spinner />
   const value = miner[0]
 
   function onSubmit(data) {
-    console.log(data)
     updateMiners({ newFee: { ...data }, id: value.id })
   }
   return (

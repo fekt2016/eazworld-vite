@@ -3,7 +3,10 @@ import { formatTime } from '../../utils/helpers'
 import Table from '../../ui/Table'
 import { devicesMax } from '../../styles/breakpoint'
 import { Link } from 'react-router-dom'
-import { updateBuy } from '../../services/apibuy'
+import { useDeleteBuy } from '../admin/useDeleteBuy'
+import SpinnerMini from '../../ui/SpinnerMini'
+import Button from '../../ui/Button'
+import { useUpdateBuy } from './useUpdateBuy'
 import emailjs from '@emailjs/browser'
 import { useEffect } from 'react'
 
@@ -56,6 +59,9 @@ const BuyId = styled.div`
 `
 
 function AdminBuyRow({ buy }) {
+  const { isDeleting, deleteBuy } = useDeleteBuy()
+  const { isLoading, mutate } = useUpdateBuy()
+
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
   const {
     id,
@@ -71,7 +77,7 @@ function AdminBuyRow({ buy }) {
   } = buy
 
   function statusHandler() {
-    updateBuy(id)
+    mutate(id)
     emailjs
       .send(
         import.meta.env.VITE_YOUR_SERVICE_ID,
@@ -97,6 +103,10 @@ function AdminBuyRow({ buy }) {
       )
   }
 
+  function handleDelete() {
+    deleteBuy(id)
+  }
+
   return (
     <Table.Row columns="repeat(8, 1fr)">
       <Date>{formatTime(buy.created_at)}</Date>
@@ -112,9 +122,11 @@ function AdminBuyRow({ buy }) {
         onClick={statusHandler}
         disabled={status === 'order completed'}
       >
-        {status}
+        {isLoading ? <SpinnerMini /> : `${status}`}
       </Status>
-      <button>delete</button>
+      <Button size="small" onClick={handleDelete}>
+        {isDeleting ? <SpinnerMini /> : 'Delete'}
+      </Button>
     </Table.Row>
   )
 }
