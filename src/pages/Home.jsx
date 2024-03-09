@@ -1,5 +1,5 @@
-import Header from '../features/home/Header'
-import Service from '../ui/Service'
+// import Header from '../features/home/Header'
+// import Service from '../ui/Service'
 import StyledSection from '../features/home/Section'
 import RateCard from '../features/home/RateCard'
 
@@ -8,12 +8,15 @@ import NewSteps from '../features/home/NewSteps'
 import Safe from '../features/home/Safe'
 
 import Whatsapp from '../ui/Whatsapp'
+import Photoslider from '../eazworldshop/photoslider'
 
 function Home() {
   return (
     <>
-      <Header />
-      <Service />
+      <Photoslider />
+      {/* <Header /> */}
+
+      {/* <Service /> */}
       <Safe />
       <RateCard />
       <StyledSection type="step">
