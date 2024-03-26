@@ -234,6 +234,7 @@ function CreateBuyForm() {
               Select Payment Method
             </option>
             <option value="Mtn Momo">MTN Momo</option>
+            <option value="Vodafone Cash">Vodafone Cash</option>
           </Select>
         </FormRow>
         <FormRow label="Wallet address" error={errors?.wallet?.message}>
