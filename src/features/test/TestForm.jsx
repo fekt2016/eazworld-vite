@@ -89,8 +89,8 @@ function TestForm({ fullName, payment }) {
           <TextBox>
             <Heading>Payment instruction below:</Heading>
             <p>
-              You will send the total to pay amount to the Merchant number:
-              0542011274(easyworldpc).
+              You will send the <strong>total to pay</strong> amount to the
+              Merchant number: 0542011274(easyworldpc).
             </p>
             <p>
               how to send money using MTN Mobile money shortcode(subscriber)
@@ -119,7 +119,46 @@ function TestForm({ fullName, payment }) {
             </List>
           </TextBox>
         ) : (
-          <TextBox>TELECEL INSTRUCTION COMING SOON</TextBox>
+          <TextBox>
+            <Heading>Payment instruction below:</Heading>
+            <p>
+              You will send the <strong>total to pay</strong> amount to the
+              Agent Number: G79398 easyworldpc(Agent).
+            </p>
+            <p>
+              how to send money using <strong>vodafone Cash</strong>
+              shortcode(subscriber)
+            </p>
+            <List>
+              <li>Dial *110# on your phone</li>
+              <li>Select withdraw Money and press send </li>
+              <li>Select From Agent and press Send</li>
+              <li>Enter our Agent Number and press send </li>
+              <li>Repeat the Number if it request again and press send</li>
+              <li>Enter the Amount and press Send</li>
+              <li>
+                Make sure the name on the account is (Eazyworldpc) before
+                Sending
+              </li>
+              <li> Enter reference details (This can be your name)</li>
+              <li>
+                Enter yourPIN after you have cross checked and confirm the
+                transaction by pressing Send
+              </li>
+              <li>
+                Check your SMS inbox for the confirmation messagethat contains
+                the Transaction ID
+              </li>
+              <li>
+                <strong>CAUTION:</strong>
+                <br />
+                Every step of the above instructions is a must follow.
+                <br />
+                If you ignore this, we may not be able to process your order or
+                refund you.
+              </li>
+            </List>
+          </TextBox>
         )}
       </StyledTest>
     )

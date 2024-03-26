@@ -171,6 +171,7 @@ const H5 = styled.h5`
 `
 
 function OrderDetail({ isLoading, buy }) {
+  console.log(buy)
   const [phoneNum, setPhoneNum] = useState('')
   const [amount, setAmount] = useState('')
   const [transaction, setTransaction] = useState('')
@@ -189,7 +190,8 @@ function OrderDetail({ isLoading, buy }) {
 
   if (isLoading) return <Spinner />
 
-  const { data: currentData } = buy
+  const currentData = buy[0]
+  console.log(currentData)
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -253,120 +255,118 @@ function OrderDetail({ isLoading, buy }) {
       <HeadingBox>
         <H4>Buying preview</H4>
       </HeadingBox>
-      {currentData?.map((item) => (
-        <DetailBox key={item?.orderId}>
-          <TextBox>
-            <h5>Thank you for your order!</h5>
-            <p>The order confirmation has been sent to your email address.</p>
-          </TextBox>
-          <StyledDetail>
-            <StyledSpan>Order Number: </StyledSpan>
-            <Ps>{item?.orderId}</Ps>
-          </StyledDetail>
-          <StyledDetail>
-            <StyledSpan>Currency: </StyledSpan>
-            <Ps>{item?.currency}</Ps>
-          </StyledDetail>
-          <StyledDetail>
-            <StyledSpan>Amount USD: </StyledSpan>
-            <Ps>${item?.amountUSD}</Ps>
-          </StyledDetail>
-          <StyledDetail>
-            <StyledSpan>Amount Gh: </StyledSpan>
-            <Ps>&#8373;{item?.amountGh}</Ps>
-          </StyledDetail>
-          <StyledDetail>
-            <StyledSpan>Sending fee: </StyledSpan>&#8373;
-            <Ps>{item?.miner * 12.5}</Ps>
-          </StyledDetail>
-          <StyledDetail>
-            <StyledSpan>payment Type: </StyledSpan>
-            <Ps>{item?.payment}</Ps>
-          </StyledDetail>
-          <StyledDetail>
-            <StyledSpan>Wallet </StyledSpan>
-            <Ps> {item?.wallet}</Ps>
-          </StyledDetail>
-          {item?.payment === 'mtn momo' ? (
-            <StyledPay>
-              Send payment to the Number:
-              <SpanNum>0542011274 easyworldpc(Merchant)</SpanNum>
-              Total To pay: <ToPay>&#8373;{item?.totalToPay}</ToPay>
-            </StyledPay>
-          ) : (
-            <StyledPay>
-              Send payment to the Number:
-              <SpanNum>G79398 easyworldpc(Agent)</SpanNum>
-              Total To pay: <ToPay>&#8373;{item?.totalToPay}</ToPay>
-              <div>
-                <Modal>
-                  <Modal.Open opens="pay">
-                    <Button>Add Payment</Button>
-                  </Modal.Open>
-                  <Modal.Window name="pay">
-                    <div>
-                      <H5>payment for order Id: {order_id}</H5>
-                      {error && <Error>{error.message}</Error>}
-                      <Form onSubmit={handleSubmit}>
-                        <FormRow label="Momo Number">
-                          <Input
-                            type="tel"
-                            onChange={(e) => setPhoneNum(e.target.value)}
-                          />
-                        </FormRow>
-                        <FormRow label="Momo Name">
-                          <Input
-                            type="text"
-                            onChange={(e) => setName(e.target.value)}
-                          />
-                        </FormRow>
-                        <FormRow label="Account Type">
-                          <Select onChange={(e) => setAccount(e.target.value)}>
-                            <option>Merchant</option>
-                            <option>Subscriber</option>
-                          </Select>
-                        </FormRow>
-                        <FormRow label="Amount sent">
-                          <Input
-                            type="number"
-                            step="any"
-                            onChange={(e) => setAmount(e.target.value)}
-                          />
-                        </FormRow>
-                        <FormRow label="Transaction No.">
-                          <Input
-                            type="number"
-                            onChange={(e) => setTransaction(e.target.value)}
-                            maxLength="13"
-                          />
-                        </FormRow>
-                        <FormRow label="Order Id">
-                          <Input
-                            type="text"
-                            onChange={(e) => setOrderId(e.target.value)}
-                          />
-                        </FormRow>
+      {/* {currentData?.map((item) => ( */}
+      <DetailBox>
+        <TextBox>
+          <h5>Thank you for your order!</h5>
+          <p>The order confirmation has been sent to your email address.</p>
+        </TextBox>
+        <StyledDetail>
+          <StyledSpan>Order Number: </StyledSpan>
+          <Ps>{currentData.orderId}</Ps>
+        </StyledDetail>
+        <StyledDetail>
+          <StyledSpan>Currency: </StyledSpan>
+          <Ps>{currentData.currency}</Ps>
+        </StyledDetail>
+        <StyledDetail>
+          <StyledSpan>Amount USD: </StyledSpan>
+          <Ps>${currentData.amountUSD}</Ps>
+        </StyledDetail>
+        <StyledDetail>
+          <StyledSpan>Amount Gh: </StyledSpan>
+          <Ps>&#8373;{currentData.amountGh}</Ps>
+        </StyledDetail>
+        <StyledDetail>
+          <StyledSpan>Sending fee: </StyledSpan>&#8373;
+          <Ps>{currentData.miner * 12.5}</Ps>
+        </StyledDetail>
+        <StyledDetail>
+          <StyledSpan>payment Type: </StyledSpan>
+          <Ps>{currentData.payment}</Ps>
+        </StyledDetail>
+        <StyledDetail>
+          <StyledSpan>Wallet </StyledSpan>
+          <Ps> {currentData.wallet}</Ps>
+        </StyledDetail>
+        {currentData.payment === 'mtn momo' ? (
+          <StyledPay>
+            Send payment to the Number:
+            <SpanNum>0542011274 easyworldpc(Merchant)</SpanNum>
+            Total To pay: <ToPay>&#8373;{currentData.totalToPay}</ToPay>
+          </StyledPay>
+        ) : (
+          <StyledPay>
+            Send payment to the Number:
+            <SpanNum>G79398 easyworldpc(Agent)</SpanNum>
+            Total To pay: <ToPay>&#8373;{currentData.totalToPay}</ToPay>
+            <div>
+              <Modal>
+                <Modal.Open opens="pay">
+                  <Button>Add Payment</Button>
+                </Modal.Open>
+                <Modal.Window name="pay">
+                  <div>
+                    <H5>payment for order Id: {order_id}</H5>
+                    {error && <Error>{error.message}</Error>}
+                    <Form onSubmit={handleSubmit}>
+                      <FormRow label="Momo Number">
+                        <Input
+                          type="tel"
+                          onChange={(e) => setPhoneNum(e.target.value)}
+                        />
+                      </FormRow>
+                      <FormRow label="Momo Name">
+                        <Input
+                          type="text"
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      </FormRow>
+                      <FormRow label="Account Type">
+                        <Select onChange={(e) => setAccount(e.target.value)}>
+                          <option>Merchant</option>
+                          <option>Subscriber</option>
+                        </Select>
+                      </FormRow>
+                      <FormRow label="Amount sent">
+                        <Input
+                          type="number"
+                          step="any"
+                          onChange={(e) => setAmount(e.target.value)}
+                        />
+                      </FormRow>
+                      <FormRow label="Transaction No.">
+                        <Input
+                          type="number"
+                          onChange={(e) => setTransaction(e.target.value)}
+                          maxLength="13"
+                        />
+                      </FormRow>
+                      <FormRow label="Order Id">
+                        <Input
+                          type="text"
+                          onChange={(e) => setOrderId(e.target.value)}
+                        />
+                      </FormRow>
 
-                        <FormRow>
-                          <Button disabled={isDisabled}>
-                            {isCreating ? <SpinnerMini /> : 'Submit'}
-                          </Button>
-                        </FormRow>
-                      </Form>
-                    </div>
-                  </Modal.Window>
-                </Modal>
-              </div>
-            </StyledPay>
-          )}
-          <P>
-            Make your order Number {item?.orderId} the reference when you are
-            sending the momo payment.
-          </P>
-          <P>For any other assistance contact 0244388190</P>
-        </DetailBox>
-      ))}
-
+                      <FormRow>
+                        <Button disabled={isDisabled}>
+                          {isCreating ? <SpinnerMini /> : 'Submit'}
+                        </Button>
+                      </FormRow>
+                    </Form>
+                  </div>
+                </Modal.Window>
+              </Modal>
+            </div>
+          </StyledPay>
+        )}
+        <P>
+          Make your Name the reference when you are sending the momo payment.
+        </P>
+        <P>For any other assistance contact 0244388190</P>
+      </DetailBox>
+      {/* ))} */}
       <StyledBtn>
         <Link to="/history">
           <Button>Order history</Button>
