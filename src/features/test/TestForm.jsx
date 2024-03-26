@@ -39,7 +39,8 @@ const List = styled.ul`
   padding: 2rem;
 `
 
-function TestForm({ fullName }) {
+function TestForm({ fullName, payment }) {
+  console.log(payment)
   const [close, setClose] = useState(false)
   const { createTest, isCreating } = useCreateTest()
   const { register, handleSubmit, reset } = useForm()
@@ -84,35 +85,42 @@ function TestForm({ fullName }) {
             <Button disabled={isCreating}>Submit</Button>
           </FormRow>
         </Form>
-        <TextBox>
-          <Heading>Payment instruction below:</Heading>
-          <p>
-            You will send the total to pay amount to the Merchant number:
-            0542011274(easyworldpc).
-          </p>
-          <p>how to send money using MTN Mobile money shortcode(subscriber)</p>
-          <List>
-            <li>Dial *170# </li>
-            <li>Select transfer money</li>
-            <li>
-              Select Momo user(that is if the person is registered om mobile
-              money.
-            </li>
-            <li>
-              Enter the mobile money number(0542011274 easyworldpc) and repeat
-              again.
-            </li>
-            <li>Enter the amount you want to send.</li>
-            <li>
-              Type in your reference(Dont type anything related to crypto)
-            </li>
-            <li>
-              Confirm and send money. Click on the `Add Payment&rsquo; in the
-              order history or the order detail page. Check the SMS confirmation
-              message you will receive from MTN it contains the Transaction ID.
-            </li>
-          </List>
-        </TextBox>
+        {payment === 'Mtn Momo' ? (
+          <TextBox>
+            <Heading>Payment instruction below:</Heading>
+            <p>
+              You will send the total to pay amount to the Merchant number:
+              0542011274(easyworldpc).
+            </p>
+            <p>
+              how to send money using MTN Mobile money shortcode(subscriber)
+            </p>
+            <List>
+              <li>Dial *170# </li>
+              <li>Select transfer money</li>
+              <li>
+                Select Momo user(that is if the person is registered om mobile
+                money.
+              </li>
+              <li>
+                Enter the mobile money number(0542011274 easyworldpc) and repeat
+                again.
+              </li>
+              <li>Enter the amount you want to send.</li>
+              <li>
+                Type in your reference(Dont type anything related to crypto)
+              </li>
+              <li>
+                Confirm and send money. Click on the `Add Payment&rsquo; in the
+                order history or the order detail page. Check the SMS
+                confirmation message you will receive from MTN it contains the
+                Transaction ID.
+              </li>
+            </List>
+          </TextBox>
+        ) : (
+          <TextBox>TELECEL INSTRUCTION COMING SOON</TextBox>
+        )}
       </StyledTest>
     )
 }

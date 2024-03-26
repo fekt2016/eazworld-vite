@@ -127,7 +127,6 @@ function CreateBuyForm() {
   if (isLoading) return <Spinner />
 
   const mine = data[0]
-  console.log(mine)
 
   return (
     <BuyContainer>
@@ -234,6 +233,7 @@ function CreateBuyForm() {
               Select Payment Method
             </option>
             <option value="Mtn Momo">MTN Momo</option>
+            <option value="voda cash">voda(telecel) cash</option>
           </Select>
         </FormRow>
         <FormRow label="Wallet address" error={errors?.wallet?.message}>

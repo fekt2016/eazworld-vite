@@ -5,6 +5,10 @@ import TestForm from '../test/TestForm'
 import { devicesMax } from '../../styles/breakpoint'
 import { useUser } from '../authentication/useUser'
 import OrderDetail from '../buy/OrderDetail'
+import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
+import Spinner from '../../ui/Spinner'
+import { getCurrentBuy } from '../../services/apibuy'
 
 const StyledOrder = styled.div`
   padding: 2rem;
@@ -30,10 +34,20 @@ function BuyCurrentOrder() {
   const fullName =
     user.user_metadata.firstName + ' ' + user.user_metadata.lastName
 
+  const { orderId: order_id } = useParams()
+
+  const { isLoading, data: buy } = useQuery({
+    queryKey: ['buy'],
+    queryFn: () => getCurrentBuy(order_id),
+  })
+
+  if (isLoading) return <Spinner />
+  const { data } = buy
+
   return (
     <StyledOrder>
-      <OrderDetail />
-      <TestForm fullName={fullName} />
+      <OrderDetail buy={data} isLoading={isLoading} />
+      <TestForm fullName={fullName} payment={data[0].payment} />
     </StyledOrder>
   )
 }

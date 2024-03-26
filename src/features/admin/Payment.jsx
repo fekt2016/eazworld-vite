@@ -8,17 +8,6 @@ import Pagination from '../../ui/Pagination'
 import { FaAmazonPay } from 'react-icons/fa6'
 import Spinner from '../../ui/Spinner'
 
-// const Container = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-
-//   div {
-//     flex: 1;
-//   }
-//   &:nth-of-type(even) {
-//     background-color: var(--color-black-200);
-//   }
-// `
 function Payment() {
   const { isLoading, data } = usePayment()
 

@@ -77,7 +77,7 @@ function OrderPage() {
         </FormRow>
         <FormRow>
           <label htmlFor="transaction">Transaction ID:</label>
-          <Input type="text" id="transaction" />
+          <Input type="number" id="transaction" />
         </FormRow>
         <FormRow>
           <div>
