@@ -12,7 +12,8 @@ const Status = styled.button`
   font-family: 'Sono';
   color: white;
   border: none;
-  background-color: var(--color-black-950);
+  background-color: ${(props) =>
+    props.status === 'processing' ? '#000' : '#ffc337'};
   @media ${devicesMax.md} {
     font-size: 1.2rem;
   }
@@ -34,25 +35,17 @@ const Price = styled.div`
   font-family: 'Sono';
   font-weight: 600;
 
-  @media ${devicesMax.md} {
+  /* @media ${devicesMax.md} {
     display: none;
-  }
+  } */
 `
-// const Price1 = styled.div`
-//   font-family: 'Sono';
-//   font-weight: 600;
-// `
 
 const Date = styled.div`
   @media ${devicesMax.md} {
     display: none;
   }
 `
-const SellId = styled.div`
-  @media ${devicesMax.md} {
-    display: none;
-  }
-`
+const SellId = styled.div``
 
 function SellRow({ sell }) {
   const {
@@ -69,20 +62,11 @@ function SellRow({ sell }) {
         <Date>{formatTime(date)}</Date>
         <SellId>{buyId}</SellId>
         <Sell>{currency}</Sell>
-        <Price>{amountUSD}</Price>
+        <div>{amountUSD}</div>
         <Price>{payment}</Price>
-        <Status>
+        <Status status={status}>
           <Link to={`/sell-currentOrder/${buyId}`}>{status}</Link>
         </Status>
-
-        {/* <Menus.Menu>
-          <Menus.Toggle id={buyId} />
-          <Menus.List id={buyId}>
-            {buyId}
-            <Price1>&#8373;{amountUSD}</Price1>
-            <Price1>&#36;{amountUSD}</Price1>
-          </Menus.List>
-        </Menus.Menu> */}
       </Table.Row>
     </>
   )

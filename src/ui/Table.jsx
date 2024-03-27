@@ -33,8 +33,12 @@ const StyledHeader = styled(CommonRow)`
   color: var(--color-grey-600);
 
   @media ${devicesMax.md} {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     padding: 1rem 1.5rem;
+  }
+  @media ${devicesMax.sm} {
+    grid-template-columns: repeat(6, 1fr);
+    padding: 0.7rem 1.2rem;
   }
 `
 
@@ -47,7 +51,7 @@ const StyledRow = styled(CommonRow)`
   }
 
   @media ${devicesMax.md} {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
   @media ${devicesMax.md} {
     padding: 1rem 1.5rem;

@@ -4,30 +4,19 @@ import Table from '../../ui/Table'
 import { useSell } from './useSell'
 import Pagination from '../../ui/Pagination'
 import styled from 'styled-components'
-import { devicesMax } from '../../styles/breakpoint'
+// import { devicesMax } from '../../styles/breakpoint'
 import Menus from '../../ui/Menus'
 import { useSearchParams } from 'react-router-dom'
+import { devicesMax } from '../../styles/breakpoint'
 
-const StyledAmount = styled.div`
-  @media ${devicesMax.md} {
-    display: none;
-  }
-`
-const Payment = styled.div`
-  @media ${devicesMax.md} {
-    display: none;
-  }
-`
+const StyledAmount = styled.div``
+const Payment = styled.div``
 const Date = styled.div`
   @media ${devicesMax.md} {
     display: none;
   }
 `
-const SellId = styled.div`
-  @media ${devicesMax.md} {
-    display: none;
-  }
-`
+const SellId = styled.div``
 
 function SellTable() {
   const { isLoading, data: sell, error } = useSell()

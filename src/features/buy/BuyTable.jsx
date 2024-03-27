@@ -51,10 +51,10 @@ function BuyTable() {
         <Table.Header role="row">
           <div>date</div>
           <div>id</div>
-          <div>currency</div>
-          <StyledAmount>amountUsd</StyledAmount>
+          <div>cur</div>
+          <div>am.Usd</div>
           <StyledAmount>amountGh</StyledAmount>
-          <StyledAmount>total am.</StyledAmount>
+          <div>total</div>
           <Payment>payment</Payment>
           <div>status</div>
         </Table.Header>

@@ -6,6 +6,8 @@ import { devicesMax } from '../../styles/breakpoint'
 import { Link } from 'react-router-dom'
 
 const Status = styled.button`
+  background-color: ${(props) =>
+    props.status === 'add payment' ? 'black' : '#ffc337'};
   font-size: 1rem;
   padding: 0.4rem;
   font-weight: 600;
@@ -13,11 +15,17 @@ const Status = styled.button`
   text-transform: capitalize;
   color: white;
   border: none;
-  background-color: ${(props) =>
-    props.status === 'add payment' ? '#000' : '#ffc337'};
+
   transition: all 0.2s;
   &:hover {
     transform: scale(1.1);
+    @media ${devicesMax.sm} {
+      transform: scale(1.5);
+    }
+  }
+
+  @media ${devicesMax.sm} {
+    font-size: 0.7rem;
   }
 `
 
@@ -71,11 +79,11 @@ function BuyRow({ buy }) {
           <Link to={`/currentOrder/${buyId}`}>{buyId}</Link>
         </BuyId>
         <Buy>{currency}</Buy>
-        <Price>&#36;{amountUSD}</Price>
+        <div>&#36;{amountUSD}</div>
         <Price>&#8373;{amountGh}</Price>
-        <Price>&#8373;{totalToPay}</Price>
+        <div>&#8373;{totalToPay}</div>
         <Payment>{payment}</Payment>
-        <Status disabled={status === 'order completed'}>
+        <Status disabled={status === 'order completed'} status={status}>
           <Link to={`/buy-currentOrder/${buyId}`}>{status}</Link>
         </Status>
       </Table.Row>
