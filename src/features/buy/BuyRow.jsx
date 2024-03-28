@@ -7,13 +7,15 @@ import { Link } from 'react-router-dom'
 
 const Status = styled.button`
   background-color: ${(props) =>
-    props.status === 'add payment' ? 'black' : '#ffc337'};
+    props.status === 'add payment' ? '#fcc' : '#25D366'};
   font-size: 1rem;
   padding: 0.4rem;
   font-weight: 600;
   font-family: 'Sono';
   text-transform: capitalize;
-  color: white;
+  color: black;
+  border-radius: 100px;
+  box-shadow: var(--shadow-md);
   border: none;
 
   transition: all 0.2s;

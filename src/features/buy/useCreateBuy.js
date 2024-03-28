@@ -8,7 +8,6 @@ export function useCreateBuy() {
 	const { mutate: createBuy, isLoading: isCreating } = useMutation({
 		mutationFn: (newBuy) => buyApi(newBuy),
 		onSuccess: () => {
-			console.log('working');
 			toast.success('New order successfully created');
 			queryClient.invalidateQueries({
 				queryKey: ['buy'],

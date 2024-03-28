@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0*/
 
 import { useSearchParams } from 'react-router-dom'
-import Select from './Select'
+import SelectSort from './SelectSort'
 
 function SortBy({ options }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -14,7 +14,7 @@ function SortBy({ options }) {
   }
 
   return (
-    <Select
+    <SelectSort
       options={options}
       type="white"
       value={sortBy}

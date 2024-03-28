@@ -7,10 +7,10 @@ const StyledSelect = styled.select`
   border: 1px solid
     ${(props) =>
       props.type === 'white'
-        ? 'var(--color-grey-100)'
+        ? 'var(--color-grey-200)'
         : 'var(--color-grey-300)'};
   border-radius: var(--border-radius-sm);
-  background-color: var(--color-grey-0);
+  background-color: var(--color-white-0);
   font-weight: 500;
   box-shadow: var(--shadow-sm);
   @media ${devicesMax.md} {

@@ -18,8 +18,12 @@ const Status = styled.button`
   text-transform: capitalize;
   color: white;
   border: none;
+  border-radius: 100px;
+  box-shadow: var(--shadow-md);
   background-color: ${(props) =>
-    props.status === 'add payment' ? '#000' : '#ffc337'};
+    props.status === 'add payment'
+      ? 'var(--color-red-500)'
+      : 'var(--color-whatsapp-100)'};
   transition: all 0.2s;
   &:hover {
     transform: scale(1.1);
@@ -108,7 +112,7 @@ function AdminBuyRow({ buy }) {
   }
 
   return (
-    <Table.Row columns="repeat(8, 1fr)">
+    <Table.Row columns="repeat(8, 1fr)" mincol="repeat(5, 1fr">
       <Date>{formatTime(buy.created_at)}</Date>
       <BuyId>
         <Link to={`/currentOrder/${buyId}`}>{buyId}</Link>

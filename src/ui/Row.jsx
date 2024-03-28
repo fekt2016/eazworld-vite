@@ -5,7 +5,12 @@ const Row = styled.div`
   display: flex;
   padding: 1rem;
 
-
+${(props) =>
+  props.type === 'admin' &&
+  css`
+    display: flex;
+    justify-content: end;
+  `}
 
 ${(props) =>
   props.type === 'contact' &&

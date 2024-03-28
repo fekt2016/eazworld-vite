@@ -20,30 +20,29 @@ const Payment = styled.div`
 `
 
 function BuyTable() {
-  const { data: buy, isLoading, error } = useBuy()
+  const { buy, isLoading, count, error } = useBuy()
   const [searchParams] = useSearchParams()
 
   if (isLoading) return <Spinner />
   if (error) return 'An error has occured: ' + error.message
-  const { data, count } = buy
+
+  // const { data, count } = buy
 
   //filter
   const filterValue = searchParams.get('buy-order') || 'all'
 
   let filteredBuy
-  if (filterValue === 'all') filteredBuy = data
+  if (filterValue === 'all') filteredBuy = buy
   if (filterValue === 'order-completed')
-    filteredBuy = data.filter((b) => b.status === 'order completed')
+    filteredBuy = buy.filter((b) => b.status === 'order completed')
   if (filterValue === 'add-payment')
-    filteredBuy = data.filter((b) => b.status === 'add payment')
+    filteredBuy = buy.filter((b) => b.status === 'add payment')
 
   //sort
   const sortBy = searchParams.get('sortBy') || 'startDate-asc'
   const [field, direction] = sortBy.split('-')
   const modifier = direction === 'asc' ? 1 : -1
   const sortedBuy = filteredBuy.sort((a, b) => (a[field] - b[field]) * modifier)
-
-  //pagination
 
   return (
     <Menus>
@@ -52,9 +51,9 @@ function BuyTable() {
           <div>date</div>
           <div>id</div>
           <div>cur</div>
-          <div>am.Usd</div>
-          <StyledAmount>amountGh</StyledAmount>
-          <div>total</div>
+          <div>Usd&#36;</div>
+          <StyledAmount>GhC&#8373;</StyledAmount>
+          <div>total&#8373;</div>
           <Payment>payment</Payment>
           <div>status</div>
         </Table.Header>

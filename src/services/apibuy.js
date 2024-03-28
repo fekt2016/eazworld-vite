@@ -1,21 +1,26 @@
 import supabase from './supabase';
 import { PAGE_SIZE } from '../utils/constants';
 
-export async function getBuy() {
-	const {
-		data: buy,
-		count,
-		error,
-	} = await supabase
+export async function getBuy({ page }) {
+	let query = supabase
 		.from('buy')
 		.select('*', { count: 'exact' })
 		.order('created_at', { ascending: false });
+
+	if (page) {
+		const from = (page - 1) * PAGE_SIZE;
+		const to = from + PAGE_SIZE - 1;
+
+		query = query.range(from, to);
+	}
+
+	const { data, error, count } = await query;
 
 	if (error) {
 		throw new Error('currency could not be loaded');
 	}
 
-	return { buy, count };
+	return { data, count, error };
 }
 
 export async function createBuy(newBuy) {
@@ -81,8 +86,6 @@ export async function updateBuy(id) {
 }
 
 export async function deleteBuy(id) {
-	console.log(id);
-
 	const { data, error } = await supabase.from('buy').delete().eq('id', id);
 	if (error) throw new Error('buy could not be updated');
 

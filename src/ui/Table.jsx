@@ -33,11 +33,11 @@ const StyledHeader = styled(CommonRow)`
   color: var(--color-grey-600);
 
   @media ${devicesMax.md} {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: ${(props) => props.mincol};
     padding: 1rem 1.5rem;
   }
   @media ${devicesMax.sm} {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: ${(props) => props.mincol};
     padding: 0.7rem 1.2rem;
   }
 `
@@ -51,7 +51,7 @@ const StyledRow = styled(CommonRow)`
   }
 
   @media ${devicesMax.md} {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: ${(props) => props.mincol};
   }
   @media ${devicesMax.md} {
     padding: 1rem 1.5rem;
@@ -80,28 +80,28 @@ const Footer = styled.footer`
 
 const TableContext = createContext()
 
-function Table({ columns, children }) {
+function Table({ columns, children, mincol }) {
   return (
-    <TableContext.Provider value={{ columns }}>
+    <TableContext.Provider value={{ columns, mincol }}>
       <StyledTable row="table">{children}</StyledTable>
     </TableContext.Provider>
   )
 }
 
 function Header({ children }) {
-  const { columns } = useContext(TableContext)
+  const { columns, mincol } = useContext(TableContext)
 
   return (
-    <StyledHeader role="row" columns={columns}>
+    <StyledHeader role="row" columns={columns} mincol={mincol}>
       {children}
     </StyledHeader>
   )
 }
 function Row({ children }) {
-  const { columns } = useContext(TableContext)
+  const { columns, mincol } = useContext(TableContext)
 
   return (
-    <StyledRow role="row" columns={columns}>
+    <StyledRow role="row" columns={columns} mincol={mincol}>
       {children}
     </StyledRow>
   )
