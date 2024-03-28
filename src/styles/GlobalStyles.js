@@ -153,6 +153,7 @@ const GlobalStyles = createGlobalStyle`:root {
 }
 
 html {
+  width: 100vw;
   font-size: 62.5%;
   @media ${devicesMax.md} {
     font-size: 60%;
@@ -166,7 +167,6 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   color: var(--color-grey-700);
-
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
   line-height: 1.5;

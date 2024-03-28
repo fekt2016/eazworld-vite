@@ -6,11 +6,14 @@ import { devicesMax } from '../styles/breakpoint'
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   border-radius: 7px;
   overflow: hidden;
 
   @media ${devicesMax.md} {
+    font-size: 1.2rem;
+  }
+  @media ${devicesMax.sm} {
     font-size: 1rem;
   }
 `
@@ -18,9 +21,15 @@ const StyledTable = styled.div`
 const CommonRow = styled.div`
   display: grid;
   grid-template-columns: ${(props) => props.columns};
-  column-gap: 2.4rem;
+  column-gap: 1.5rem;
   align-items: center;
   transition: none;
+  @media ${devicesMax.sm} {
+    column-gap: 1.2rem;
+  }
+  @media ${devicesMax.sm} {
+    column-gap: 1rem;
+  }
 `
 
 const StyledHeader = styled(CommonRow)`
@@ -44,6 +53,7 @@ const StyledHeader = styled(CommonRow)`
 
 const StyledRow = styled(CommonRow)`
   padding: 1.2rem 2.4rem;
+  grid-template-columns: ${(props) => props.columns};
   cursor: pointer;
 
   &:not(:last-child) {
@@ -52,9 +62,10 @@ const StyledRow = styled(CommonRow)`
 
   @media ${devicesMax.md} {
     grid-template-columns: ${(props) => props.mincol};
-  }
-  @media ${devicesMax.md} {
     padding: 1rem 1.5rem;
+  }
+  @media ${devicesMax.sm} {
+    padding: 1rem 1.2rem;
   }
 `
 
@@ -64,8 +75,6 @@ const StyledBody = styled.section`
 
 const Footer = styled.footer`
   background-color: var(--color-grey-50);
-  display: flex;
-  justify-content: center;
   padding: 1.2rem;
 
   /* This will hide the footer when it contains no child elements. Possible thanks to the parent selector :has 🎉 */

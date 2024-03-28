@@ -26,10 +26,9 @@ const BuyContainer = styled.div`
   justify-content: center;
   align-items: stretch;
   gap: 10px;
-  /* padding: 2rem 6rem; */
 
   @media ${devicesMax.md} {
-    padding: 2rem;
+    /* padding: 3rem; */
     flex-direction: column;
   }
   @media ${devicesMax.sm} {
@@ -46,6 +45,7 @@ const StyledTerm = styled.div`
   box-shadow: var(--shadow-sm);
   background-color: var(--color-primary-300);
   border-radius: var(--border-radius-lg);
+
   @media ${devicesMax.md} {
     width: 100%;
   }

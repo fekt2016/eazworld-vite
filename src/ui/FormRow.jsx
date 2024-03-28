@@ -33,6 +33,10 @@ const StyledFormRow = styled.div`
     width: 100%;
     flex-direction: column;
   }
+  @media ${devicesMax.sm} {
+    padding: 0.6rem;
+    gap: 0.6rem;
+  }
 `
 const Label = styled.label`
   font-weight: 500;

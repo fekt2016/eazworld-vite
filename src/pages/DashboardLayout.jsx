@@ -26,9 +26,9 @@ const Main = styled.main`
     padding-right: 1rem;
     padding-left: 7rem;
   }
-  @media ${devicesMax.md} {
+  @media ${devicesMax.sm} {
     padding-right: 0.5rem;
-    padding-left: 6rem;
+    padding-left: 9rem;
   }
 `
 

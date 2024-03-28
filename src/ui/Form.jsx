@@ -44,7 +44,7 @@ const Form = styled.form`
         padding: 4rem;
         box-shadow: var(--shadow-md);
         background-color: var(--color-white-0);
-        padding: 2.4rem 1rem;
+        padding: 2.4rem 1.2rem;
         width: 100%;
         order: 2;
         }

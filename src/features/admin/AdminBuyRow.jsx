@@ -5,10 +5,11 @@ import { devicesMax } from '../../styles/breakpoint'
 import { Link } from 'react-router-dom'
 import { useDeleteBuy } from '../admin/useDeleteBuy'
 import SpinnerMini from '../../ui/SpinnerMini'
-import Button from '../../ui/Button'
+// import Button from '../../ui/Button'
 import { useUpdateBuy } from './useUpdateBuy'
 import emailjs from '@emailjs/browser'
 import { useEffect } from 'react'
+import { TiDelete } from 'react-icons/ti'
 
 const Status = styled.button`
   font-size: 1rem;
@@ -24,6 +25,10 @@ const Status = styled.button`
     props.status === 'add payment'
       ? 'var(--color-red-500)'
       : 'var(--color-whatsapp-100)'};
+  @media ${devicesMax.sm} {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+  }
   transition: all 0.2s;
   &:hover {
     transform: scale(1.1);
@@ -60,6 +65,10 @@ const Wallet = styled.div`
 const Date = styled.div``
 const BuyId = styled.div`
   text-transform: capitalize;
+`
+
+const DelIcon = styled(TiDelete)`
+  font-size: 3rem;
 `
 
 function AdminBuyRow({ buy }) {
@@ -128,9 +137,10 @@ function AdminBuyRow({ buy }) {
       >
         {isLoading ? <SpinnerMini /> : `${status}`}
       </Status>
-      <Button size="small" onClick={handleDelete}>
+      {/* <Button size="small" onClick={handleDelete}>
         {isDeleting ? <SpinnerMini /> : 'Delete'}
-      </Button>
+      </Button> */}
+      {isDeleting ? <SpinnerMini /> : <DelIcon onClick={handleDelete} />}
     </Table.Row>
   )
 }
