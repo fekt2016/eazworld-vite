@@ -44,8 +44,8 @@ function Product() {
       <ProContent>
         <h3>appeals</h3>
         <ProList>
-          <Card background={'../../public/image3.jpg'}>woman new arrival</Card>
-          <Card background={'../../public/images1.jpg'}>product 2</Card>
+          <Card background={'../../image3.jpg'}>woman new arrival</Card>
+          <Card background={'../../images1.jpg'}>product 2</Card>
           <Card>product 3</Card>
           <Card>product 4</Card>
           <Card>product 5</Card>
