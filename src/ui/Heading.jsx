@@ -5,11 +5,12 @@ const Heading = styled.h1`
   ${(props) =>
     props.as === 'h1' &&
     css`
-      font-size: 4rem;
-      font-weight: 600;
+      font-size: 3.5rem;
+      line-height: 1.2;
+      font-stretch: extra-condensed;
       text-transform: capitalize;
-      text-align: center;
-      font-family: 'Lato', Courier, monospace;
+      text-align: start;
+      font-family: 'Lato', sans-serif;
       @media ${devicesMax.md} {
         font-size: 2.5rem;
       }

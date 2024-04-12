@@ -3,6 +3,7 @@ import Button from '../../ui/Button'
 import Form from '../../ui/Form'
 import FormRow from '../../ui/FormRow'
 import Input from '../../ui/Input'
+import Checkbox from '../../ui/Checkbox'
 
 import { NavLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -22,29 +23,40 @@ const StyledFooter = styled.div`
 `
 
 function SignupForm() {
-  const { signup, isLoading } = useSignup()
+  const { isLoading } = useSignup()
 
   const {
     register,
     formState: { errors },
     getValues,
     handleSubmit,
-    reset,
+    // reset,
   } = useForm()
+
+  // const { onChange, ref } = register
+  const agreed = register('agreed', { required: true })
   // const { errors } = formState
 
-  async function onSubmit({ firstName, lastName, email, password, phone }) {
-    signup(
-      { firstName, lastName, email, password, phone },
-      {
-        onSettled: reset(),
-      },
-    )
+  async function onSubmit({
+    firstName,
+    lastName,
+    email,
+    password,
+    phone,
+    agreed,
+  }) {
+    // signup(
+    //   { firstName, lastName, email, password, phone },
+    //   {
+    //     onSettled: reset(),
+    //   },
+    // )
+    console.log(firstName, lastName, email, password, phone, agreed)
   }
   return (
     <>
       <Form type="signup" onSubmit={handleSubmit(onSubmit)}>
-        <FormRow label="Fisrt Name" error={errors?.firstName?.message}>
+        <FormRow label="First Name" error={errors?.firstName?.message}>
           <Input
             disabled={isLoading}
             type="text"
@@ -115,6 +127,17 @@ function SignupForm() {
               required: 'This field is required',
             })}
           />
+        </FormRow>
+        <FormRow>
+          <Checkbox
+            id="agreed"
+            // onChange={onChange}
+            name={agreed.name}
+            // ref={ref}
+            // {...register('agreed', { required: `this field is required` })}
+          >
+            Agree with our Term & agreement...
+          </Checkbox>
         </FormRow>
 
         <FormRow>

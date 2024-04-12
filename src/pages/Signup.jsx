@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 const SignupLayout = styled.main`
   min-height: 100vh;
-  padding: 4rem;
+  padding: 0 10rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,7 +16,7 @@ const SignupLayout = styled.main`
   background-color: var(--color-black-900);
 
   @media ${devicesMax.md} {
-    padding: 4rem 1rem;
+    padding: 2rem 1rem;
   }
 `
 const Container = styled.div`

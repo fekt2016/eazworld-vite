@@ -46,6 +46,7 @@ const StyledTerm = styled.div`
     width: 100%;
   }
 `
+const wallet = import.meta.env.VITE_BITCOIN_WALLET
 
 function CreateSellForm() {
   const { createSell, isCreating } = useCreateSell()
@@ -82,6 +83,7 @@ function CreateSellForm() {
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
   function onSubmit(data) {
+    console.log(data)
     createSell(
       { ...data },
       {
@@ -229,7 +231,7 @@ function CreateSellForm() {
           type="hidden"
           id="wallet"
           {...register('wallet')}
-          defaultValue={'bc1q73rd9uh6279pp2tcew5t0e5s72wr6d4pyxsrsw'}
+          defaultValue={wallet}
         />
 
         <Input

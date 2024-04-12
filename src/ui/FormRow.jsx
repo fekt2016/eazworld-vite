@@ -5,8 +5,7 @@ const StyledFormRow = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
-
-  padding: 1rem;
+  padding: 0.8rem;
   gap: 1rem;
 
   &:first-child {
@@ -41,6 +40,7 @@ const StyledFormRow = styled.div`
 const Label = styled.label`
   font-weight: 500;
   width: 35rem;
+  color: var(--color-grey-400);
 `
 const Error = styled.span`
   font-size: 1.4rem;

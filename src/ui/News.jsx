@@ -40,8 +40,6 @@ function News() {
 
   if (isLoading) return <p>loading</p>
 
-  console.log(dataList)
-
   if (close === false)
     return (
       <StyledNews>

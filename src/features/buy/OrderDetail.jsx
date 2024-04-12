@@ -15,6 +15,7 @@ import Spinner from '../../ui/Spinner'
 import { useCreatePayment } from '../payment/useCreatePayment'
 import { getCurrentBuy } from '../../services/apibuy'
 import Form from '../../ui/Form'
+import supabase from '../../services/supabase'
 
 const OrderDetails = styled.div`
   flex: 2;
@@ -169,7 +170,7 @@ const H5 = styled.h5`
   text-transform: capitalize;
 `
 
-function OrderDetail() {
+function OrderDetail({ onPayment }) {
   const [phoneNum, setPhoneNum] = useState('')
   const [amount, setAmount] = useState('')
   const [transaction, setTransaction] = useState('')
@@ -178,6 +179,23 @@ function OrderDetail() {
   const [error, setError] = useState()
   const [orderId, setOrderId] = useState('')
   const [isDisabled, setIsDisabled] = useState(false)
+  const [rate, setRate] = useState(0)
+
+  useEffect(() => {
+    const fetchRate = async function () {
+      const { data, error } = await supabase
+        .from('rate')
+        .select('*')
+        .eq('currency', 'bitcoin')
+      if (error) {
+        console.log(error)
+      }
+      const rate = data[0]
+      if (rate) setRate(rate.buy)
+    }
+
+    fetchRate()
+  }, [])
 
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
@@ -191,9 +209,12 @@ function OrderDetail() {
   const { user } = useUser()
 
   if (isLoading) return <Spinner />
-
+  console.log(buy)
   const { data: currentData } = buy
 
+  const pay = currentData[0]
+  console.log(pay.payment)
+  onPayment(pay.payment)
   function handleSubmit(e) {
     e.preventDefault()
     if (!phoneNum || !amount || !transaction || !account || !name || !orderId) {
@@ -203,7 +224,6 @@ function OrderDetail() {
       })
       return
     }
-    const pay = currentData[0]
 
     createPayment(
       { phoneNum, amount, transaction, account, name, orderId },
@@ -279,7 +299,7 @@ function OrderDetail() {
           </StyledDetail>
           <StyledDetail>
             <StyledSpan>Sending fee: </StyledSpan>&#8373;
-            <Ps>{item?.miner * 12.5}</Ps>
+            <Ps>{item?.miner * rate}</Ps>
           </StyledDetail>
           <StyledDetail>
             <StyledSpan>payment Type: </StyledSpan>
@@ -291,7 +311,11 @@ function OrderDetail() {
           </StyledDetail>
           <StyledPay>
             Send payment to the Number:
-            <SpanNum>0542011274 easyworldpc(Merchant)</SpanNum>
+            <SpanNum>
+              {item.payment === 'Mtn Momo'
+                ? '0542011274 Easyworldpc(Merchant)'
+                : 'G79398 Easyworldpc (Agent)'}
+            </SpanNum>
             Total To pay: <ToPay>&#8373;{item?.totalToPay}</ToPay>
           </StyledPay>
           <P>

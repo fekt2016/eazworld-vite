@@ -14,7 +14,7 @@ const Form = styled.form`
   ${(props) =>
     props.type === 'regular' &&
     css`
-      padding: 2.4rem 4rem;
+      padding: 2.4rem 3rem;
       width: 70%;
       @media ${devicesMax.md} {
         padding: 2.4rem 1rem;
@@ -35,7 +35,7 @@ const Form = styled.form`
     props.type === 'signup' &&
     css`
       width: 100%;
-      padding: 2rem;
+      padding: 1.5rem;
     `}
   ${(props) =>
     props.type === 'buy' &&

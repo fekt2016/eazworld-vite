@@ -40,6 +40,8 @@ const List = styled.ul`
 `
 
 function TestForm({ fullName, payment }) {
+  console.log(payment)
+
   const [close, setClose] = useState(false)
   const { createTest, isCreating } = useCreateTest()
   const { register, handleSubmit, reset } = useForm()

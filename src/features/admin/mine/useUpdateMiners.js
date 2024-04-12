@@ -8,7 +8,7 @@ export function useUpdateMiners() {
 	const { mutate: updateMiners, isLoading: isUpdating } = useMutation({
 		mutationFn: ({ id, newFee }) => apiMiners(id, newFee),
 		onSuccess: () => {
-			toast.success('miner fees successfully edited');
+			toast.success('miner fees successfully updated');
 			queryClient.setQueryData(['miner']);
 		},
 		onError: (err) => toast.error(err.message),

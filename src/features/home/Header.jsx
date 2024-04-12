@@ -15,7 +15,8 @@ const StyledHeader = styled.header`
   align-items: center;
 `
 const StyledRight = styled.div`
-  flex: 1;
+  padding: 2rem;
+  flex: 2;
   background-image: url('/Crypto2.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -31,6 +32,7 @@ const StyledText = styled.div`
   height: 100%;
   padding: 4rem;
   display: flex;
+  gap: 50px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -48,7 +50,9 @@ function Header() {
   return (
     <StyledHeader>
       <StyledText>
-        <Heading as="h1">buy bitcoin & other crypto currency</Heading>
+        <Heading as="h1">
+          buy bitcoin <br />& other crypto currency
+        </Heading>
         <StyledPBox>
           <StyledP>
             Start Your Order With Just $10 In Less Than 10minutes

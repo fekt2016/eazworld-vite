@@ -5,6 +5,7 @@ import TestForm from '../test/TestForm'
 import { devicesMax } from '../../styles/breakpoint'
 import { useUser } from '../authentication/useUser'
 import OrderDetail from '../buy/OrderDetail'
+import { useState } from 'react'
 
 const StyledOrder = styled.div`
   padding: 2rem;
@@ -26,14 +27,19 @@ const StyledOrder = styled.div`
 `
 
 function BuyCurrentOrder() {
+  const [payment, setPayment] = useState('')
   const { user } = useUser()
   const fullName =
     user.user_metadata.firstName + ' ' + user.user_metadata.lastName
 
+  function checkPayment(payment) {
+    setPayment(payment)
+  }
+
   return (
     <StyledOrder>
-      <OrderDetail />
-      <TestForm fullName={fullName} />
+      <OrderDetail onPayment={checkPayment} />
+      <TestForm fullName={fullName} payment={payment} />
     </StyledOrder>
   )
 }

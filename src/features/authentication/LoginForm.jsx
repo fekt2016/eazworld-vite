@@ -8,8 +8,8 @@ import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { useLogin } from './useLogin'
 
-import { HiMiniEye, HiMiniEyeSlash } from 'react-icons/hi2'
-import { devicesMax } from '../../styles/breakpoint'
+// import { HiMiniEye, HiMiniEyeSlash } from 'react-icons/hi2'
+// import { devicesMax } from '../../styles/breakpoint'
 
 const StyledBtn = styled(NavLink)`
   padding: 0.5rem 1.5rem;
@@ -22,23 +22,23 @@ const StyledFooter = styled.div`
   display: flex;
   justify-content: space-between;
 `
-const PassSpan = styled.span`
-  position: absolute;
-  top: 15px;
-  right: 30px;
-  z-index: 1000;
-  cursor: pointer;
+// const PassSpan = styled.span`
+//   position: absolute;
+//   top: 15px;
+//   right: 30px;
+//   z-index: 1000;
+//   cursor: pointer;
 
-  @media ${devicesMax.md} {
-    top: 60px;
-    right: 20px;
-  }
-`
+//   @media ${devicesMax.md} {
+//     top: 60px;
+//     right: 20px;
+//   }
+// `
 
 function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [visible, setVisible] = useState(false)
+  // const [visible, setVisible] = useState(false)
 
   const { login, isLoading } = useLogin()
 
@@ -71,16 +71,17 @@ function LoginForm() {
       </FormRow>
       <FormRow label="Password">
         <Input
-          type={visible ? 'text' : 'password'}
+          // type={visible ? 'text' : 'password'}
           id="password"
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
         />
-        <PassSpan onClick={() => setVisible((s) => !s)}>
+
+        {/* <PassSpan onClick={() => setVisible((s) => !s)}>
           {visible ? <HiMiniEye /> : <HiMiniEyeSlash />}
-        </PassSpan>
+        </PassSpan> */}
       </FormRow>
       <FormRow>
         <Button size="large" disabled={isLoading}>
