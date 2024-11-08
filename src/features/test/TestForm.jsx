@@ -1,17 +1,17 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 // import Form from '../../ui/Form'
-import FormRow from '../../ui/FormRow'
+import FormRow from "../../ui/FormRow";
 
-import Heading from '../../ui/Heading'
-import Form from '../../ui/Form'
-import Textarea from '../../ui/Textarea'
-import Button from '../../ui/Button'
-import { useCreateTest } from './useTestCreate'
-import { useForm } from 'react-hook-form'
-import Input from '../../ui/Input'
-import { useState } from 'react'
-import CloseIcon from '../../ui/CloseIcon'
-import { devicesMax } from '../../styles/breakpoint'
+import Heading from "../../ui/Heading";
+import Form from "../../ui/Form";
+import Textarea from "../../ui/Textarea";
+import Button from "../../ui/Button";
+import { useCreateTest } from "./useTestCreate";
+import { useForm } from "react-hook-form";
+import Input from "../../ui/Input";
+import { useState } from "react";
+import CloseIcon from "../../ui/CloseIcon";
+import { devicesMax } from "../../styles/breakpoint";
 
 const StyledTest = styled.div`
   flex: 1;
@@ -23,39 +23,36 @@ const StyledTest = styled.div`
   position: relative;
 
   background-color: var(--color-blue-100);
-`
+`;
 const HeadingBox = styled.div`
   margin-bottom: 2rem;
-`
+`;
 const TextBox = styled.div`
   margin-top: 2rem;
 
   @media ${devicesMax.sm} {
     font-size: 1.3rem;
   }
-`
+`;
 const List = styled.ul`
   list-style: lower-roman;
   padding: 2rem;
-`
+`;
 
 function TestForm({ fullName, payment }) {
-  console.log(payment)
-
-  const [close, setClose] = useState(false)
-  const { createTest, isCreating } = useCreateTest()
-  const { register, handleSubmit, reset } = useForm()
+  const [close, setClose] = useState(false);
+  const { createTest, isCreating } = useCreateTest();
+  const { register, handleSubmit, reset } = useForm();
 
   function onSubmit(data) {
-    console.log(data)
-    createTest({ ...data })
-    reset()
+    createTest({ ...data });
+    reset();
   }
 
   if (close === false)
     return (
       <StyledTest>
-        {payment === 'Mtn Momo' ? (
+        {payment === "Mtn Momo" ? (
           <TextBox>
             <Heading>Payment instruction below:</Heading>
             <p>
@@ -138,8 +135,8 @@ function TestForm({ fullName, payment }) {
           <FormRow>
             <Textarea
               placeholder="testimonal message"
-              {...register('msg', {
-                required: 'msg is required',
+              {...register("msg", {
+                required: "msg is required",
               })}
             />
           </FormRow>
@@ -147,14 +144,14 @@ function TestForm({ fullName, payment }) {
             <Input
               type="text"
               placeholder="Your location"
-              {...register('loc', {
-                required: 'loc is required',
+              {...register("loc", {
+                required: "loc is required",
               })}
             />
           </FormRow>
           <Input
             type="hidden"
-            {...register('fullName')}
+            {...register("fullName")}
             defaultValue={fullName}
           />
           <FormRow>
@@ -162,7 +159,7 @@ function TestForm({ fullName, payment }) {
           </FormRow>
         </Form>
       </StyledTest>
-    )
+    );
 }
 
-export default TestForm
+export default TestForm;

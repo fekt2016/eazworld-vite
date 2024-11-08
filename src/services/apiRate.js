@@ -1,30 +1,29 @@
-import supabase from './supabase';
+import supabase from "./supabase";
 
 export async function getRate() {
-	const { data, error } = await supabase.from('rate').select('*');
-	if (error) throw new Error(error.message);
+  const { data, error } = await supabase.from("rate").select("*");
+  if (error) throw new Error(error.message);
 
-	return { data, error };
+  return { data, error };
 }
 
 export async function updateRate(id, newRate) {
-	const { data, error } = await supabase
-		.from('rate')
-		.update({ ...newRate })
-		.eq('id', id)
-		.select()
-		.order('created_at', { ascending: false })
-		.single();
+  const { data, error } = await supabase
+    .from("rate")
+    .update({ ...newRate })
+    .eq("id", id)
+    .select()
+    .order("created_at", { ascending: false })
+    .single();
 
-	if (error) {
-		console.error(error);
-		throw new Error('Rate could not be updated');
-	}
-	return data;
+  if (error) {
+    throw new Error("Rate could not be updated");
+  }
+  return data;
 }
 
 export async function getRAateByCol() {
-	const { data, error } = await supabase.from('rate').select();
+  const { data, error } = await supabase.from("rate").select();
 
-	return { data, error };
+  return { data, error };
 }

@@ -1,25 +1,26 @@
 /*eslint react/prop-types : 0 */
-import styled from 'styled-components'
-import Input from '../../ui/Input'
-import Form from '../../ui/Form'
-import Button from '../../ui/Button'
-import Spinner from '../../ui/Spinner'
-import FormRow from '../../ui/FormRow'
-import emailjs from '@emailjs/browser'
-import Select from '../../ui/Select'
-import supabase from '../../services/supabase'
+import styled from "styled-components";
+import Input from "../../ui/Input";
+import Form from "../../ui/Form";
+import Spinner from "../../ui/Spinner";
+import FormRow from "../../ui/FormRow";
+// import emailjs from "@emailjs/browser";
+import Select from "../../ui/Select";
+import supabase from "../../services/supabase";
 
-import { useForm } from 'react-hook-form'
-import { DevTool } from '@hookform/devtools'
-import { useNavigate } from 'react-router-dom'
-import { useCreateBuy } from '../buy/useCreateBuy'
-import { devicesMax } from '../../styles/breakpoint'
-import { useEffect, useState } from 'react'
-import { useUser } from '../authentication/useUser'
-import { randomOrderId } from '../../utils/helpers'
-import { useMiner } from '../miner/useMiner'
+import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
+// import { useNavigate } from "react-router-dom";
+import { useCreateBuy } from "../buy/useCreateBuy";
+import { devicesMax } from "../../styles/breakpoint";
+import { useEffect, useState } from "react";
+import { useUser } from "../authentication/useUser";
+import { randomOrderId } from "../../utils/helpers";
+import { useMiner } from "../miner/useMiner";
 
-import News from '../../ui/News'
+import News from "../../ui/News";
+import Button from "../../ui/Button";
+import { useNavigate } from "react-router-dom";
 
 const BuyContainer = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ const BuyContainer = styled.div`
   @media ${devicesMax.sm} {
     padding: 1rem;
   }
-`
+`;
 
 const StyledTerm = styled.div`
   margin-top: 2rem;
@@ -49,31 +50,33 @@ const StyledTerm = styled.div`
   @media ${devicesMax.md} {
     width: 100%;
   }
-`
+`;
 
 function CreateBuyForm() {
-  const { createBuy, isCreating } = useCreateBuy()
-  const { user } = useUser()
-  const { isLoading, data } = useMiner()
-  const [rate, setRate] = useState(0)
+  const { createBuy, isCreating } = useCreateBuy();
+  const { user } = useUser();
 
-  const navigate = useNavigate()
+  const { isLoading, data } = useMiner();
+
+  const [rate, setRate] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRate = async function () {
       const { data, error } = await supabase
-        .from('rate')
-        .select('*')
-        .eq('currency', 'bitcoin')
+        .from("rate")
+        .select("*")
+        .eq("currency", "bitcoin");
       if (error) {
-        console.log(error)
+        console.log(error);
       }
-      const rate = data[0]
-      if (rate) setRate(rate.buy)
-    }
+      const rate = data[0];
+      if (rate) setRate(rate.buy);
+    };
 
-    fetchRate()
-  }, [])
+    fetchRate();
+  }, []);
 
   const {
     register,
@@ -83,58 +86,57 @@ function CreateBuyForm() {
     reset,
     setValue,
     getValues,
-  } = useForm()
-  const { errors } = formState
-  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
+  } = useForm();
+  const { errors } = formState;
+  // useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
 
   function onSubmit(data) {
     createBuy(
       { ...data },
       {
         onSuccess: () => {
-          reset()
-          navigate(`/buy-currentOrder/${data.orderId}`)
+          reset();
+          navigate(`/buy-currentOrder/${data.orderId}`);
         },
-      },
-    )
-
-    emailjs
-      .send(
-        import.meta.env.VITE_YOUR_SERVICE_ID,
-        import.meta.env.VITE_YOUR_BUY_TEMPLATE_ID,
-        {
-          from_name: user.user_metadata.firstName,
-          recipient: user?.email,
-          orderId: data.orderId,
-          currency: data.currency,
-          amountGh: data.amountGh,
-          amountUSD: data.amountUSD,
-          Payment: data.payment,
-          TotaltoPay: data.totalToPay,
-          wallet: data.wallet,
-          miner: data.miner,
-        },
-      )
-      .then(
-        (result) => {
-          console.log(result)
-        },
-        (error) => {
-          console.log(error.text)
-        },
-      )
+      }
+    );
+    // emailjs
+    //   .send(
+    //     import.meta.env.VITE_YOUR_SERVICE_ID,
+    //     import.meta.env.VITE_YOUR_BUY_TEMPLATE_ID,
+    //     {
+    //       from_name: user.user_metadata.firstName,
+    //       recipient: user?.email,
+    //       orderId: data.orderId,
+    //       currency: data.currency,
+    //       amountGh: data.amountGh,
+    //       amountUSD: data.amountUSD,
+    //       Payment: data.payment,
+    //       TotaltoPay: data.totalToPay,
+    //       wallet: data.wallet,
+    //       miner: data.miner,
+    //     },
+    //   )
+    //   .then(
+    //     (result) => {
+    //       console.log(result)
+    //     },
+    //     (error) => {
+    //       console.log(error.text)
+    //     },
+    // )
   }
-  if (isLoading) return <Spinner />
+  if (isLoading) return <Spinner />;
 
-  const mine = data[0]
+  const { normal, priority } = data[0];
 
   return (
     <BuyContainer>
       <Form type="buy" onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Select Currency" error={errors?.currency?.message}>
           <Select
-            {...register('currency', {
-              required: 'select currency',
+            {...register("currency", {
+              required: "select currency",
             })}
           >
             <option value="" disabled selected>
@@ -150,17 +152,17 @@ function CreateBuyForm() {
             step="any"
             min="10"
             id="amountUSD"
-            {...register('amountUSD', {
-              required: 'Dollar amount is required',
+            {...register("amountUSD", {
+              required: "Dollar amount is required",
               valueAsNumber: true,
               min: 10,
               onChange: (evt) => {
-                const miner = getValues('miner') * rate
-                const cedis = evt.target.value * rate
-                const total = cedis + miner
+                const miner = getValues("miner") * rate;
+                const cedis = evt.target.value * rate;
+                const total = cedis + miner;
                 if (!isNaN(cedis && total)) {
-                  setValue('amountGh', cedis)
-                  setValue('totalToPay', total)
+                  setValue("amountGh", cedis.toFixed(2));
+                  setValue("totalToPay", total.toFixed(2));
                 }
               },
             })}
@@ -171,21 +173,20 @@ function CreateBuyForm() {
             type="number"
             id="amountGh"
             step="any"
-            {...register('amountGh', {
-              required: 'Cedis amount is required',
+            {...register("amountGh", {
+              required: "Cedis amount is required",
               valueAsNumber: true,
               min: 125,
               onChange: (evt) => {
-                const dollar = evt.target.value / rate
-                const miner = getValues('miner') * rate
-                const total = dollar + miner
-
+                const dollar = evt.target.value / rate;
+                const miner = getValues("miner") * rate;
+                const total = dollar + miner;
                 if (!isNaN(dollar)) {
-                  setValue('amountUSD', dollar)
-                  setValue('totalToPay', total)
+                  setValue("amountUSD", dollar.toFixed(2));
+                  setValue("totalToPay", total.toFixed(2));
                 }
                 if (evt.target.value === 0) {
-                  setValue('amountUSD', 0)
+                  setValue("amountUSD", 0);
                 }
               },
             })}
@@ -193,15 +194,15 @@ function CreateBuyForm() {
         </FormRow>
         <FormRow label="Miner" error={errors?.miner?.message}>
           <Select
-            {...register('miner', {
-              required: 'select miners fee',
+            {...register("miner", {
+              required: "select miners fee",
               onChange: (evt) => {
-                const miner = evt.target.value * rate
-                const cedis = getValues('amountGh')
-                const total = miner + cedis
+                const miner = evt.target.value * rate;
+                const cedis = getValues("amountGh");
+                const total = miner + cedis;
 
                 if (!isNaN(miner && cedis)) {
-                  setValue('totalToPay', total)
+                  setValue("totalToPay", total.toFixed(2));
                 }
               },
             })}
@@ -209,8 +210,8 @@ function CreateBuyForm() {
             <option value="" disabled selected>
               Select Miners fee
             </option>
-            <option>{mine.normal}</option>
-            <option>{mine.priority}</option>
+            <option>{normal}</option>
+            <option>{priority}</option>
           </Select>
         </FormRow>
         <FormRow label="TotalTopay">
@@ -218,15 +219,15 @@ function CreateBuyForm() {
             type="number"
             step="any"
             id="totalToPay"
-            {...register('totalToPay', {
-              required: 'total is required',
+            {...register("totalToPay", {
+              required: "total is required",
             })}
           />
         </FormRow>
         <FormRow label="Payment method" error={errors?.payment?.message}>
           <Select
-            {...register('payment', {
-              required: 'select payment method',
+            {...register("payment", {
+              required: "select payment method",
             })}
           >
             <option value="" disabled selected>
@@ -241,11 +242,11 @@ function CreateBuyForm() {
             error={errors?.wallet?.message}
             type="text"
             id="wallet"
-            {...register('wallet', {
-              required: 'Wallet address required',
+            {...register("wallet", {
+              required: "Wallet address required",
               pattern: {
                 value: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/s,
-                message: 'check your wallet address',
+                message: "check your wallet address",
               },
             })}
           />
@@ -254,21 +255,21 @@ function CreateBuyForm() {
         <Input
           type="hidden"
           id="status"
-          {...register('status')}
-          defaultValue={'add payment'}
+          {...register("status")}
+          defaultValue={"add payment"}
         />
 
         <Input
           type="hidden"
           id="orderId"
-          {...register('orderId')}
+          {...register("orderId")}
           defaultValue={randomOrderId()}
         />
 
         <Input
           type="hidden"
           id="email"
-          {...register('email')}
+          {...register("email")}
           defaultValue={user?.email}
         />
 
@@ -281,10 +282,10 @@ function CreateBuyForm() {
         <FormRow>
           <div>
             {rate === 0 ? (
-              ''
+              ""
             ) : (
               <Button disabled={isCreating}>
-                {isCreating ? 'Submitting' : 'Place an Order'}
+                {isCreating ? "Submitting" : "Place an Order"}
               </Button>
             )}
           </div>
@@ -294,7 +295,7 @@ function CreateBuyForm() {
 
       <DevTool control={control} />
     </BuyContainer>
-  )
+  );
 }
 
-export default CreateBuyForm
+export default CreateBuyForm;

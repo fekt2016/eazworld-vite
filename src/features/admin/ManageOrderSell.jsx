@@ -1,23 +1,23 @@
-import Table from '../../ui/Table'
-import { useAllSell } from '../sell/useAllSell'
-import Spinner from '../../ui/Spinner'
-import AdminSellRow from '../admin/AdminSellRow'
-import { GiReceiveMoney } from 'react-icons/gi'
-import Stat from '../../ui/Stat'
-import Pagination from '../../ui/Pagination'
-import styled from 'styled-components'
+import Table from "../../ui/Table";
+import { useAllSell } from "../sell/useAllSell";
+import Spinner from "../../ui/Spinner";
+import AdminSellRow from "../admin/AdminSellRow";
+import { GiReceiveMoney } from "react-icons/gi";
+import Stat from "../../ui/Stat";
+import Pagination from "../../ui/Pagination";
+import styled from "styled-components";
 
 const StyledD = styled.div`
   /* display: none; */
-`
+`;
 
 function ManageOrderSell() {
-  const { data, isLoading, error } = useAllSell()
+  const { data, isLoading, error } = useAllSell();
 
-  if (isLoading) return <Spinner />
-  if (error) return 'An error has occured: ' + error.message
-  const { data: sell, count } = data
-  console.log(sell, count)
+  if (isLoading) return <Spinner />;
+  if (error) return "An error has occured: " + error.message;
+  const { data: sell, count } = data;
+
   return (
     <>
       <Stat
@@ -49,7 +49,7 @@ function ManageOrderSell() {
         </Table.Footer>
       </Table>
     </>
-  )
+  );
 }
 
-export default ManageOrderSell
+export default ManageOrderSell;

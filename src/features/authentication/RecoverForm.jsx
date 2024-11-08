@@ -1,22 +1,19 @@
-import Form from '../../ui/Form'
-import Input from '../../ui/Input'
-import Button from '../../ui/Button'
-import { useState } from 'react'
-import FormRowVertical from '../../ui/FormRowVertical'
-import supabase from '../../services/supabase'
-// import { emailLink } from '../../services/apiAuth'
+import Form from "../../ui/Form";
+import Input from "../../ui/Input";
+import Button from "../../ui/Button";
+import { useState } from "react";
+import FormRowVertical from "../../ui/FormRowVertical";
+import { useRecoverEmail } from "./useRecoverEmail";
+import SpinnerMini from "../../ui/SpinnerMini";
 
 function RecoverForm() {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState("");
+  const { recover, isLoading } = useRecoverEmail();
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    console.log(email)
-    let { data, error } = await supabase.auth.resetPasswordForEmail(
-      'mapag25220@wuzak.com',
-    )
-    // emailLink(email)
-    console.log(data, error)
+    console.log(email);
+    e.preventDefault();
+    recover(email);
   }
   return (
     <Form onSubmit={handleSubmit}>
@@ -26,12 +23,12 @@ function RecoverForm() {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          // disabled={isLoading}
+          disabled={isLoading}
         />
       </FormRowVertical>
-      <Button>Send</Button>
+      <Button>{isLoading ? <SpinnerMini /> : "Send"}</Button>
     </Form>
-  )
+  );
 }
 
-export default RecoverForm
+export default RecoverForm;

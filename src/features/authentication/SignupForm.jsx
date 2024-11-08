@@ -1,75 +1,53 @@
-import styled from 'styled-components'
-import Button from '../../ui/Button'
-import Form from '../../ui/Form'
-import FormRow from '../../ui/FormRow'
-import Input from '../../ui/Input'
-import Checkbox from '../../ui/Checkbox'
+import styled from "styled-components";
+import Button from "../../ui/Button";
+import Form from "../../ui/Form";
+import FormRow from "../../ui/FormRow";
+import Input from "../../ui/Input";
 
-import { NavLink } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { useSignup } from './useSignup'
-
-// Email regex: /\S+@\S+\.\S+/
+import { NavLink } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useSignup } from "./useSignup";
 
 const StyledBtn = styled(NavLink)`
   padding: 0.5rem 1.5rem;
   &:hover {
     text-decoration-line: underline;
   }
-`
+`;
 const StyledFooter = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 
 function SignupForm() {
-  const { isLoading } = useSignup()
+  const { signup, isLoading } = useSignup();
 
   const {
     register,
     formState: { errors },
     getValues,
     handleSubmit,
-    // reset,
-  } = useForm()
+    reset,
+  } = useForm();
 
-  // const { onChange, ref } = register
-  const agreed = register('agreed', { required: true })
-  // const { errors } = formState
-
-  async function onSubmit({
-    firstName,
-    lastName,
-    email,
-    password,
-    phone,
-    agreed,
-  }) {
-    // signup(
-    //   { firstName, lastName, email, password, phone },
-    //   {
-    //     onSettled: reset(),
-    //   },
-    // )
-    console.log(firstName, lastName, email, password, phone, agreed)
+  function onSubmit({ fullName, email, password, phone }) {
+    console.log(email);
+    signup(
+      { fullName, email, password, phone },
+      {
+        onSettled: reset(),
+      }
+    );
   }
   return (
     <>
       <Form type="signup" onSubmit={handleSubmit(onSubmit)}>
-        <FormRow label="First Name" error={errors?.firstName?.message}>
+        <FormRow label="FullName" error={errors?.lastName?.message}>
           <Input
             disabled={isLoading}
             type="text"
-            id="firstName"
-            {...register('firstName', { required: 'This field is required' })}
-          />
-        </FormRow>
-        <FormRow label="Last Name" error={errors?.lastName?.message}>
-          <Input
-            disabled={isLoading}
-            type="text"
-            id="lastName"
-            {...register('lastName', { required: 'This field is required' })}
+            id="fullName"
+            {...register("fullName", { required: "This field is required" })}
           />
         </FormRow>
 
@@ -78,11 +56,11 @@ function SignupForm() {
             disabled={isLoading}
             type="email"
             id="email"
-            {...register('email', {
-              required: 'This field is required',
+            {...register("email", {
+              required: "This field is required",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: 'Please provide valid email address',
+                message: "Please provide valid email address",
               },
             })}
           />
@@ -93,11 +71,11 @@ function SignupForm() {
             disabled={isLoading}
             type="password"
             id="password"
-            {...register('password', {
-              required: 'This field is required',
+            {...register("password", {
+              required: "This field is required",
               minLength: {
                 value: 8,
-                message: 'Password needs a minimum of 8 characters',
+                message: "Password needs a minimum of 8 characters",
               },
             })}
           />
@@ -111,10 +89,10 @@ function SignupForm() {
             disabled={isLoading}
             type="password"
             id="passwordConfirm"
-            {...register('passwordConfirm', {
-              required: 'This field is required',
+            {...register("passwordConfirm", {
+              required: "This field is required",
               validate: (value) =>
-                value === getValues().password || 'passwords need to match',
+                value === getValues().password || "passwords need to match",
             })}
           />
         </FormRow>
@@ -123,22 +101,12 @@ function SignupForm() {
             disabled={isLoading}
             type="phone"
             id="phone"
-            {...register('phone', {
-              required: 'This field is required',
+            {...register("phone", {
+              required: "This field is required",
             })}
           />
         </FormRow>
-        <FormRow>
-          <Checkbox
-            id="agreed"
-            // onChange={onChange}
-            name={agreed.name}
-            // ref={ref}
-            // {...register('agreed', { required: `this field is required` })}
-          >
-            Agree with our Term & agreement...
-          </Checkbox>
-        </FormRow>
+        <FormRow></FormRow>
 
         <FormRow>
           <Button disabled={isLoading}>Sign Up</Button>
@@ -148,7 +116,7 @@ function SignupForm() {
         </StyledFooter>
       </Form>
     </>
-  )
+  );
 }
 
-export default SignupForm
+export default SignupForm;

@@ -1,12 +1,16 @@
-import styled from 'styled-components'
-import { useUsers } from './useUsers'
-// import { formatTime } from '../../utils/helpers'
-import Spinner from '../../ui/Spinner'
-import Table from '../../ui/Table'
-import CustomerRow from './CustomerRow'
-import Pagination from '../../ui/Pagination'
-import { devicesMax } from '../../styles/breakpoint'
-import { FcCustomerSupport } from 'react-icons/fc'
+import styled from "styled-components";
+
+// import { formatTime } from "../../utils/helpers";
+// import Spinner from "../../ui/Spinner";
+import Table from "../../ui/Table";
+import CustomerRow from "./CustomerRow";
+// import Pagination from "../../ui/Pagination";
+import { devicesMax } from "../../styles/breakpoint";
+import { FcCustomerSupport } from "react-icons/fc";
+import { useEffect, useState } from "react";
+import supabase from "../../services/supabase";
+
+// import { useProfiles } from "./useProfiles";
 
 // const StyledLi = styled.li`
 //   display: flex;
@@ -20,13 +24,13 @@ import { FcCustomerSupport } from 'react-icons/fc'
 //   &:nth-of-type(even) {
 //     background-color: var(--color-black-200);
 //   }
-// `
+// `;
 
 const StyledD = styled.div`
   @media ${devicesMax.md} {
     display: none;
   }
-`
+`;
 const Count = styled.div`
   max-width: 50rem;
   padding: 1rem;
@@ -34,7 +38,7 @@ const Count = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-`
+`;
 const IconBox = styled.div`
   background-color: var(--color-red-500);
   margin-right: 1rem;
@@ -44,22 +48,30 @@ const IconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 function Customers() {
-  const { data, isLoading } = useUsers()
+  const [profiles, setProfiles] = useState([]);
 
-  if (isLoading) return <Spinner />
+  useEffect(() => {
+    const fetchProfiles = async function () {
+      const { data, error } = await supabase.from("profiles").select("*");
 
-  const { users, count } = data
+      if (error) {
+        console.log(error);
+      }
+      setProfiles(data);
+    };
 
+    fetchProfiles();
+  }, []);
   return (
     <div>
       <Count>
         <IconBox>
           <FcCustomerSupport />
         </IconBox>
-        {count}
+        {/* {count} */}
       </Count>
       <Table type="table" columns="repeat(4, 1fr)">
         <Table.Header role="row">
@@ -70,24 +82,15 @@ function Customers() {
         </Table.Header>
 
         <Table.Body
-          data={users}
-          render={(user) => <CustomerRow key={user.id} user={user} />}
+          data={profiles}
+          render={(pro) => <CustomerRow key={pro.id} user={pro} />}
         />
-        <Table.Footer>
+        {/* <Table.Footer>
           <Pagination count={count} />
-        </Table.Footer>
+        </Table.Footer> */}
       </Table>
-      {/* <ul>
-        {users.map((user) => (
-          <StyledLi key={user.id}>
-            <div>{formatTime(user.created_at)}</div>
-            <div>{user.email}</div>
-            <div>{user.role}</div>
-          </StyledLi>
-        ))}
-      </ul> */}
     </div>
-  )
+  );
 }
 
-export default Customers
+export default Customers;

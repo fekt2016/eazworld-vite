@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import LoginForm from '../features/authentication/LoginForm'
-import Logo from '../ui/Logo'
-import Heading from '../ui/Heading'
-import { devicesMax } from '../styles/breakpoint'
+import styled from "styled-components";
+import LoginForm from "../features/authentication/LoginForm";
+import Logo from "../ui/Logo";
+import Heading from "../ui/Heading";
+import { devicesMax } from "../styles/breakpoint";
 
 const LoginLayout = styled.main`
   min-height: 100vh;
@@ -11,7 +11,7 @@ const LoginLayout = styled.main`
   justify-content: center;
   align-items: center;
   background-color: var(--color-black-900);
-`
+`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,7 +34,7 @@ const Container = styled.div`
   @media ${devicesMax.sm} {
     width: 90%;
   }
-`
+`;
 
 function Login() {
   return (
@@ -50,7 +50,7 @@ function Login() {
         <LoginForm />
       </Container>
     </LoginLayout>
-  )
+  );
 }
 
-export default Login
+export default Login;

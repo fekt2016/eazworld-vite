@@ -1,7 +1,7 @@
-import { styled } from 'styled-components'
-import HeaderMenu from './HeaderMenu'
-import UserAvatar from '../authentication/UserAvatar'
-import Timer from '../../ui/Timer'
+import { styled } from "styled-components";
+import HeaderMenu from "./HeaderMenu";
+// import UserAvatar from '../authentication/UserAvatar'
+import Timer from "../../ui/Timer";
 
 const StyledHeader = styled.header`
   width: 100vw;
@@ -16,22 +16,22 @@ const StyledHeader = styled.header`
   top: 0;
   background-color: var(--color-white-0);
   z-index: 100;
-`
+`;
 const P = styled.p`
   font-size: 0.8rem;
-`
+`;
 
 function DashHeader() {
   return (
     <StyledHeader>
-      <UserAvatar />
+      {/* <UserAvatar /> */}
       <HeaderMenu />
       <div>
         <Timer />
         <P>TimeOut</P>
       </div>
     </StyledHeader>
-  )
+  );
 }
 
-export default DashHeader
+export default DashHeader;

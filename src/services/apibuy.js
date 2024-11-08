@@ -1,93 +1,93 @@
-import supabase from './supabase';
-import { PAGE_SIZE } from '../utils/constants';
+import supabase from "./supabase";
+import { PAGE_SIZE } from "../utils/constants";
 
 export async function getBuy({ page }) {
-	let query = supabase
-		.from('buy')
-		.select('*', { count: 'exact' })
-		.order('created_at', { ascending: false });
+  let query = supabase
+    .from("buy")
+    .select("*", { count: "exact" })
+    .order("created_at", { ascending: false });
 
-	if (page) {
-		const from = (page - 1) * PAGE_SIZE;
-		const to = from + PAGE_SIZE - 1;
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
 
-		query = query.range(from, to);
-	}
+    query = query.range(from, to);
+  }
 
-	const { data, error, count } = await query;
+  const { data, error, count } = await query;
 
-	if (error) {
-		throw new Error('currency could not be loaded');
-	}
+  if (error) {
+    throw new Error("currency could not be loaded");
+  }
 
-	return { data, count, error };
+  return { data, count, error };
 }
 
 export async function createBuy(newBuy) {
-	const { data, error } = await supabase.from('buy').insert([newBuy]);
-	if (error) {
-		throw new Error('currency could not be loaded');
-	}
+  const { data, error } = await supabase.from("buy").insert([newBuy]);
+  if (error) {
+    throw new Error("currency could not be loaded");
+  }
 
-	return data;
+  return data;
 }
 
 export async function getCurrentUserBuy({ page }) {
-	const {
-		data: { user },
-		error2,
-	} = await supabase.auth.refreshSession();
+  const {
+    data: { user },
 
-	if (error2) throw new Error(error.message);
+    error2,
+  } = await supabase.auth.refreshSession();
 
-	let query = supabase
-		.from('buy')
-		.select('*', {
-			count: 'exact',
-		})
-		.order('created_at', { ascending: false })
-		.eq('user_id', user.id);
+  if (error2) throw new Error(error.message);
 
-	if (page) {
-		const from = (page - 1) * PAGE_SIZE;
-		const to = from + PAGE_SIZE - 1;
+  let query = supabase
+    .from("buy")
+    .select("*", {
+      count: "exact",
+    })
+    .order("created_at", { ascending: false })
+    .eq("userId", user.id);
 
-		query = query.range(from, to);
-	}
-	const { data, error, count } = await query;
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
 
-	if (error) throw new Error('currency could not be loaded');
-
-	return { data, count };
+    query = query.range(from, to);
+  }
+  const { data, error, count } = await query;
+  if (error) throw new Error("currency could not be loaded");
+  return { data, count };
 }
 
 export async function getCurrentBuy(id) {
-	const { data, error } = await supabase
-		.from('buy')
-		.select('*')
-		.eq('orderId', id);
+  const { data, error } = await supabase
+    .from("buy")
+    .select("*")
+    .eq("orderId", id);
 
-	if (error) throw new Error('there was an error');
+  if (error) throw new Error("there was an error");
 
-	return { data, error };
+  return { data, error };
 }
 
-export async function updateBuy(id) {
-	const { data, error } = await supabase
-		.from('buy')
-		.update({ status: 'order completed' })
-		.eq('id', id)
-		.select()
-		.single();
+export async function updateBuy(id, status) {
+  console.log(status, id);
+  const { data, error } = await supabase
+    .from("buy")
+    .update({ status: "order completed" })
+    .eq("id", id)
+    .select()
+    .single();
 
-	if (error) throw new Error('buy could not be updated');
+  if (error) throw new Error("buy could not be updated");
 
-	return { data, error };
+  return { data, error };
 }
 
 export async function deleteBuy(id) {
-	const { data, error } = await supabase.from('buy').delete().eq('id', id);
-	if (error) throw new Error('buy could not be updated');
+  const { data, error } = await supabase.from("buy").delete().eq("id", id);
+  if (error) throw new Error("buy could not be updated");
 
-	return data;
+  return data;
 }

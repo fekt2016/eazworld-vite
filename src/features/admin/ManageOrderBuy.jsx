@@ -1,49 +1,52 @@
-import Table from '../../ui/Table'
-import { useAllBuy } from '../buy/useAllBuy'
-import Spinner from '../../ui/Spinner'
-import AdminBuyRow from './AdminBuyRow'
-import Stat from '../../ui/Stat'
-import { GiPayMoney } from 'react-icons/gi'
-import Pagination from '../../ui/Pagination'
-import styled from 'styled-components'
-import { devicesMax } from '../../styles/breakpoint'
-import AdminTableOperations from './AdminTableOperations'
-import Row from '../../ui/Row'
-import { useSearchParams } from 'react-router-dom'
+import Table from "../../ui/Table";
+import { useAllBuy } from "../buy/useAllBuy";
+import Spinner from "../../ui/Spinner";
+import AdminBuyRow from "./AdminBuyRow";
+import Stat from "../../ui/Stat";
+import { GiPayMoney } from "react-icons/gi";
+import Pagination from "../../ui/Pagination";
+import styled from "styled-components";
+import { devicesMax } from "../../styles/breakpoint";
+import AdminTableOperations from "./AdminTableOperations";
+import Row from "../../ui/Row";
+import { useSearchParams } from "react-router-dom";
 
 const StyledD = styled.div`
   @media ${devicesMax.md} {
     font-size: 1rem;
   }
-`
+`;
 const Email = styled.div`
   @media ${devicesMax.md} {
     display: none;
   }
-`
+`;
 
 function ManageOrderBuy() {
-  const { buy, isLoading, error, count } = useAllBuy()
-  const [searchParams] = useSearchParams()
+  const { buy, isLoading, error, count } = useAllBuy();
 
-  if (isLoading) return <Spinner />
-  if (error) return 'An error has occured: ' + error.message
+  const [searchParams] = useSearchParams();
+
+  if (isLoading) return <Spinner />;
+  if (error) return "An error has occured: " + error.message;
 
   //filter
-  const filterValue = searchParams.get('buy-order') || 'all'
+  const filterValue = searchParams.get("buy-order") || "all";
 
-  let filteredBuy
-  if (filterValue === 'all') filteredBuy = buy
-  if (filterValue === 'order-completed')
-    filteredBuy = buy.filter((b) => b.status === 'order completed')
-  if (filterValue === 'add-payment')
-    filteredBuy = buy.filter((b) => b.status === 'add payment')
+  let filteredBuy;
+  if (filterValue === "all") filteredBuy = buy;
+  if (filterValue === "order-completed")
+    filteredBuy = buy.filter((b) => b.status === "order completed");
+  if (filterValue === "add-payment")
+    filteredBuy = buy.filter((b) => b.status === "add payment");
 
   //sort
-  const sortBy = searchParams.get('sortBy') || 'startDate-asc'
-  const [field, direction] = sortBy.split('-')
-  const modifier = direction === 'asc' ? 1 : -1
-  const sortedBuy = filteredBuy.sort((a, b) => (a[field] - b[field]) * modifier)
+  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedBuy = filteredBuy.sort(
+    (a, b) => (a[field] - b[field]) * modifier
+  );
 
   return (
     <>
@@ -80,7 +83,7 @@ function ManageOrderBuy() {
         </Table.Footer>
       </Table>
     </>
-  )
+  );
 }
 
-export default ManageOrderBuy
+export default ManageOrderBuy;

@@ -1,9 +1,9 @@
-import { styled } from 'styled-components'
-import Card from '../features/dashboard/Card'
-import Spinner from '../ui/Spinner'
+import { styled } from "styled-components";
+import Card from "../features/dashboard/Card";
+import Spinner from "../ui/Spinner";
 
-import { devicesMax } from '../styles/breakpoint'
-import { useRate } from '../features/admin/rate/useRate'
+import { devicesMax } from "../styles/breakpoint";
+import { useRate } from "../features/admin/rate/useRate";
 
 const StyledUl = styled.ul`
   padding: 1rem;
@@ -23,13 +23,13 @@ const StyledUl = styled.ul`
   @media ${devicesMax.sm} {
     grid-template-columns: 1fr;
   }
-`
+`;
 
 function PriceCard() {
-  const { isLoading, rate } = useRate()
+  const { isLoading, rate } = useRate();
 
-  if (isLoading) return <Spinner />
-  const { data: currentRate } = rate
+  if (isLoading) return <Spinner />;
+  const { data: currentRate } = rate;
 
   return (
     <StyledUl>
@@ -45,7 +45,7 @@ function PriceCard() {
         />
       ))}
     </StyledUl>
-  )
+  );
 }
 
-export default PriceCard
+export default PriceCard;

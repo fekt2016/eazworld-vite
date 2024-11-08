@@ -1,11 +1,11 @@
-import Heading from '../ui/Heading'
-import Row from '../ui/Row'
-import CreateSellForm from '../features/sell/CreateSellForm'
-import { useState } from 'react'
-import Modal from '../ui/Modal'
+import Heading from "../ui/Heading";
+import Row from "../ui/Row";
+import CreateSellForm from "../features/sell/CreateSellForm";
+import { useState } from "react";
+import Modal from "../ui/Modal";
 
 function Sell() {
-  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [isOpenModal, setIsOpenModal] = useState(false);
   return (
     <>
       <Row type="horizontal">
@@ -20,7 +20,7 @@ function Sell() {
         )}
       </Row>
     </>
-  )
+  );
 }
 
-export default Sell
+export default Sell;

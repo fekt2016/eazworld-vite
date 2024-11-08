@@ -1,21 +1,22 @@
-import styled from 'styled-components'
-import { devicesMax } from '../../styles/breakpoint'
-import Modal from '../../ui/Modal'
-import { Link, useParams } from 'react-router-dom'
-import Button from '../../ui/Button'
-import SpinnerMini from '../../ui/SpinnerMini'
-import FormRow from '../../ui/FormRow'
-import Input from '../../ui/Input'
-import Select from '../../ui/Select'
-import emailjs from '@emailjs/browser'
-import { useEffect, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { useUser } from '../authentication/useUser'
-import Spinner from '../../ui/Spinner'
-import { useCreatePayment } from '../payment/useCreatePayment'
-import { getCurrentBuy } from '../../services/apibuy'
-import Form from '../../ui/Form'
-import supabase from '../../services/supabase'
+import styled from "styled-components";
+import { devicesMax } from "../../styles/breakpoint";
+import Modal from "../../ui/Modal";
+import { Link, useParams } from "react-router-dom";
+import Button from "../../ui/Button";
+import SpinnerMini from "../../ui/SpinnerMini";
+import FormRow from "../../ui/FormRow";
+import Input from "../../ui/Input";
+import Select from "../../ui/Select";
+// import emailjs from "@emailjs/browser";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+// import { useUser } from "../authentication/useUser";
+import Spinner from "../../ui/Spinner";
+import { useCreatePayment } from "../payment/useCreatePayment";
+import { getCurrentBuy } from "../../services/apibuy";
+import Form from "../../ui/Form";
+import supabase from "../../services/supabase";
+import { updateBuy } from "../../services/apibuy";
 
 const OrderDetails = styled.div`
   flex: 2;
@@ -26,14 +27,14 @@ const OrderDetails = styled.div`
   @media ${devicesMax.lg} {
     width: 100%;
   }
-`
+`;
 const HeadingBox = styled.div`
   background-color: var(--color-black-950);
   padding: 1rem;
-`
+`;
 const H4 = styled.h4`
   color: var(--color-white-0);
-`
+`;
 
 const DetailBox = styled.div`
   padding: 2rem;
@@ -49,7 +50,7 @@ const DetailBox = styled.div`
   @media ${devicesMax.md} {
     padding: 0.5rem;
   }
-`
+`;
 const TextBox = styled.div`
   background-color: var(--color-litecoin-500);
   width: 80%;
@@ -66,17 +67,17 @@ const TextBox = styled.div`
   @media ${devicesMax.sm} {
     width: 100%;
   }
-`
+`;
 const StyledSpan = styled.span`
   /* padding: 1rem; */
   text-transform: capitalize;
   @media ${devicesMax.md} {
     width: 100%;
   }
-`
+`;
 const Ps = styled.p`
   transition: all 0.4s;
-`
+`;
 const StyledDetail = styled.div`
   width: 80%;
   border-radius: 7px;
@@ -108,7 +109,7 @@ const StyledDetail = styled.div`
   @media ${devicesMax.sm} {
     font-size: 1.2rem;
   }
-`
+`;
 
 const StyledPay = styled.div`
   background-color: var(--color-doge-500);
@@ -120,7 +121,7 @@ const StyledPay = styled.div`
   @media ${devicesMax.md} {
     width: 95%;
   }
-`
+`;
 const StyledBtn = styled.div`
   margin: 4rem;
   padding: 2rem;
@@ -128,7 +129,7 @@ const StyledBtn = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-`
+`;
 const ToPay = styled.span`
   color: var(--color-white-0);
   background-color: var(--color-black-950);
@@ -141,7 +142,7 @@ const ToPay = styled.span`
   &:hover {
     transform: scale(1.5);
   }
-`
+`;
 const SpanNum = styled.span`
   background-color: var(--color-black-900);
   padding: 1rem;
@@ -156,73 +157,76 @@ const SpanNum = styled.span`
   @media ${devicesMax.md} {
     font-size: 1.3rem;
   }
-`
+`;
 const P = styled.p`
   color: var(--color-red-700);
-`
+`;
 
 const Error = styled.p`
   color: var(--color-red-700);
   text-align: center;
-`
+`;
 const H5 = styled.h5`
   text-align: center;
   text-transform: capitalize;
-`
+`;
 
 function OrderDetail({ onPayment }) {
-  const [phoneNum, setPhoneNum] = useState('')
-  const [amount, setAmount] = useState('')
-  const [transaction, setTransaction] = useState('')
-  const [account, setAccount] = useState('')
-  const [name, setName] = useState('')
-  const [error, setError] = useState()
-  const [orderId, setOrderId] = useState('')
-  const [isDisabled, setIsDisabled] = useState(false)
-  const [rate, setRate] = useState(0)
+  const [phoneNum, setPhoneNum] = useState("");
+  const [amount, setAmount] = useState("");
+  const [transaction, setTransaction] = useState("");
+  const [account, setAccount] = useState("");
+  const [name, setName] = useState("");
+  const [error, setError] = useState();
+  const [orderId, setOrderId] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [rate, setRate] = useState(0);
 
   useEffect(() => {
     const fetchRate = async function () {
       const { data, error } = await supabase
-        .from('rate')
-        .select('*')
-        .eq('currency', 'bitcoin')
+        .from("rate")
+        .select("*")
+        .eq("currency", "bitcoin");
       if (error) {
-        console.log(error)
+        console.log(error);
       }
-      const rate = data[0]
-      if (rate) setRate(rate.buy)
-    }
+      const rate = data[0];
+      if (rate) setRate(rate.buy);
+    };
 
-    fetchRate()
-  }, [])
+    fetchRate();
+  }, []);
 
-  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
+  // useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
 
-  const { orderId: order_id } = useParams()
+  const { orderId: order_id } = useParams();
 
   const { isLoading, data: buy } = useQuery({
-    queryKey: ['buy'],
+    queryKey: ["buy"],
     queryFn: () => getCurrentBuy(order_id),
-  })
-  const { createPayment, isCreating } = useCreatePayment()
-  const { user } = useUser()
+  });
+  const { createPayment, isCreating } = useCreatePayment();
 
-  if (isLoading) return <Spinner />
-  console.log(buy)
-  const { data: currentData } = buy
+  // const { user } = useUser();
 
-  const pay = currentData[0]
-  console.log(pay.payment)
-  onPayment(pay.payment)
+  if (isLoading) return <Spinner />;
+
+  const { data: currentData } = buy;
+
+  const pay = currentData[0];
+
+  onPayment(pay.payment);
   function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
+    console.log(phoneNum, amount, transaction, account, name, orderId);
+    console.log(account);
     if (!phoneNum || !amount || !transaction || !account || !name || !orderId) {
       setError({
-        title: 'Invalid input',
-        message: 'Please enter the credentials',
-      })
-      return
+        title: "Invalid input",
+        message: "Please enter the credentials",
+      });
+      return;
     }
 
     createPayment(
@@ -230,45 +234,47 @@ function OrderDetail({ onPayment }) {
 
       {
         onSettled: () => {
-          setPhoneNum('')
-          setAmount('')
-          setTransaction('')
-          setAccount('')
-          setName('')
-          setOrderId('')
+          setPhoneNum("");
+          setAmount("");
+          setTransaction("");
+          setAccount("");
+          setName("");
+          setOrderId("");
         },
-      },
-    )
-    emailjs
-      .send(
-        import.meta.env.VITE_YOUR_SERVICE_ID,
-        import.meta.env.VITE_YOUR_PAY_TEMPLATE_ID,
-        {
-          from_name: user.user_metadata.firstName,
-          recipient: user.email,
-          orderId: order_id,
-          currency: pay.currency,
-          amountGh: pay.amountGh,
-          amountUSD: pay.amountUSD,
-          Payment: pay.payment,
-          wallet: pay.wallet,
-          total: pay.totalToPay,
-          phoneNum,
-          amount,
-          transaction,
-          account,
-          name,
-        },
-      )
-      .then(
-        (result) => {
-          console.log(result)
-        },
-        (error) => {
-          console.log(error.text)
-        },
-      )
-    setIsDisabled(true)
+      }
+    );
+    updateBuy(pay.id, "paid");
+
+    // emailjs
+    //   .send(
+    //     import.meta.env.VITE_YOUR_SERVICE_ID,
+    //     import.meta.env.VITE_YOUR_PAY_TEMPLATE_ID,
+    //     {
+    //       from_name: user.user_metadata.firstName,
+    //       recipient: user.email,
+    //       orderId: order_id,
+    //       currency: pay.currency,
+    //       amountGh: pay.amountGh,
+    //       amountUSD: pay.amountUSD,
+    //       Payment: pay.payment,
+    //       wallet: pay.wallet,
+    //       total: pay.totalToPay,
+    //       phoneNum,
+    //       amount,
+    //       transaction,
+    //       account,
+    //       name,
+    //     }
+    //   )
+    //   .then(
+    //     (result) => {
+    //       console.log(result);
+    //     },
+    //     (error) => {
+    //       console.log(error.text);
+    //     }
+    //   );
+    setIsDisabled(true);
   }
   return (
     <OrderDetails>
@@ -299,7 +305,7 @@ function OrderDetail({ onPayment }) {
           </StyledDetail>
           <StyledDetail>
             <StyledSpan>Sending fee: </StyledSpan>&#8373;
-            <Ps>{item?.miner * rate}</Ps>
+            <Ps>{(item?.miner * rate).toFixed(2)}</Ps>
           </StyledDetail>
           <StyledDetail>
             <StyledSpan>payment Type: </StyledSpan>
@@ -312,9 +318,9 @@ function OrderDetail({ onPayment }) {
           <StyledPay>
             Send payment to the Number:
             <SpanNum>
-              {item.payment === 'Mtn Momo'
-                ? '0542011274 Easyworldpc(Merchant)'
-                : 'G79398 Easyworldpc (Agent)'}
+              {item.payment === "Mtn Momo"
+                ? "0542011274 Easyworldpc(Merchant)"
+                : "G79398 Easyworldpc (Agent)"}
             </SpanNum>
             Total To pay: <ToPay>&#8373;{item?.totalToPay}</ToPay>
           </StyledPay>
@@ -354,6 +360,7 @@ function OrderDetail({ onPayment }) {
                 </FormRow>
                 <FormRow label="Account Type">
                   <Select onChange={(e) => setAccount(e.target.value)}>
+                    <option selected>select Acc type</option>
                     <option>Merchant</option>
                     <option>Subscriber</option>
                   </Select>
@@ -381,7 +388,7 @@ function OrderDetail({ onPayment }) {
 
                 <FormRow>
                   <Button disabled={isDisabled}>
-                    {isCreating ? <SpinnerMini /> : 'Submit'}
+                    {isCreating ? <SpinnerMini /> : "Submit"}
                   </Button>
                 </FormRow>
               </Form>
@@ -390,7 +397,7 @@ function OrderDetail({ onPayment }) {
         </Modal>
       </StyledBtn>
     </OrderDetails>
-  )
+  );
 }
 
-export default OrderDetail
+export default OrderDetail;

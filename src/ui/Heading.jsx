@@ -11,6 +11,7 @@ const Heading = styled.h1`
       text-transform: capitalize;
       text-align: start;
       font-family: 'Lato', sans-serif;
+
       @media ${devicesMax.md} {
         font-size: 2.5rem;
       }
