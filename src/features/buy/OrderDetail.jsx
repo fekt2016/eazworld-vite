@@ -16,7 +16,7 @@ import { useCreatePayment } from "../payment/useCreatePayment";
 import { getCurrentBuy } from "../../services/apibuy";
 import Form from "../../ui/Form";
 import supabase from "../../services/supabase";
-import { updateBuy } from "../../services/apibuy";
+// import { updateBuy } from "../../services/apibuy";
 
 const OrderDetails = styled.div`
   flex: 2;
@@ -243,7 +243,7 @@ function OrderDetail({ onPayment }) {
         },
       }
     );
-    updateBuy(pay.id, "paid");
+    // updateBuy(pay.id, "paid");
 
     // emailjs
     //   .send(
