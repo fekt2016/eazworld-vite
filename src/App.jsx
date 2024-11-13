@@ -24,6 +24,7 @@ import Blog from "./pages/Blog";
 import Nav from "./features/home/Nav";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import Admin from "./pages/Admin";
+import { useEffect, useState } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,12 +34,28 @@ const queryClient = new QueryClient({
   },
 });
 
+function useMedia(query) {
+  const [matches, setMatches] = useState(window.matchMedia(query).matches);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+    const listener = () => setMatches(media.matches);
+    media.addListener(listener);
+    return () => media.removeListener(listener);
+  }, [query, matches]);
+
+  return matches;
+}
 function App() {
+  const small = useMedia("(max-width: 640px)");
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
-
       <BrowserRouter>
         <Routes>
           <Route index element={<Navigate replace to="/home" />} />
@@ -81,18 +98,27 @@ function App() {
       </BrowserRouter>
 
       <Toaster
-        position="top-center"
+        position={small ? "bottom-center" : "top-center"}
         gutter={12}
         containerStyle={{ margin: "8px" }}
         toastOptions={{
           success: {
             duration: 3000,
+            style: {
+              backgroundColor: "var(--color-green-700)",
+              color: "var(--color-white-0)",
+            },
+          },
+          error: {
+            style: {
+              backgroundColor: "var(--color-red-800)",
+              color: "var(--color-white-0)",
+            },
           },
           style: {
-            fontSize: "16px",
-            maxWidth: "500px",
-            backgroundColor: "var(--color-grey-0)",
-            color: "var(--color-grey-700)",
+            fontSize: `${small ? "1rem" : "1.6rem"}`,
+            maxWidth: `${small ? "35rem" : "50rem"}`,
+            boxShadow: `rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px`,
           },
         }}
       />
