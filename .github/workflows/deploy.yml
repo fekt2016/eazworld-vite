@@ -25,10 +25,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get build artifects
-        uses: actions/downoad-artifect@v4
+        uses: actions/download-artifact@v4
         with:
           name: dist-flies
-      - name: Output contents
+      - name: Output content
         run: ls
       - name: Deploy
         run: echo "Deploy"
