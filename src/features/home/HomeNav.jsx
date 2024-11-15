@@ -1,17 +1,17 @@
-import { css, styled } from 'styled-components'
+import { css, styled } from "styled-components";
 
 // import Logo from '../../ui/Logo'
-import { NavLink } from 'react-router-dom'
-import { devicesMax, devicesMin } from '../../styles/breakpoint'
-import { HiOutlineBars3, HiOutlineXMark } from 'react-icons/hi2'
-import { useState } from 'react'
+import { NavLink } from "react-router-dom";
+import { devicesMax, devicesMin } from "../../styles/breakpoint";
+import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
+import { useState } from "react";
 
 const sideNav = css`
   height: 50%;
   flex-direction: column;
   justify-content: space-evenly;
   color: var(--color-white-0);
-`
+`;
 
 const StyledNav = styled.nav`
   padding: 1rem;
@@ -24,20 +24,15 @@ const StyledNav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
-// const StyledLeftContainer = styled.div`
-//   height: 100%;
-//   position: relative;
-//   background-color: red;
-// `
 const StyledRightContainer = styled.div`
   flex: 1;
 
   display: flex;
   justify-content: flex-end;
-  padding: 0 2rem;
-`
+  padding: 0 4rem;
+`;
 const StyledSideNav = styled.div`
   height: 100vh;
   width: 30rem;
@@ -51,7 +46,7 @@ const StyledSideNav = styled.div`
   @media ${devicesMin.sm} {
     display: none;
   }
-`
+`;
 const StyledUl = styled.ul`
   text-transform: capitalize;
 
@@ -60,15 +55,15 @@ const StyledUl = styled.ul`
   justify-content: space-around;
   align-items: center;
 
-  ${(props) => (props.isOpen ? sideNav : '')}
-`
+  ${(props) => (props.isOpen ? sideNav : "")}
+`;
 const StyledLi = styled(NavLink)`
   border-bottom: 1px solid transparent;
   padding: 0.5rem;
   transition: all 0.3s;
   position: relative;
   &::before {
-    content: '';
+    content: "";
     height: 1px;
     background-color: black;
     width: 0;
@@ -80,7 +75,7 @@ const StyledLi = styled(NavLink)`
     background-color: var(--color-black-950);
     width: 100%;
   }
-`
+`;
 
 const StyledList = styled.div`
   display: flex;
@@ -90,7 +85,7 @@ const StyledList = styled.div`
   @media ${devicesMax.sm} {
     display: none;
   }
-`
+`;
 const StyledBtnD = styled.div`
   display: flex;
   justify-content: space-around;
@@ -98,9 +93,9 @@ const StyledBtnD = styled.div`
   flex-basis: 20rem;
 
   @media ${devicesMax.sm} {
-    flex-basis: 15rem;
+    flex-basis: 16rem;
   }
-`
+`;
 const StyledBtn = styled(NavLink)`
   border: 1px solid var(--color-black-950);
   border-radius: var(--Border-radius-cir);
@@ -113,7 +108,7 @@ const StyledBtn = styled(NavLink)`
   @media ${devicesMax.sm} {
     padding: 0.5rem 1rem;
   }
-`
+`;
 const NavButton = styled.button`
   background: none;
   border: none;
@@ -124,6 +119,7 @@ const NavButton = styled.button`
   position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 2000
   &:hover {
     background-color: var(--color-grey-100);
   }
@@ -137,18 +133,17 @@ const NavButton = styled.button`
   @media ${devicesMax.sm} {
     display: block;
   }
-`
+`;
 
 const Img = styled.img`
-  height: 12rem;
-  /* padding-top: 2rem; */
+  height: 8rem;
   position: absolute;
-  top: -10px;
-  left: 20px;
-`
+  top: -5px;
+  left: 40px;
+`;
 
 function HomeNav() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <StyledNav>
@@ -207,7 +202,7 @@ function HomeNav() {
         </StyledBtnD>
       </StyledRightContainer>
     </StyledNav>
-  )
+  );
 }
 
-export default HomeNav
+export default HomeNav;
