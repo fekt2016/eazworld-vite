@@ -84,7 +84,7 @@ function LoginForm() {
         </PassSpan>
       </FormRow>
       <FormRow>
-        <Button size="large" disabled={isLoading}>
+        <Button disabled={isLoading}>
           {isLoading ? <SpinnerMini /> : "Log in"}
         </Button>
       </FormRow>

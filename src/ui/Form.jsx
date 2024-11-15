@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components'
-import { devicesMax } from '../styles/breakpoint'
+import styled, { css } from "styled-components";
+import { devicesMax } from "../styles/breakpoint";
 
 const Form = styled.form`
   overflow: hidden;
@@ -9,10 +9,8 @@ const Form = styled.form`
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
 
-
-
   ${(props) =>
-    props.type === 'regular' &&
+    props.type === "regular" &&
     css`
       padding: 2.4rem 3rem;
       width: 70%;
@@ -21,9 +19,9 @@ const Form = styled.form`
       }
     `}
   ${(props) =>
-    props.type === 'login' &&
+    props.type === "login" &&
     css`
-      padding: 2.4rem 4rem;
+      padding: 2.4rem 0 0 0;
       width: 100%;
 
       @media ${devicesMax.md} {
@@ -32,13 +30,13 @@ const Form = styled.form`
     `}
 
   ${(props) =>
-    props.type === 'signup' &&
+    props.type === "signup" &&
     css`
       width: 100%;
       padding: 1.5rem;
     `}
   ${(props) =>
-    props.type === 'buy' &&
+    props.type === "buy" &&
     css`
         flex: 2;
         padding: 4rem;
@@ -50,15 +48,14 @@ const Form = styled.form`
         }
       `}
   ${(props) =>
-    props.type === 'test' &&
+    props.type === "test" &&
     css`
       width: 100%;
       background-color: var(--color-white-0);
       padding: 2rem;
     `}
-
-`
+`;
 Form.defaultProps = {
-  type: 'regular',
-}
-export default Form
+  type: "regular",
+};
+export default Form;

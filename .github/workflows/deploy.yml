@@ -1,31 +1,21 @@
+name: Deploy website
 on:
   push:
-    branches: main
-
-name: 🚀 Deploy website on push
+    branches:
+      - main
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v4
-
-      - name: Use Node.js 20
-        uses: actions/setup-node@v2
-        with:
-          node-version: "20"
-      - name: Build Project
-        run: npm run build
-      - name: Upload production-ready build files
-        uses: actions/upload-pagesartifact@v3
-        with:
-          name: github-pages
-          path: ./dist
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.ftp_server }}
-          username: ${{ secrets.ftp_name }}
-          password: ${{ secrets.ftp_password }}
-          local-dir: dist/
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        uses: npm ci
+      - name: Build website
+        uses: npm run build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deploy"

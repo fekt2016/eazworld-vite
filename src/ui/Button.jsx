@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components'
-import { devicesMax } from '../styles/breakpoint'
+import styled, { css } from "styled-components";
+import { devicesMax } from "../styles/breakpoint";
 
 const sizes = {
   small: css`
@@ -11,7 +11,7 @@ const sizes = {
   `,
   medium: css`
     font-size: 1.4rem;
-    padding: 1.2rem 1.6rem;
+    padding: 1rem 4rem;
     font-weight: 500;
   `,
   large: css`
@@ -19,7 +19,7 @@ const sizes = {
     padding: 1.2rem 2.4rem;
     font-weight: 500;
   `,
-}
+};
 
 const variations = {
   primary: css`
@@ -57,7 +57,7 @@ const variations = {
       background-color: var(--color-black-950);
     }
   `,
-}
+};
 
 const Button = styled.button`
   border: none;
@@ -66,13 +66,13 @@ const Button = styled.button`
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
   @media ${devicesMax.lg} {
-margin-bottom: 2rem ;
+    margin-bottom: 2rem;
   }
-`
+`;
 
 Button.defaultProps = {
-  variation: 'primary',
-  size: 'medium',
-}
+  variation: "primary",
+  size: "medium",
+};
 
-export default Button
+export default Button;

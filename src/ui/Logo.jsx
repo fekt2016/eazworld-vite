@@ -1,42 +1,35 @@
 /* eslint react/prop-types: 0 */
-import styled, { css } from 'styled-components'
-import { Link } from 'react-router-dom'
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledLogo = styled.div`
-  /* height: 100%; */
   display: flex;
   align-items: center;
 
   ${(props) =>
-    props.type === 'nav' &&
+    props.type === "nav" &&
     css`
       border-radius: 50%;
     `}
-
-  ${(props) => props.type === 'login' && css``}
-`
+`;
 
 const Img = styled.img`
-
-
+  ${(props) =>
+    props.sizes === "small" &&
+    css`
+      height: 10rem;
+    `}
+  ${(props) =>
+    props.sizes === "big" &&
+    css`
+      height: 20rem;
+    `}
     ${(props) =>
-      props.sizes === 'small' &&
-      css`
-        height: 10rem;
-      `}
-    ${(props) =>
-      props.sizes === 'big' &&
-      css`
-        height: 20rem;
-      `}
-    ${(props) =>
-      props.sizes === 'medium' &&
-      css`
-        height: 15rem;
-      `}
-
-
-`
+    props.sizes === "medium" &&
+    css`
+      height: 15rem;
+    `}
+`;
 
 function Logo({ type, img, sizes }) {
   return (
@@ -45,7 +38,7 @@ function Logo({ type, img, sizes }) {
         <Img src={img} alt="Logo" sizes={sizes} />
       </Link>
     </StyledLogo>
-  )
+  );
 }
 
-export default Logo
+export default Logo;

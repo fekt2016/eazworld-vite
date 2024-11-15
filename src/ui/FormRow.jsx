@@ -1,12 +1,12 @@
 /* eslint react/prop-types: 0 */
-import { styled } from 'styled-components'
-import { devicesMax } from '../styles/breakpoint'
+import { styled } from "styled-components";
+import { devicesMax } from "../styles/breakpoint";
 const StyledFormRow = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
   padding: 0.8rem;
-  gap: 1rem;
+  gap: 0.2rem;
 
   &:first-child {
     padding-top: 0;
@@ -36,16 +36,16 @@ const StyledFormRow = styled.div`
     padding: 0.6rem;
     gap: 0.6rem;
   }
-`
+`;
 const Label = styled.label`
   font-weight: 500;
   width: 35rem;
   color: var(--color-grey-400);
-`
+`;
 const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
-`
+`;
 
 function FormRow({ label, error, children }) {
   return (
@@ -54,7 +54,7 @@ function FormRow({ label, error, children }) {
       {children}
       <div>{error && <Error>{error}</Error>}</div>
     </StyledFormRow>
-  )
+  );
 }
 
-export default FormRow
+export default FormRow;

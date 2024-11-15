@@ -5,7 +5,7 @@ import Heading from "../ui/Heading";
 import { devicesMax } from "../styles/breakpoint";
 
 const LoginLayout = styled.main`
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,8 +21,8 @@ const Container = styled.div`
 
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 7px;
-  width: 40%;
-  padding: 6rem 2rem;
+  width: 30%;
+  padding: 4rem 1rem;
 
   @media ${devicesMax.lg} {
     width: 70%;
@@ -32,7 +32,7 @@ const Container = styled.div`
     width: 65%;
   }
   @media ${devicesMax.sm} {
-    width: 90%;
+    width: 80%;
   }
 `;
 

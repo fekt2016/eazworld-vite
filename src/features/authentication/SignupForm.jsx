@@ -106,7 +106,6 @@ function SignupForm() {
             })}
           />
         </FormRow>
-        <FormRow></FormRow>
 
         <FormRow>
           <Button disabled={isLoading}>Sign Up</Button>
