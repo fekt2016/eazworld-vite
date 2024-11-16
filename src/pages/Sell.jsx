@@ -8,9 +8,9 @@ function Sell() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   return (
     <>
-      <Row type="horizontal">
+      {/* <Row type="horizontal">
         <Heading as="h1">Sell </Heading>
-      </Row>
+      </Row> */}
       <Row>
         <CreateSellForm openModal={() => setIsOpenModal(true)} />
         {isOpenModal && (
