@@ -39,5 +39,9 @@ jobs:
         run: ls
       - name: Output filename
         run: echo "${{ needs.build.outputs.script-file}}"
-      - name: Deploy
-        run: echo "Deploy"
+      - name: FTP-Deploy-action
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_NAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
