@@ -123,6 +123,8 @@ const GlobalStyles = createGlobalStyle`:root {
   --color-red-500:#fcc;
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
+  --color-green-700:#00b26b;
+  --color-red-900:	#FF0000;
 
   --backdrop-color: rgba(255, 255, 255, 0.1);
 

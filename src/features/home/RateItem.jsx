@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
-import { styled } from 'styled-components'
-import { NavLink } from 'react-router-dom'
+import { styled } from "styled-components";
+import { NavLink } from "react-router-dom";
 
 const StyledItem = styled.li`
   padding: 1rem;
@@ -20,16 +20,16 @@ const StyledItem = styled.li`
   &:hover {
     transform: scale(1.4);
   }
-`
+`;
 const StyledHeader = styled.header`
   display: flex;
   justify-content: space-around;
   align-items: center;
-`
+`;
 const StyledIma = styled.img`
   height: 4.5rem;
   width: 4.5rem;
-`
+`;
 const StyledNavSell = styled(NavLink)`
   text-decoration: none;
   font-size: 1.6rem;
@@ -42,7 +42,7 @@ const StyledNavSell = styled(NavLink)`
   -o-border-radius: 5px;
   background-color: rgba(242, 169, 0, 0.1);
   color: var(--color-sec-900);
-`
+`;
 const StyledNavBuy = styled(NavLink)`
   text-decoration: none;
   font-size: 1.6rem;
@@ -55,25 +55,26 @@ const StyledNavBuy = styled(NavLink)`
   -o-border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.1);
   color: var(--color-black-0);
-`
+`;
 const StyledName = styled.div`
   display: flex;
   padding: 1rem;
   justify-content: space-around;
   font-size: 1.6rem;
   text-transform: capitalize;
-`
+`;
 const StyledCur = styled.span`
   font-size: 2rem;
   font-weight: 500;
-  font-family: 'roboto', Arial, Helvetica, sans-serif;
+  font-family: "roboto", Arial, Helvetica, sans-serif;
   color: #f2a900;
-`
+`;
 
 const StyledPer = styled.span`
-  color: #00b26b;
+  color: ${(props) =>
+    props.rate > 0 ? "var(--color-green-700)" : "var(--color-red-900)"};
   font-size: 1.8rem;
-`
+`;
 
 function RateItem({ cryp, inview }) {
   return (
@@ -89,12 +90,12 @@ function RateItem({ cryp, inview }) {
       </StyledName>
       <StyledName>
         <span>{`$${cryp.current_price.toFixed(2)}`}</span>
-        <StyledPer>{`${cryp.price_change_percentage_24h.toFixed(
-          2,
-        )}%`}</StyledPer>
+        <StyledPer
+          rate={cryp.price_change_percentage_24h}
+        >{`${cryp.price_change_percentage_24h.toFixed(2)}%`}</StyledPer>
       </StyledName>
     </StyledItem>
-  )
+  );
 }
 
-export default RateItem
+export default RateItem;
