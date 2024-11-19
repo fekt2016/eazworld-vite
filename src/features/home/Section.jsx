@@ -1,11 +1,11 @@
-import styled, { css } from 'styled-components'
-import { devicesMax } from '../../styles/breakpoint'
+import styled, { css } from "styled-components";
+import { devicesMax } from "../../styles/breakpoint";
 
 const StyledSection = styled.section`
   ${(props) =>
-    props.type === 'service' &&
+    props.type === "service" &&
     css`
-      padding: 6rem;
+      padding: 20rem 6rem;
 
       background-color: var(--color-grey-100);
       opacity: 90%;
@@ -21,7 +21,7 @@ const StyledSection = styled.section`
       }
     `}
   ${(props) =>
-    props.type === 'safe' &&
+    props.type === "safe" &&
     css`
       background-color: black;
       text-align: center;
@@ -36,18 +36,18 @@ const StyledSection = styled.section`
     `}
 
     ${(props) =>
-      props.type === 'step' &&
-      css`
-        padding: 3rem;
-        @media ${devicesMax.md} {
-        }
-      `}
+    props.type === "step" &&
+    css`
+      padding: 3rem;
+      @media ${devicesMax.md} {
+      }
+    `}
       ${(props) =>
-        props.type === 'slider' &&
-        css`
-          background-color: black;
-          padding: 4rem;
-        `}
-`
+    props.type === "slider" &&
+    css`
+      background-color: black;
+      padding: 4rem;
+    `}
+`;
 
-export default StyledSection
+export default StyledSection;

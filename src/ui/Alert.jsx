@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import { FaWindowClose } from 'react-icons/fa'
-import { devicesMax } from '../styles/breakpoint'
+import { useState } from "react";
+import styled from "styled-components";
+import { FaWindowClose } from "react-icons/fa";
+import { devicesMax } from "../styles/breakpoint";
 
 const StyledAlert = styled.div`
   width: 50%;
   height: 50rem;
-  background-color: var(--color-red-500);
-  position: sticky;
+  background-color: var(--color-gold-900);
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -24,7 +24,7 @@ const StyledAlert = styled.div`
 
     transform: translate(-23%, -50%);
   }
-`
+`;
 const AlertContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -32,7 +32,7 @@ const AlertContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 const Close = styled(FaWindowClose)`
   position: absolute;
   right: 0.8rem;
@@ -40,12 +40,12 @@ const Close = styled(FaWindowClose)`
   font-size: 3rem;
   cursor: pointer;
   fill: var(--color-red-700);
-`
+`;
 function Alert() {
-  const [showAlert, setShowAlert] = useState(true)
+  const [showAlert, setShowAlert] = useState(true);
   const closeAlert = () => {
-    setShowAlert(false)
-  }
+    setShowAlert(false);
+  };
   // setTimeout(() => {
   //   setShowAlert(false)
   // }, 5000)
@@ -58,7 +58,7 @@ function Alert() {
         </AlertContainer>
       </StyledAlert>
     )
-  )
+  );
 }
 
-export default Alert
+export default Alert;

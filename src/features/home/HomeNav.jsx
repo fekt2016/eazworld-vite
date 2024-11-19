@@ -97,13 +97,28 @@ const StyledBtnD = styled.div`
   }
 `;
 const StyledBtn = styled(NavLink)`
-  border: 1px solid var(--color-black-950);
-  border-radius: var(--Border-radius-cir);
-  padding: 0.5rem 1.5rem;
-  &:hover {
-    background-color: var(--color-black-950);
-    color: var(--color-white-0);
-  }
+  ${(props) =>
+    props.btn === "login" &&
+    css`
+      background-color: var(--color-gold-900);
+      padding: 0.5rem 2rem;
+      border-radius: var(--Border-radius-cir);
+      transition: all 0.4s;
+      &:hover {
+        transform: scale(1.2);
+      }
+    `}
+  ${(props) =>
+    props.btn === "register" &&
+    css`
+      border-radius: var(--Border-radius-cir);
+      border: 1px solid var(--color-gold-900);
+      padding: 0.5rem 1.5rem;
+      transition: all 0.4s;
+      &:hover {
+        background-color: var(--color-gold-900);
+      }
+    `}
 
   @media ${devicesMax.sm} {
     padding: 0.5rem 1rem;
@@ -196,9 +211,13 @@ function HomeNav() {
           </StyledUl>
         </StyledList>
         <StyledBtnD>
-          <StyledBtn to="/login">Login</StyledBtn>
+          <StyledBtn btn="login" to="/login">
+            Login
+          </StyledBtn>
 
-          <StyledBtn to="/signup">Register</StyledBtn>
+          <StyledBtn btn="register" to="/signup">
+            Register
+          </StyledBtn>
         </StyledBtnD>
       </StyledRightContainer>
     </StyledNav>

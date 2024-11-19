@@ -19,6 +19,10 @@ const StyledFooter = styled.div`
   justify-content: space-between;
 `;
 
+const Span = styled.span`
+  color: var(--color-primary-900);
+  text-decoration-line: underline;
+`;
 function SignupForm() {
   const { signup, isLoading } = useSignup();
 
@@ -111,7 +115,9 @@ function SignupForm() {
           <Button disabled={isLoading}>Sign Up</Button>
         </FormRow>
         <StyledFooter>
-          <StyledBtn to="/login">Already have an account? Login</StyledBtn>
+          <StyledBtn to="/login">
+            Already have an account? <Span>Login</Span>
+          </StyledBtn>
         </StyledFooter>
       </Form>
     </>

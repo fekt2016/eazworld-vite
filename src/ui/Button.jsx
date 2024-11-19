@@ -23,7 +23,7 @@ const sizes = {
 
 const variations = {
   primary: css`
-    color: var(--color-white-0);
+    color: var(--color-gold-900);
     background-color: var(--color-black-900);
     border-radius: var(--Border-radius-cir);
 

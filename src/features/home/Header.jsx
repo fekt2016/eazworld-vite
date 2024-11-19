@@ -1,32 +1,31 @@
-import { styled } from 'styled-components'
-import Button from '../../ui/Button'
-import { devicesMax } from '../../styles/breakpoint'
+import { styled } from "styled-components";
+import Button from "../../ui/Button";
+// import { devicesMax } from "../../styles/breakpoint";
 
-import Heading from '../../ui/Heading'
-import { NavLink } from 'react-router-dom'
+import Heading from "../../ui/Heading";
+import { NavLink } from "react-router-dom";
 
 const StyledHeader = styled.header`
-  background-color: var(--color-grey-0);
-  margin-bottom: 2rem;
+  background-color: var(--color-grey-900);
 
-  height: 70vh;
+  height: 95vh;
   display: flex;
   justify-content: center;
   align-items: center;
-`
-const StyledRight = styled.div`
-  padding: 2rem;
-  flex: 2;
-  background-image: url('/Crypto2.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
+`;
+// const StyledRight = styled.div`
+//   padding: 2rem;
+//   flex: 2;
+//   background-image: url('/Crypto2.png');
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   height: 100%;
 
-  @media ${devicesMax.sm} {
-    display: none;
-  }
-`
+//   @media ${devicesMax.sm} {
+//     display: none;
+//   }
+// `
 
 const StyledText = styled.div`
   height: 100%;
@@ -38,19 +37,19 @@ const StyledText = styled.div`
   align-items: center;
   text-align: center;
   flex: 1;
-`
+`;
 const StyledPBox = styled.div`
   padding: 2rem;
-`
+`;
 const StyledP = styled.p`
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   color: var(--color-primary-500);
-`
+`;
 function Header() {
   return (
     <StyledHeader>
       <StyledText>
-        <Heading as="h1">
+        <Heading as="homeh1">
           buy bitcoin <br />& other crypto currency
         </Heading>
         <StyledPBox>
@@ -62,9 +61,9 @@ function Header() {
           </Button>
         </StyledPBox>
       </StyledText>
-      <StyledRight />
+      {/* <StyledRight /> */}
     </StyledHeader>
-  )
+  );
 }
 
-export default Header
+export default Header;
