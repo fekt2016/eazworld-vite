@@ -1,35 +1,35 @@
-import { styled } from 'styled-components'
-import { devicesMax } from '../../styles/breakpoint'
+import { styled } from "styled-components";
+import { devicesMax } from "../../styles/breakpoint";
 
-import { BsWhatsapp, BsTwitter, BsInstagram, BsFacebook } from 'react-icons/bs'
+import { BsWhatsapp, BsTwitter, BsInstagram, BsFacebook } from "react-icons/bs";
 
 const StyledFooter = styled.footer`
-  padding: 4rem;
-
+  padding: 5rem 0 10rem 0;
   border-top: 1px solid var(--color-grey-200);
-
+  background-color: var(--color-grey-900);
   display: flex;
   justify-content: space-between;
   @media ${devicesMax.md} {
     flex-direction: column;
+    text-align: center;
   }
-`
+`;
 const Imag = styled.img`
   height: 10rem;
-`
+`;
 const AsideLogo = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   flex-basis: 20%;
-`
+`;
 const LinkAside = styled.aside`
   flex: 2;
 
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: start;
 
   @media ${devicesMax.md} {
     display: grid;
@@ -37,74 +37,99 @@ const LinkAside = styled.aside`
     grid-template-rows: 1fr 1fr;
     gap: 20px;
   }
-`
+`;
+const Col = styled.div`
+  @media ${devicesMax.md} {
+    text-align: center;
+  }
+`;
 const Media = styled.div`
   width: 100%;
   padding: 1rem;
 
   display: flex;
   justify-content: space-around;
-`
+`;
 const H4 = styled.h4`
-  color: var(--color-primary-900);
-`
+  color: var(--color-gold-900);
+  font-weight: 900;
+  font-size: 2rem;
+`;
 
 const StyledUl = styled.ul`
   list-style: none;
-`
+  color: var(--color-white-0);
+  display: flex;
+  flex-direction: column;
+`;
+const Li = styled.li`
+  font-size: 1.6rem;
+  padding: 1rem 0;
+`;
 const P = styled.p`
   font-size: 1.2rem;
-`
+
+  @media ${devicesMax.md} {
+    display: none;
+  }
+`;
+const Ps = styled.p`
+  display: none @media ${devicesMax.md} {
+    display: block;
+  }
+`;
+
 function Footer() {
   return (
     <StyledFooter>
       <AsideLogo>
         <Imag src="/2.png" alt="footer-log" />
         <Media>
-          <BsWhatsapp />
-          <BsTwitter />
-          <BsInstagram />
-          <BsFacebook />
+          <BsWhatsapp fill="var(--color-whatsapp-700)" fontSize={24} />
+          <BsTwitter fill="var(--color-twitter-900)" fontSize={24} />
+          <BsInstagram fill="#C13584" fontSize={24} />
+          <BsFacebook fill="#4267B2" fontSize={24} />
         </Media>
         <P>&#169; 2023 EazWorld</P>
       </AsideLogo>
       <LinkAside>
-        <div>
+        <Col>
           <H4>Product</H4>
           <StyledUl>
-            <li>Explorer</li>
-            <li>pay</li>
-            <li>Card</li>
-            <li>Rate</li>
+            <Li>Explorer</Li>
+            <Li>pay</Li>
+            <Li>Card</Li>
+            <Li>Rate</Li>
           </StyledUl>
-        </div>
-        <div>
+        </Col>
+        <Col>
           <H4>Compnay</H4>
           <StyledUl>
-            <li>About</li>
-            <li>Careers</li>
-            <li>Blog</li>
-            <li>Ventures</li>
+            <Li>About</Li>
+            <Li>Careers</Li>
+            <Li>Blog</Li>
+            <Li>Ventures</Li>
           </StyledUl>
-        </div>
-        <div>
+        </Col>
+        <Col>
           <H4>Partner</H4>
           <StyledUl>
-            <li>Kardaclan</li>
+            <Li>Kardaclan</Li>
           </StyledUl>
-        </div>
-        <div>
+        </Col>
+        <Col>
           <H4>Support</H4>
           <StyledUl>
-            <li>Support Center</li>
-            <li>Contact us</li>
-            <li>system status</li>
-            <li>Legal Agreement</li>
+            <Li>Support Center</Li>
+            <Li>Contact us</Li>
+            <Li>system status</Li>
+            <Li>Legal Agreement</Li>
           </StyledUl>
-        </div>
+        </Col>
       </LinkAside>
+      <Ps>&#169; 2023 EazWorld</Ps>
     </StyledFooter>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

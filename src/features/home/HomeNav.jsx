@@ -1,6 +1,4 @@
 import { css, styled } from "styled-components";
-
-// import Logo from '../../ui/Logo'
 import { NavLink } from "react-router-dom";
 import { devicesMax, devicesMin } from "../../styles/breakpoint";
 import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
@@ -19,7 +17,7 @@ const StyledNav = styled.nav`
   position: sticky;
   top: 0;
   height: 7rem;
-  /* z-index: 999; */
+  z-index: 999;
   background-color: var(--color-white-0);
   display: flex;
   justify-content: space-between;

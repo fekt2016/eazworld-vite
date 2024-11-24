@@ -1,5 +1,5 @@
-import { styled } from 'styled-components'
-import { devicesMax } from '../styles/breakpoint'
+import { styled } from "styled-components";
+import { devicesMax } from "../styles/breakpoint";
 
 const Input = styled.input`
   border: 1px solid var(--color-gray-700);
@@ -9,9 +9,9 @@ const Input = styled.input`
   box-shadow: var(--shadow-sm);
   flex-basis: 50rem;
 
+  width: 100%;
   @media ${devicesMax.md} {
-    width: 100%;
     flex-basis: auto;
   }
-`
-export default Input
+`;
+export default Input;

@@ -4,6 +4,7 @@ import Button from "../../ui/Button";
 
 import Heading from "../../ui/Heading";
 import { NavLink } from "react-router-dom";
+import { devicesMax } from "../../styles/breakpoint";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-900);
@@ -12,24 +13,15 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-// const StyledRight = styled.div`
-//   padding: 2rem;
-//   flex: 2;
-//   background-image: url('/Crypto2.png');
-//   background-position: center;
-//   background-repeat: no-repeat;
-//   background-size: cover;
-//   height: 100%;
 
-//   @media ${devicesMax.sm} {
-//     display: none;
-//   }
-// `
+  @media ${devicesMax.md} {
+    height: 50rem;
+  }
+`;
 
 const StyledText = styled.div`
   height: 100%;
-  padding: 4rem;
+
   display: flex;
   gap: 50px;
   flex-direction: column;

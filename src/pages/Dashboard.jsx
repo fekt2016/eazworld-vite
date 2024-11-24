@@ -36,7 +36,7 @@ function Dashboard() {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 2000,
+    speed: 20000,
     autoplaySpeed: 2000,
     cssEase: "linear",
     pauseOnHover: true,

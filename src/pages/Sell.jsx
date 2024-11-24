@@ -9,7 +9,7 @@ function Sell() {
   return (
     <>
       <Row type="horizontal">
-        <Heading as="h1">Sell </Heading>
+        <Heading as="h1">You are Selling </Heading>
       </Row>
       <Row>
         <CreateSellForm openModal={() => setIsOpenModal(true)} />

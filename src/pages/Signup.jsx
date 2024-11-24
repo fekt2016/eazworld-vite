@@ -26,11 +26,12 @@ const Container = styled.div`
   align-items: center;
   background-color: var(--color-white-0);
   border-radius: 7px;
+  padding: 2rem;
 
-  width: 40%;
+  width: 60%;
 
   @media ${devicesMax.lg} {
-    width: 70%;
+    width: 80%;
     padding: 1rem;
   }
   @media ${devicesMax.md} {
@@ -47,7 +48,7 @@ function Signup() {
         <Link to="/">
           <Logo img="/4.png" sizes="medium" />
         </Link>
-        <Heading as="h1">Let’s get you started with a eazworld account</Heading>
+        <Heading as="h1">Let’s get you started with an account</Heading>
         <SignupForm />
       </Container>
     </SignupLayout>

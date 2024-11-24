@@ -16,13 +16,13 @@ const Heading = styled.h1`
       text-shadow: 4px 4px 6px rgba(66, 68, 90, 1);
 
       @media ${devicesMax.md} {
-        font-size: 2.5rem;
+        font-size: 4rem;
       }
     `}
   ${(props) =>
     props.as === "h1" &&
     css`
-      font-size: 3.5rem;
+      font-size: 2rem;
       line-height: 1.2;
       font-stretch: extra-condensed;
       text-transform: capitalize;

@@ -85,10 +85,13 @@ const GlobalStyles = createGlobalStyle`:root {
   --color-doge-900:#cb9800;
   --color-ethereum-500:#9eb6b8;
   --color-litecoin-500:#aae4ff;
-  --color-bitcsh-500:#b6d990;
-  --color-whatsapp-100:#25D366;
-  --color-whatsapp-700:#128C7E;
-  --color-gold-900:#FFD700;
+  --color-bitcsh-500: #b6d990;
+  --color-whatsapp-100: #25D366;
+  --color-whatsapp-700: #128C7E;
+  --color-gold-900: #FFD700;
+  --color-twitter-900: #1DA1F2;
+  --color-instagram: #C13584:
+  --color-facebook: #4267B2;
 
 
 

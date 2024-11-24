@@ -8,27 +8,24 @@ import { DevTool } from "@hookform/devtools";
 import { useCreateSell } from "./useCreateSell";
 import FormRow from "../../ui/FormRow";
 import { devicesMax } from "../../styles/breakpoint";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Select from "../../ui/Select";
 import { useEffect, useState } from "react";
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 import { useUser } from "../authentication/useUser";
 import { randomOrderId } from "../../utils/helpers";
 import SpinnerMini from "../../ui/SpinnerMini";
-import News from "../../ui/News";
+// import News from "../../ui/News";
 import supabase from "../../services/supabase";
 
 const SellContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 10px;
+  // display: flex;
+  // justify-content: center;
+  // align-items: stretch;
+  // gap: 10px;
 
   @media ${devicesMax.md} {
     flex-direction: column;
-  }
-
-  @media ${devicesMax.sm} {
   }
 `;
 
@@ -53,7 +50,7 @@ function CreateSellForm() {
   const { user } = useUser();
   const [rate, setRate] = useState(0);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchRate = async function () {
       const { data, error } = await supabase
@@ -74,7 +71,7 @@ function CreateSellForm() {
     useForm();
 
   const { errors } = formState;
-  // useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
+  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
 
   function onSubmit(data) {
     createSell(
@@ -82,33 +79,34 @@ function CreateSellForm() {
       {
         onSuccess: () => {
           reset();
-          // navigate(`/sell-currentOrder/${data.orderId}`)
+          navigate(`/sell-currentOrder/${data.orderId}`);
         },
       }
     );
-    // emailjs
-    //   .send(
-    //     import.meta.env.VITE_YOUR_SERVICE_ID,
-    //     import.meta.env.VITE_YOUR_SELL_TEMPLATE_ID,
-    //     {
-    //       from_name: user.user_metadata.firstName,
-    //       recipient: user.email,
-    //       orderId: data.orderId,
-    //       currency: data.currency,
-    //       amountGh: data.amountGh,
-    //       amountUSD: data.amountUSD,
-    //       Payment: data.payment,
-    //       wallet: data.wallet,
-    //     },
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result)
-    //     },
-    //     (error) => {
-    //       console.log(error.text)
-    //     },
-    //   )
+    console.log(user.email);
+    emailjs
+      .send(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_SELL_TEMPLATE_ID,
+        {
+          from_name: user.user_metadata.firstName,
+          recipient: user.email,
+          orderId: data.orderId,
+          currency: data.currency,
+          amountGh: data.amountGh,
+          amountUSD: data.amountUSD,
+          Payment: data.payment,
+          wallet: data.wallet,
+        }
+      )
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   }
   return (
     <SellContainer>
@@ -246,7 +244,7 @@ function CreateSellForm() {
           </Button>
         </FormRow>
       </Form>
-      <News />
+      {/* <News /> */}
 
       <DevTool control={control} />
     </SellContainer>

@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import Card from "../features/dashboard/Card";
-import Spinner from "../ui/Spinner";
 
 import { devicesMax } from "../styles/breakpoint";
 import { useRate } from "../features/admin/rate/useRate";
@@ -28,7 +27,7 @@ const StyledUl = styled.ul`
 function PriceCard() {
   const { isLoading, rate } = useRate();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <div></div>;
   const { data: currentRate } = rate;
 
   return (

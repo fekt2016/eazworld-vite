@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaWindowClose } from "react-icons/fa";
 import { devicesMax } from "../styles/breakpoint";
@@ -21,8 +21,9 @@ const StyledAlert = styled.div`
 
   @media ${devicesMax.sm} {
     width: 70%;
+    height: 30rem;
 
-    transform: translate(-23%, -50%);
+    transform: translate(-50%, -50%);
   }
 `;
 const AlertContainer = styled.div`
@@ -46,9 +47,11 @@ function Alert() {
   const closeAlert = () => {
     setShowAlert(false);
   };
-  // setTimeout(() => {
-  //   setShowAlert(false)
-  // }, 5000)
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 10000);
+  }, []);
   return (
     showAlert && (
       <StyledAlert className="">

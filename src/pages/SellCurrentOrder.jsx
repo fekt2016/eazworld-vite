@@ -1,54 +1,66 @@
-import styled from 'styled-components'
-import { devicesMax } from '../styles/breakpoint'
-import { useParams } from 'react-router-dom'
-import Button from '../ui/Button'
-import { useQuery } from '@tanstack/react-query'
-import { getCurrentSell } from '../services/apiSell'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import toast from 'react-hot-toast'
-
-import { useEffect, useState } from 'react'
+import styled from "styled-components";
+import { devicesMax } from "../styles/breakpoint";
+import { useParams } from "react-router-dom";
+import Button from "../ui/Button";
+import { useQuery } from "@tanstack/react-query";
+import { getCurrentSell } from "../services/apiSell";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import toast from "react-hot-toast";
+import debounce from "lodash.debounce";
+import { useEffect, useState } from "react";
+import supabase from "../services/supabase";
 
 const StyledOrder = styled.div`
-  background-color: var(--color-black-200);
+  // background-color: var(--color-black-200);
   border-radius: 7px;
   overflow: hidden;
-`
+`;
 const HeadingBox = styled.div`
   background-color: var(--color-black-950);
   padding: 1rem;
-  margin: 4rem;
-`
+  margin: 2rem;
+
+  @media ${devicesMax.md} {
+    padding: 0.2rem;
+    margin: 1rem;
+  }
+`;
 const H4 = styled.h4`
   color: var(--color-white-0);
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   text-transform: capitalize;
-`
+`;
 
 const DetailBox = styled.div`
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+
+  @media ${devicesMax.md} {
+    padding: 0.5rem;
+  }
+`;
 const TextBox = styled.div`
   background-color: var(--color-litecoin-500);
   width: 50%;
   margin: 0 auto;
   text-align: center;
   border-radius: 10px;
-  padding: 2rem;
-  margin-bottom: 4rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
   text-transform: capitalize;
 
   @media ${devicesMax.md} {
     width: 95%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
   }
-`
+`;
 const StyledSpan = styled.span`
   background-color: var(--color-black-950);
-  padding: 1rem;
+  padding: 0.3rem;
   color: var(--color-white-0);
   width: 15rem;
   text-transform: capitalize;
@@ -56,8 +68,9 @@ const StyledSpan = styled.span`
 
   @media ${devicesMax.md} {
     width: 100%;
+    padding: 0.2rem;
   }
-`
+`;
 const StyledDetail = styled.div`
   width: 80%;
   display: flex;
@@ -68,15 +81,19 @@ const StyledDetail = styled.div`
     flex-direction: column;
     width: 100%;
     justify-content: center;
+    margin-bottom: 0.2rem;
   }
-`
+`;
 const Img = styled.img`
   height: 15rem;
-`
+  @media ${devicesMax.md} {
+    height: 10rem;
+  }
+`;
 
 const P = styled.p`
   color: var(--color-red-700);
-`
+`;
 const Ps = styled.p`
   width: 50%;
   margin: 0 auto;
@@ -85,42 +102,63 @@ const Ps = styled.p`
   padding: 1rem;
   @media ${devicesMax.md} {
     width: 90%;
+    padding: 0.5rem;
   }
-`
+`;
 const StyledP = styled.span`
   color: var(--color-bitcoin-900);
-`
+`;
 
 function SellCurrentOrder() {
-  const [copied, setCopied] = useState(false)
-  const { orderId: order_id } = useParams()
-  const [value, setValue] = useState('')
-  const [currentData, setCurrentData] = useState([])
-  const [btcValue, setBtcValue] = useState()
+  const { orderId: order_id } = useParams();
+  const [value, setValue] = useState("");
+  const [currentData, setCurrentData] = useState([]);
+  const [btcValue, setBtcValue] = useState();
+  const [rate, setRate] = useState(0);
 
   const { data: sell } = useQuery({
-    queryKey: ['sell'],
+    queryKey: ["sell"],
     queryFn: () => getCurrentSell(order_id),
-  })
+  });
+
+  useEffect(() => {
+    const fetchRate = async function () {
+      const { data, error } = await supabase
+        .from("rate")
+        .select("*")
+        .eq("currency", "bitcoin");
+      if (error) {
+        console.log(error);
+      }
+      const rate = data[0];
+      if (rate) setRate(rate.buy);
+    };
+
+    fetchRate();
+  }, []);
 
   useEffect(() => {
     if (sell) {
-      const { data: currentData1 } = sell
-      setCurrentData(currentData1)
+      const { data: currentData1 } = sell;
+      setCurrentData(currentData1);
 
-      const value = currentData1[0]
+      const value = currentData1[0];
 
-      setValue(value.amountUSD)
+      setValue(value.amountUSD);
     }
     async function btcRate() {
       let rate = await fetch(
-        `https://blockchain.info/tobtc?currency=USD&value=${value}`,
-      )
-      let data = await rate.json()
-      setBtcValue(data)
+        `https://blockchain.info/tobtc?currency=USD&value=${value}`
+      );
+      let data = await rate.json();
+      setBtcValue(data);
     }
-    btcRate()
-  }, [sell, value])
+    btcRate();
+  }, [sell, value]);
+
+  const handleCopy = debounce((text) => {
+    toast.success(text);
+  }, 500);
 
   return (
     <>
@@ -138,7 +176,7 @@ function SellCurrentOrder() {
               <p>
                 You are selling <StyledP>{sell?.amountUSD}USD</StyledP>
                 And will receive <StyledP>{sell?.amountGh}GHS</StyledP> At
-                <StyledP>12GHS</StyledP> per <StyledP>1 USD</StyledP>
+                <StyledP>{rate}</StyledP> per <StyledP>1 USD</StyledP>
               </p>
             </TextBox>
             <StyledDetail>
@@ -147,22 +185,23 @@ function SellCurrentOrder() {
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>SEND Amount</StyledSpan>
-              <span style={{ margin: '1rem' }}>{btcValue} BTC</span>
-              <CopyToClipboard onCopy={() => setCopied(true)} text={btcValue}>
+              <span style={{ margin: "1rem" }}>{btcValue} BTC</span>
+              <CopyToClipboard
+                onCopy={() => handleCopy("Amount copied")}
+                text={btcValue}
+              >
                 <Button>Copy Code</Button>
               </CopyToClipboard>
-              {copied ? toast.success('copied') : ''}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>to wallet address</StyledSpan>
-              <span style={{ margin: '1rem' }}>{sell?.wallet}</span>
+              <span style={{ margin: "1rem" }}>{sell?.wallet}</span>
               <CopyToClipboard
-                onCopy={() => setCopied(true)}
+                onCopy={() => handleCopy("Address copied")}
                 text={sell?.wallet}
               >
                 <Button>Copy Address</Button>
               </CopyToClipboard>
-              {copied ? toast.success('copied') : ''}
             </StyledDetail>
             <StyledDetail>
               <StyledSpan>Account Type: </StyledSpan>
@@ -191,7 +230,7 @@ function SellCurrentOrder() {
         ))}
       </StyledOrder>
     </>
-  )
+  );
 }
 
-export default SellCurrentOrder
+export default SellCurrentOrder;

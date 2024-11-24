@@ -13,7 +13,7 @@ import { devicesMax } from "../../styles/breakpoint";
 
 const StyledBtn = styled(NavLink)`
   padding: 0.5rem 1.5rem;
-
+  color: var(--color-brand-900);
   &:hover {
     text-decoration-line: underline;
   }
@@ -21,17 +21,33 @@ const StyledBtn = styled(NavLink)`
 const StyledFooter = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 5rem;
 `;
 const PassSpan = styled.span`
   position: absolute;
-  top: 15px;
-  right: 30px;
+  top: 10px;
+  right: 5px;
   z-index: 1000;
   cursor: pointer;
 
+  // @media ${devicesMax.md} {
+  //   top: 60px;
+  //   right: 20px;
+  // }
+`;
+const SignupBox = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
+
+const EyeHandler = styled.div`
+  position: relative;
+  flex-basis: 53rem;
+
   @media ${devicesMax.md} {
-    top: 60px;
-    right: 20px;
+    flex-basis: auto;
   }
 `;
 
@@ -62,7 +78,6 @@ function LoginForm() {
         <Input
           type="email"
           id="email"
-          // This makes this form better for password managers
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -70,18 +85,20 @@ function LoginForm() {
         />
       </FormRow>
       <FormRow label="Password">
-        <Input
-          type={visible ? "text" : "password"}
-          id="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          disabled={isLoading}
-        />
+        <EyeHandler>
+          <Input
+            type={visible ? "text" : "password"}
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={isLoading}
+          />
 
-        <PassSpan onClick={() => setVisible((s) => !s)}>
-          {visible ? <HiMiniEye /> : <HiMiniEyeSlash />}
-        </PassSpan>
+          <PassSpan onClick={() => setVisible((s) => !s)}>
+            {visible ? <HiMiniEye /> : <HiMiniEyeSlash />}
+          </PassSpan>
+        </EyeHandler>
       </FormRow>
       <FormRow>
         <Button disabled={isLoading}>
@@ -92,9 +109,12 @@ function LoginForm() {
         <StyledBtn to="/recover-password" disabled={isLoading}>
           Forget password
         </StyledBtn>
-        <StyledBtn to="/signup" disabled={isLoading}>
-          Sign Up
-        </StyledBtn>
+        <SignupBox>
+          <p>New to eazworld ? </p>
+          <StyledBtn to="/signup" disabled={isLoading}>
+            Sign Up
+          </StyledBtn>
+        </SignupBox>
       </StyledFooter>
     </Form>
   );

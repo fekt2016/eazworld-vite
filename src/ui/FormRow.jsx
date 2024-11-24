@@ -1,10 +1,10 @@
 /* eslint react/prop-types: 0 */
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import { devicesMax } from "../styles/breakpoint";
 const StyledFormRow = styled.div`
   display: flex;
   justify-content: space-between;
-  position: relative;
+
   padding: 0.8rem;
   gap: 0.2rem;
 
@@ -25,6 +25,10 @@ const StyledFormRow = styled.div`
     justify-content: flex-end;
     gap: 1.2rem;
   }
+
+
+  ${props => props.signup && css`
+    `}
   @media ${devicesMax.lg} {
     width: 100%;
   }

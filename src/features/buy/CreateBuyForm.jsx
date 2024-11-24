@@ -4,13 +4,13 @@ import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Spinner from "../../ui/Spinner";
 import FormRow from "../../ui/FormRow";
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 import Select from "../../ui/Select";
 import supabase from "../../services/supabase";
 
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCreateBuy } from "../buy/useCreateBuy";
 import { devicesMax } from "../../styles/breakpoint";
 import { useEffect, useState } from "react";
@@ -18,9 +18,7 @@ import { useUser } from "../authentication/useUser";
 import { randomOrderId } from "../../utils/helpers";
 import { useMiner } from "../miner/useMiner";
 
-import News from "../../ui/News";
 import Button from "../../ui/Button";
-import { useNavigate } from "react-router-dom";
 
 const BuyContainer = styled.div`
   display: flex;
@@ -54,11 +52,10 @@ const StyledTerm = styled.div`
 
 function CreateBuyForm() {
   const { createBuy, isCreating } = useCreateBuy();
+  const [rate, setRate] = useState(0);
   const { user } = useUser();
 
   const { isLoading, data } = useMiner();
-
-  const [rate, setRate] = useState(0);
 
   const navigate = useNavigate();
 
@@ -88,7 +85,7 @@ function CreateBuyForm() {
     getValues,
   } = useForm();
   const { errors } = formState;
-  // useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), [])
+  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
 
   function onSubmit(data) {
     createBuy(
@@ -100,31 +97,31 @@ function CreateBuyForm() {
         },
       }
     );
-    // emailjs
-    //   .send(
-    //     import.meta.env.VITE_YOUR_SERVICE_ID,
-    //     import.meta.env.VITE_YOUR_BUY_TEMPLATE_ID,
-    //     {
-    //       from_name: user.user_metadata.firstName,
-    //       recipient: user?.email,
-    //       orderId: data.orderId,
-    //       currency: data.currency,
-    //       amountGh: data.amountGh,
-    //       amountUSD: data.amountUSD,
-    //       Payment: data.payment,
-    //       TotaltoPay: data.totalToPay,
-    //       wallet: data.wallet,
-    //       miner: data.miner,
-    //     },
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result)
-    //     },
-    //     (error) => {
-    //       console.log(error.text)
-    //     },
-    // )
+    emailjs
+      .send(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_BUY_TEMPLATE_ID,
+        {
+          from_name: user.user_metadata.firstName,
+          recipient: user?.email,
+          orderId: data.orderId,
+          currency: data.currency,
+          amountGh: data.amountGh,
+          amountUSD: data.amountUSD,
+          Payment: data.payment,
+          TotaltoPay: data.totalToPay,
+          wallet: data.wallet,
+          miner: data.miner,
+        }
+      )
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   }
   if (isLoading) return <Spinner />;
 
@@ -291,7 +288,6 @@ function CreateBuyForm() {
           </div>
         </FormRow>
       </Form>
-      <News />
 
       <DevTool control={control} />
     </BuyContainer>
