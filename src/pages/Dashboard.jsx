@@ -27,7 +27,9 @@ const StyledAdmin = styled.div`
 `;
 const Test = styled.div`
   padding: 3rem;
-  background-color: var(--color-black-200);
+  // background-color: var(--color-black-200);
+  border: 1px solid var(--color-black-200);
+  border-radius: 5px;
 `;
 function Dashboard() {
   const settings = {
@@ -119,6 +121,7 @@ function Dashboard() {
         <Spinner />
       ) : (
         <Test>
+          <Heading>testimonials </Heading>
           <Slider {...settings}>
             {dataList.map((item) => (
               <TestCard

@@ -15,27 +15,21 @@ function UpdateUserDataForm() {
   const {
     user: {
       email,
-      user_metadata: { lastName: currentLastName, firstName: currentFirstName },
+      user_metadata: { fullName: currentFullName },
     },
   } = useUser();
+
   const { updateUser, isUpdating } = useUpdateUser();
 
-  const [lastName, setLastName] = useState(currentLastName);
-  const [firstName, setFirstName] = useState(currentFirstName);
+  const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!lastName && !firstName) return;
-    updateUser(
-      { lastName, firstName, avatar },
-      {
-        onSuccess: () => {
-          setAvatar(null);
-          e.target.reset();
-        },
-      }
-    );
+
+    if (!fullName) return;
+
+    updateUser({ fullName, avatar });
   }
 
   return (
@@ -43,23 +37,14 @@ function UpdateUserDataForm() {
       <FormRow label="email">
         <Input disabled value={email} type="email" id="email" />
       </FormRow>
-      <FormRow label="First Name">
+      <FormRow label="full Name">
         <Input
           type="text"
-          id="firstName"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          id="fullName"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
         />
       </FormRow>
-      <FormRow label="Last Name">
-        <Input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          id="lastName"
-        />
-      </FormRow>
-
       <FormRow label="Avatar image">
         <FileInput
           type="file"
@@ -70,7 +55,6 @@ function UpdateUserDataForm() {
       </FormRow>
       <FormRow>
         <Button>{isUpdating ? <SpinnerMini /> : "Update account"}</Button>
-        <Button>update</Button>
       </FormRow>
     </Form>
   );

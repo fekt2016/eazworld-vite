@@ -1,17 +1,18 @@
 /* eslint react/prop-types: 0 */
-import styled from 'styled-components'
-import { formatTime } from '../../utils/helpers'
-import Table from '../../ui/Table'
-import { devicesMax } from '../../styles/breakpoint'
-import { Link } from 'react-router-dom'
+import styled from "styled-components";
+import { formatTime } from "../../utils/helpers";
+import Table from "../../ui/Table";
+import { devicesMax } from "../../styles/breakpoint";
+import { Link } from "react-router-dom";
+// import { updateBuy } from "../../services/apibuy";
 
 const Status = styled.button`
   background-color: ${(props) =>
-    props.status === 'add payment' ? '#fcc' : '#25D366'};
+    props.status === "add payment" ? "#fcc" : "#25D366"};
   font-size: 1rem;
   padding: 0.4rem;
   font-weight: 600;
-  font-family: 'Sono';
+  font-family: "Sono";
   text-transform: capitalize;
   color: black;
   border-radius: 100px;
@@ -33,27 +34,27 @@ const Status = styled.button`
   @media ${devicesMax.sm} {
     font-size: 0.7rem;
   }
-`
+`;
 
 const Buy = styled.div`
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--color-grey-600);
-  font-family: 'Sono';
+  font-family: "Sono";
   text-transform: capitalize;
   @media ${devicesMax.md} {
     font-size: 1.2rem;
   }
-`
+`;
 
 const Price = styled.div`
-  font-family: 'Sono';
+  font-family: "Sono";
   font-weight: 600;
 
   /* @media ${devicesMax.md} {
     display: none;
   } */
-`
+`;
 
 const Payment = styled.div`
   /* text-overflow: ellipsis; */
@@ -66,11 +67,11 @@ const Payment = styled.div`
   &:hover {
     overflow: visible;
   }
-`
-const Date = styled.div``
+`;
+const Date = styled.div``;
 const BuyId = styled.div`
   text-transform: capitalize;
-`
+`;
 const Wallet = styled.div`
   transition: all 0.4s;
   overflow: hidden;
@@ -78,7 +79,7 @@ const Wallet = styled.div`
   &:hover {
     overflow: visible;
   }
-`
+`;
 
 function BuyRow({ buy }) {
   const {
@@ -91,7 +92,7 @@ function BuyRow({ buy }) {
     wallet,
     payment,
     status,
-  } = buy
+  } = buy;
 
   return (
     <>
@@ -107,12 +108,17 @@ function BuyRow({ buy }) {
         <div>&#8373;{totalToPay}</div>
         <Payment>{payment}</Payment>
 
-        <Status disabled={status === 'order completed'} status={status}>
-          <Link to={`/buy-currentOrder/${buyId}`}>{status}</Link>
+        <Status disabled={status === "order completed"} status={status}>
+          <Link
+            disabled={status === "order completed"}
+            to={`/buy-currentOrder/${buyId}`}
+          >
+            {status}
+          </Link>
         </Status>
       </Table.Row>
     </>
-  )
+  );
 }
 
-export default BuyRow
+export default BuyRow;

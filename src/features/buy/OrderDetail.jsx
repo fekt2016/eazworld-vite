@@ -7,16 +7,16 @@ import SpinnerMini from "../../ui/SpinnerMini";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Select from "../../ui/Select";
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-// import { useUser } from "../authentication/useUser";
+import { useUser } from "../authentication/useUser";
 import Spinner from "../../ui/Spinner";
 import { useCreatePayment } from "../payment/useCreatePayment";
 import { getCurrentBuy } from "../../services/apibuy";
 import Form from "../../ui/Form";
 import supabase from "../../services/supabase";
-// import { updateBuy } from "../../services/apibuy";
+import { updateBuy } from "../../services/apibuy";
 
 const OrderDetails = styled.div`
   flex: 2;
@@ -198,7 +198,7 @@ function OrderDetail({ onPayment }) {
     fetchRate();
   }, []);
 
-  // useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
+  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
 
   const { orderId: order_id } = useParams();
 
@@ -208,19 +208,19 @@ function OrderDetail({ onPayment }) {
   });
   const { createPayment, isCreating } = useCreatePayment();
 
-  // const { user } = useUser();
+  const { user } = useUser();
 
   if (isLoading) return <Spinner />;
 
   const { data: currentData } = buy;
 
   const pay = currentData[0];
+  console.log(pay.id);
 
   onPayment(pay.payment);
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(phoneNum, amount, transaction, account, name, orderId);
-    console.log(account);
+
     if (!phoneNum || !amount || !transaction || !account || !name || !orderId) {
       setError({
         title: "Invalid input",
@@ -243,37 +243,37 @@ function OrderDetail({ onPayment }) {
         },
       }
     );
-    // updateBuy(pay.id, "paid");
+    updateBuy(pay.id, "paid");
 
-    // emailjs
-    //   .send(
-    //     import.meta.env.VITE_YOUR_SERVICE_ID,
-    //     import.meta.env.VITE_YOUR_PAY_TEMPLATE_ID,
-    //     {
-    //       from_name: user.user_metadata.firstName,
-    //       recipient: user.email,
-    //       orderId: order_id,
-    //       currency: pay.currency,
-    //       amountGh: pay.amountGh,
-    //       amountUSD: pay.amountUSD,
-    //       Payment: pay.payment,
-    //       wallet: pay.wallet,
-    //       total: pay.totalToPay,
-    //       phoneNum,
-    //       amount,
-    //       transaction,
-    //       account,
-    //       name,
-    //     }
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result);
-    //     },
-    //     (error) => {
-    //       console.log(error.text);
-    //     }
-    //   );
+    emailjs
+      .send(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_PAY_TEMPLATE_ID,
+        {
+          from_name: user.user_metadata.firstName,
+          recipient: user.email,
+          orderId: order_id,
+          currency: pay.currency,
+          amountGh: pay.amountGh,
+          amountUSD: pay.amountUSD,
+          Payment: pay.payment,
+          wallet: pay.wallet,
+          total: pay.totalToPay,
+          phoneNum,
+          amount,
+          transaction,
+          account,
+          name,
+        }
+      )
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
     setIsDisabled(true);
   }
   return (

@@ -6,9 +6,9 @@ export function useUpdateBuy() {
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: (id) => updateBuyApi(id),
+    mutationFn: (id, status) => updateBuyApi(id, status),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["buy", status] });
+      queryClient.invalidateQueries({ queryKey: ["buy"] });
       toast.success("order completed");
     },
     onError: (err) => toast.error(err.message),

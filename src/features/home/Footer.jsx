@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { devicesMax } from "../../styles/breakpoint";
 
 import { BsWhatsapp, BsTwitter, BsInstagram, BsFacebook } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const StyledFooter = styled.footer`
   padding: 5rem 0 10rem 0;
@@ -74,6 +75,7 @@ const P = styled.p`
   }
 `;
 const Ps = styled.p`
+  display: none;
   display: none @media ${devicesMax.md} {
     display: block;
   }
@@ -87,8 +89,8 @@ function Footer() {
         <Media>
           <BsWhatsapp fill="var(--color-whatsapp-700)" fontSize={24} />
           <BsTwitter fill="var(--color-twitter-900)" fontSize={24} />
-          <BsInstagram fill="#C13584" fontSize={24} />
-          <BsFacebook fill="#4267B2" fontSize={24} />
+          <BsInstagram fill="#FFDC80" fontSize={24} />
+          <BsFacebook fill="var(--color-facebook)" fontSize={24} />
         </Media>
         <P>&#169; 2023 EazWorld</P>
       </AsideLogo>
@@ -123,7 +125,9 @@ function Footer() {
             <Li>Support Center</Li>
             <Li>Contact us</Li>
             <Li>system status</Li>
-            <Li>Legal Agreement</Li>
+            <Li>
+              <Link to={"/legal"}>Legal Agreement</Link>
+            </Li>
           </StyledUl>
         </Col>
       </LinkAside>
