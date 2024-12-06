@@ -61,22 +61,6 @@ function DashboardLayout() {
     </StyledDashboardLayout>
   );
 }
-// function DashboardLayout() {
-//   const [sidebar, setSidebar] = useState(false);
-//   const showSidebar = () => setSidebar((s) => !s);
-//   return (
-//     <StyledDashboardLayout>
-//       <Sidebar sidebar={sidebar} showSidebar={showSidebar} />{" "}
-//       <DashHeader
-//         sidebar={sidebar}
-//         setSidebar={setSidebar}
-//         showSidebar={showSidebar}
-//       />
-//       <Main>
-//         <Outlet />
-//       </Main>
-//     </StyledDashboardLayout>
-//   );
-// }
+
 
 export default DashboardLayout;

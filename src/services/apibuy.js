@@ -75,7 +75,7 @@ export async function updateBuy(id, status) {
   console.log(status, id);
   const { data, error } = await supabase
     .from("buy")
-    .update({ status: "order completed" })
+    .update({ status: status })
     .eq("id", id)
     .select()
     .single();

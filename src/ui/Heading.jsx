@@ -26,7 +26,7 @@ const Heading = styled.h1`
       line-height: 1.2;
       font-stretch: extra-condensed;
       text-transform: capitalize;
-      text-align: center;
+      // text-align: center;
       font-family: "Lato", sans-serif;
 
       @media ${devicesMax.md} {

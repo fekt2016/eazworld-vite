@@ -1,18 +1,21 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const StyledCheckbox = styled.div`
   display: flex;
   gap: 1.6rem;
+  outline: none;
 
-  & input[type='checkbox'] {
-    height: 2.4rem;
-    width: 2.4rem;
+  & input[type="checkbox"] {
+    height: 2rem;
+    width: 2rem;
     outline-offset: 2px;
     transform-origin: 0;
-    accent-color: var(--color-brand-600);
+    accent-color: var(--color-gold-900);
   }
-
-  & input[type='checkbox']:disabled {
+  & input[type="checkbox"]:focus {
+    outline: none;
+  }
+  & input[type="checkbox"]:disabled {
     accent-color: var(--color-brand-600);
   }
 
@@ -23,7 +26,7 @@ const StyledCheckbox = styled.div`
     align-items: center;
     gap: 0.8rem;
   }
-`
+`;
 
 function Checkbox({ checked, onChange, disabled = false, id, children }) {
   return (
@@ -35,9 +38,9 @@ function Checkbox({ checked, onChange, disabled = false, id, children }) {
         onChange={onChange}
         disabled={disabled}
       />
-      <label htmlFor={!disabled ? id : ''}>{children}</label>
+      <label htmlFor={!disabled ? id : ""}>{children}</label>
     </StyledCheckbox>
-  )
+  );
 }
 
-export default Checkbox
+export default Checkbox;

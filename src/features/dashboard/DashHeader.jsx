@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import HeaderMenu from "./HeaderMenu";
-// import UserAvatar from '../authentication/UserAvatar'
+import UserAvatar from "../authentication/UserAvatar";
 import Timer from "../../ui/Timer";
 
 const StyledHeader = styled.header`
@@ -24,7 +24,7 @@ const P = styled.p`
 function DashHeader() {
   return (
     <StyledHeader>
-      {/* <UserAvatar /> */}
+      <UserAvatar />
       <HeaderMenu />
       <div>
         <Timer />

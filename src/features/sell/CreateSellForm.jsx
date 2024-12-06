@@ -15,8 +15,9 @@ import emailjs from "@emailjs/browser";
 import { useUser } from "../authentication/useUser";
 import { randomOrderId } from "../../utils/helpers";
 import SpinnerMini from "../../ui/SpinnerMini";
-// import News from "../../ui/News";
 import supabase from "../../services/supabase";
+import TermBox from "../../ui/TermBox";
+import Checkbox from "../../ui/Checkbox";
 
 const SellContainer = styled.div`
   // display: flex;
@@ -28,27 +29,22 @@ const SellContainer = styled.div`
     flex-direction: column;
   }
 `;
-
-const StyledTerm = styled.div`
-  margin-top: 2rem;
-  width: 50%;
-  text-align: center;
-  padding: 1rem;
-  align-self: start;
-  box-shadow: var(--shadow-sm);
-  background-color: var(--color-primary-300);
-  border-radius: var(--border-radius-lg);
-
-  @media ${devicesMax.md} {
-    width: 100%;
-  }
+const P = styled.p`
+  flex: 2;
 `;
+
 const wallet = import.meta.env.VITE_BITCOIN_WALLET;
 
 function CreateSellForm() {
   const { createSell, isCreating } = useCreateSell();
   const { user } = useUser();
   const [rate, setRate] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
+
+  function checkHandler(e) {
+    e.preventDefault();
+    setIsChecked(e.target.checked);
+  }
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -74,6 +70,7 @@ function CreateSellForm() {
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
 
   function onSubmit(data) {
+    if (!isChecked) return;
     createSell(
       { ...data },
       {
@@ -232,11 +229,14 @@ function CreateSellForm() {
           defaultValue={user?.email}
         />
 
-        <StyledTerm>
-          <strong>Selling Terms: </strong>By clicking the order button, you have
-          agreed that all information provide are correct and you should be held
-          liable detail s submitted
-        </StyledTerm>
+        <TermBox>
+          <Checkbox onChange={checkHandler} />
+          <strong>Selling Terms: </strong>
+          <P>
+            By clicking the order button, you have agreed that all information
+            provide are correct and you should be held liable detail s submitted
+          </P>
+        </TermBox>
 
         <FormRow>
           <Button disabled={isCreating}>
@@ -244,7 +244,6 @@ function CreateSellForm() {
           </Button>
         </FormRow>
       </Form>
-      {/* <News /> */}
 
       <DevTool control={control} />
     </SellContainer>

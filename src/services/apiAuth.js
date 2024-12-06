@@ -49,20 +49,15 @@ export async function logout() {
   if (error) throw new Error(error.message);
 }
 
-export async function updateCurrentUser({
-  password,
-  firstName,
-  lastName,
-  avatar,
-}) {
+export async function updateCurrentUser({ password, fullName, avatar }) {
+  console.log(avatar, fullName);
   let updateData;
   if (password) updateData = { password };
 
-  if (lastName && firstName)
+  if (fullName)
     updateData = {
       data: {
-        lastName,
-        firstName,
+        fullName,
       },
     };
 
@@ -94,7 +89,7 @@ export async function resetPassword({ email, password }) {
     password,
   });
   if (error) throw new Error(error.message);
-  console.log(data);
+
   return data;
 }
 

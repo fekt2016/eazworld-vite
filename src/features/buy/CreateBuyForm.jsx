@@ -7,6 +7,7 @@ import FormRow from "../../ui/FormRow";
 import emailjs from "@emailjs/browser";
 import Select from "../../ui/Select";
 import supabase from "../../services/supabase";
+import Checkbox from "../../ui/Checkbox";
 
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
@@ -19,6 +20,7 @@ import { randomOrderId } from "../../utils/helpers";
 import { useMiner } from "../miner/useMiner";
 
 import Button from "../../ui/Button";
+import TermBox from "../../ui/TermBox";
 
 const BuyContainer = styled.div`
   display: flex;
@@ -35,25 +37,20 @@ const BuyContainer = styled.div`
   }
 `;
 
-const StyledTerm = styled.div`
-  margin-top: 2rem;
-  width: 50%;
-  text-align: center;
-  padding: 1rem;
-  align-self: start;
-  box-shadow: var(--shadow-sm);
-  background-color: var(--color-primary-300);
-  border-radius: var(--border-radius-lg);
-
-  @media ${devicesMax.md} {
-    width: 100%;
-  }
+const P = styled.p`
+  flex: 2;
 `;
 
 function CreateBuyForm() {
   const { createBuy, isCreating } = useCreateBuy();
   const [rate, setRate] = useState(0);
   const { user } = useUser();
+  const [isChecked, setIsChecked] = useState(false);
+  
+  function checkHandler(e) {
+    e.preventDefault();
+    setIsChecked(e.target.checked);
+  }
 
   const { isLoading, data } = useMiner();
 
@@ -88,6 +85,7 @@ function CreateBuyForm() {
   useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
 
   function onSubmit(data) {
+    if (!isChecked) return;
     createBuy(
       { ...data },
       {
@@ -270,12 +268,15 @@ function CreateBuyForm() {
           defaultValue={user?.email}
         />
 
-        <StyledTerm>
+        <TermBox>
+          <Checkbox onChange={checkHandler} />
           <strong>Buying Terms: </strong>
-          By clicking the order button, You have agreed that all information
-          provide are correct and you should be held liable for payment details
-          submitted
-        </StyledTerm>
+          <P>
+            By clicking the order button, You have agreed that all information
+            provide are correct and you should be held liable for payment
+            details submitted
+          </P>
+        </TermBox>
         <FormRow>
           <div>
             {rate === 0 ? (

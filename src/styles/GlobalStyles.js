@@ -30,6 +30,9 @@ const GlobalStyles = createGlobalStyle`:root {
   --color-brand-800: #3730a3;
   --color-brand-900: #312e81;
 
+  --color-facebook: #4267B2;
+  --color-twitter-900: #1DA1F2;
+  --color-instagram: #FFDC80:
 
 
   --color-primary-100: #d4efff;
@@ -89,9 +92,12 @@ const GlobalStyles = createGlobalStyle`:root {
   --color-whatsapp-100: #25D366;
   --color-whatsapp-700: #128C7E;
   --color-gold-900: #FFD700;
-  --color-twitter-900: #1DA1F2;
-  --color-instagram: #C13584:
-  --color-facebook: #4267B2;
+  --color-gold-700: #eada9c;
+ 
+
+
+  
+  
 
 
 

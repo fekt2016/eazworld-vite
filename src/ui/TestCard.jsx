@@ -9,7 +9,7 @@ const Card = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  background-color: var(--color-green-100);
+  background-color: var(--color-gold-700);
 
   margin: 10px;
   padding: 1rem;
@@ -22,7 +22,9 @@ const Card = styled.div`
 `;
 const Img = styled.img`
   height: 4rem;
+  width: 4rem;
   margin-right: 2rem;
+  border-radius: 50%;
 `;
 const Loc = styled.p`
   color: var(--color-red-800);
@@ -30,8 +32,6 @@ const Loc = styled.p`
 function TestCard({ fullName, msg, loc }) {
   const { user } = useUser();
   const { avatar } = user.user_metadata;
-
-  console.log(user);
 
   return (
     <Card>

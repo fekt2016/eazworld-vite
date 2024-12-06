@@ -25,6 +25,7 @@ import Nav from "./features/home/Nav";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import Admin from "./pages/Admin";
 import { useEffect, useState } from "react";
+import Legal from "./pages/Legal";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,6 +66,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="contact" element={<Contact />} />
             <Route path="blog" element={<Blog />} />
+            <Route path="legal" element={<Legal />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />

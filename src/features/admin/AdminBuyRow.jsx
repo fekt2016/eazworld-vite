@@ -6,11 +6,10 @@ import { Link } from "react-router-dom";
 import { useDeleteBuy } from "../admin/useDeleteBuy";
 import SpinnerMini from "../../ui/SpinnerMini";
 
-import { useUpdateBuy } from "./useUpdateBuy";
-// import emailjs from "@emailjs/browser";
-// import { useEffect } from "react";
+import { updateBuy } from "../../services/apibuy";
+import emailjs from "@emailjs/browser";
+import { useEffect } from "react";
 import { TiDelete } from "react-icons/ti";
-// import Button from "../../ui/Button";
 
 const Status = styled.button`
   font-size: 1rem;
@@ -74,48 +73,48 @@ const DelIcon = styled(TiDelete)`
 
 function AdminBuyRow({ buy }) {
   const { isDeleting, deleteBuy } = useDeleteBuy();
-  const { isLoading, mutate } = useUpdateBuy();
 
-  // useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
+  useEffect(() => emailjs.init(import.meta.env.VITE_YOUR_PUBLIC_KEY), []);
+
   const {
     id,
     orderId: buyId,
     amountUSD,
-    // amountGh,
-    // currency,
+    amountGh,
+    currency,
     totalToPay,
-    // payment,
+    payment,
     status,
     email,
     wallet,
   } = buy;
-  console.log(id);
 
   function statusHandler() {
-    mutate(id, "paid");
-    // emailjs
-    // .send(
-    //   import.meta.env.VITE_YOUR_SERVICE_ID,
-    //   import.meta.env.VITE_YOUR_BUY_COMPLETED_TEMPLATE_ID,
-    //   {
-    //     recipient: email,
-    //     orderId: buyId,
-    //     currency: currency,
-    //     amountGh: amountGh,
-    //     amountUSD: amountUSD,
-    //     Payment: payment,
-    //     TotaltoPay: totalToPay,
-    //     wallet: wallet,
-    //   }
-    // )
-    // .then(
-    //   (result) => {
-    //     console.log(result);
-    //   },
-    //   (error) => {
-    //     console.log(error.text);
-    //   }
-    // );
+    updateBuy(buy.id, "order completed");
+
+    emailjs
+      .send(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_BUY_COMPLETED_TEMPLATE_ID,
+        {
+          recipient: email,
+          orderId: buyId,
+          currency: currency,
+          amountGh: amountGh,
+          amountUSD: amountUSD,
+          Payment: payment,
+          TotaltoPay: totalToPay,
+          wallet: wallet,
+        }
+      )
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   }
 
   function handleDelete() {
@@ -137,11 +136,9 @@ function AdminBuyRow({ buy }) {
         onClick={statusHandler}
         disabled={status === "order completed"}
       >
-        {isLoading ? <SpinnerMini /> : `${status}`}
+        {status}
+        {/* {isLoading ? <SpinnerMini /> : `${status}`} */}
       </Status>
-      {/* <Button size="small" onClick={handleDelete}>
-        {isDeleting ? <SpinnerMini /> : "Delete"}
-      </Button> */}
       {isDeleting ? <SpinnerMini /> : <DelIcon onClick={handleDelete} />}
     </Table.Row>
   );
