@@ -1,26 +1,44 @@
 import styled, { css } from "styled-components";
 import Heading from "../ui/Heading";
 import { useState } from "react";
+import { devicesMax } from "../styles/breakpoint";
 
 const Container = styled.div`
   padding: 5rem;
   height: 85vh;
+  
 `;
+const Header =  styled.div`
+padding: 2rem`
+
 
 const Main = styled.div`
   display: flex;
   height: 100%;
+
+
+  @media ${devicesMax.md} {
+       flex-direction: column;
+      }
 `;
 const SideUl = styled.ul`
   border: 2px solid var(--color-grey-200);
   border-radius: 5px;
-  padding: 5rem;
+  padding: 1rem;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  @media ${devicesMax.md} {
+       flex-direction: row;
+      }
+     
+
 `;
 const Detail = styled.div`
-  padding: 0 5rem;
+  padding: 2rem;
   flex: 5;
   overflow-y: auto;
+  
 `;
 
 const P = styled.div`
@@ -31,6 +49,11 @@ const Ul = styled.ul`
 `;
 const ActiveLink = styled.li`
   padding: 1rem;
+font-size: 2rem;
+  @media ${devicesMax.lg} {
+    font-size: 1.2rem;
+     
+      }
   ${(props) =>
     props.toggle === props.active &&
     css`
@@ -38,13 +61,20 @@ const ActiveLink = styled.li`
       font-size: 2rem;
       font-weight: 900;
       cursor: pointer;
+
+      @media ${devicesMax.lg} {
+    font-size: 1.1rem;
+     
+      }
     `};
 `;
 function Legal() {
   const [toggle, setToggle] = useState(1);
   return (
     <Container>
-      <Heading as="h1">Legal</Heading>
+      <Header><Heading as="h1">Legal</Heading></Header>
+      
+      
       <Main>
         <SideUl>
           <ActiveLink active={1} toggle={toggle} onClick={() => setToggle(1)}>
