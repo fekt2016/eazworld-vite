@@ -32,7 +32,6 @@ function UserAvatar() {
         src={avatar || "avatar.png"}
         alt={`avatar of ${fullName} `}
       />
-
       <span>{fullName}</span>
     </StyledUserAvatar>
   );
