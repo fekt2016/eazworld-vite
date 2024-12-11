@@ -325,8 +325,8 @@ function OrderDetail({ onPayment }) {
             Total To pay: <ToPay>&#8373;{item?.totalToPay}</ToPay>
           </StyledPay>
           <P>
-            Make your order Number {item?.orderId} the reference when you are
-            sending the momo payment.
+            make number the referrence 1 of your momo payment. and do not write anything related to cryptocurrency.
+            momo carriers may block your number for anything related to bitcoin or other cryptocurrency. Thank You.
           </P>
           <P>For any other assistance contact 0244388190</P>
         </DetailBox>
