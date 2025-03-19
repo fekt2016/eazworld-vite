@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaWindowClose } from "react-icons/fa";
 import { devicesMax } from "../styles/breakpoint";
+import Heading from "./Heading";
 
 const StyledAlert = styled.div`
   width: 50%;
@@ -29,10 +30,12 @@ const StyledAlert = styled.div`
 const AlertContainer = styled.div`
   width: 100%;
   height: 100%;
+  padding: 1rem;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 `;
 const Close = styled(FaWindowClose)`
   position: absolute;
@@ -57,7 +60,19 @@ function Alert() {
       <StyledAlert className="">
         <Close onClick={closeAlert} />
         <AlertContainer>
-          <h1>Coming soon!!!</h1>
+        <Heading as="h3">Points program is coming soon.</Heading>
+          <ul>
+            
+            <li>The program will in this way.</li>
+            <li>$1 is equivelet to 0.67point of any order a customer place </li>
+            <li>a refered customer will gain 20 point anytime he has been refered</li>
+            <li>there is customers membership level as fellows(rookie member,Silver member, gold member and a platinum member </li>
+            <li>When you first register for a membership, you become a rookie member who has no discount price </li>
+            <li>you will become a silver member after you have aquired 1000point from orders you place and when customers refered you when they signup.</li>
+            <li>You become Gold Member after you had 2000points</li>
+            <li>You become platinum after you have 50000points</li>
+          </ul>
+          
         </AlertContainer>
       </StyledAlert>
     )
