@@ -31,15 +31,11 @@ function Header() {
                     <DownNav>
                         <Cat>
                             <a href="url">All Categories</a>
-                            <SearchEngine>
-                                <p>
-                                Search for Product...
-                                </p>
-
-                                <p>🔍</p>
+                            <SearchCont>
+                                <SearchEngine type="text" placeholder="Search for Product..." />
+                                <Icon>🔍</Icon>
+                            </SearchCont>
                             
-                            </SearchEngine>
-                            {/* <a href="url">Support</a> */}
                         </Cat>
 
                         <Log>
@@ -146,7 +142,18 @@ justify-content: space-around;
 `;
 
 
+const SearchCont = styled.header`
+/* width: 100%; */
+position: relative;
 
+`;
+
+const Icon = styled.header`
+position: absolute;
+top: 11px;
+right: 8px;
+
+`;
 
 
 export {Header}
