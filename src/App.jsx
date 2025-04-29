@@ -15,6 +15,7 @@
 // import Prepaid from "./pages/Prepaid";
 // import { Toaster } from "react-hot-toast";
 
+
 // import RecoverPassword from "./pages/RecoverPassword";
 // import UpdatePassword from "./pages/UpdatePassword";
 // import BuyCurrentOrder from "./features/dashboard/BuyCurrentOrder";
@@ -131,15 +132,19 @@
 // }
 
 
-// export default App;
 
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
-function App() {
+import { Header } from "./components/common/header";
+
+function App () {
   return (
-    <div>
-      App
-    </div>
-  )
+    <>
+       <Header />
+
+    </>
+  );
 }
 
 export default App;
