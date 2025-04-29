@@ -2,7 +2,7 @@ import styled from "styled-components";
 // import { Navbar } from "./nav";
 // import { Usernav } from "./user";
 import { Logonav } from "./logo";
-import { SearchEngine } from "./button";
+import { SearchEngine } from "./input";
 
 
 function Header() {
@@ -33,7 +33,7 @@ function Header() {
                             <a href="url">All Categories</a>
                             <SearchEngine>
                                 <p>
-                                Search for Product... 
+                                Search for Product...
                                 </p>
 
                                 <p>🔍</p>
