@@ -2,7 +2,7 @@ import styled from "styled-components";
 // import { Navbar } from "./nav";
 // import { Usernav } from "./user";
 import { Logonav } from "./logo";
-import { SearchEngine } from "./input";
+import { SearchEngine } from "./search";
 
 
 function Header() {
