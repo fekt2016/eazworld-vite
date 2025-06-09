@@ -12,7 +12,7 @@ const sideNav = css`
 `;
 
 const StyledNav = styled.nav`
-  padding: 1rem;
+  /* padding: 1rem; */
   border-bottom: 1px solid var(--color-grey-100);
   position: sticky;
   top: 0;
@@ -84,44 +84,44 @@ const StyledList = styled.div`
     display: none;
   }
 `;
-const StyledBtnD = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-basis: 20rem;
+// const StyledBtnD = styled.div`
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+//   flex-basis: 20rem;
 
-  @media ${devicesMax.sm} {
-    flex-basis: 16rem;
-  }
-`;
-const StyledBtn = styled(NavLink)`
-  ${(props) =>
-    props.btn === "login" &&
-    css`
-      background-color: var(--color-gold-900);
-      padding: 0.5rem 2rem;
-      border-radius: var(--Border-radius-cir);
-      transition: all 0.4s;
-      &:hover {
-        transform: scale(1.2);
-      }
-    `}
-  ${(props) =>
-    props.btn === "register" &&
-    css`
-      border-radius: var(--Border-radius-cir);
-      border: 1px solid var(--color-gold-900);
-      padding: 0.5rem 1.5rem;
-      transition: all 0.4s;
-      &:hover {
-        background-color: var(--color-gold-900);
-      }
-    `}
+//   @media ${devicesMax.sm} {
+//     flex-basis: 16rem;
+//   }
+// `;
+// const StyledBtn = styled(NavLink)`
+//   ${(props) =>
+//     props.btn === "login" &&
+//     css`
+//       background-color: var(--color-gold-900);
+//       padding: 0.5rem 2rem;
+//       border-radius: var(--Border-radius-cir);
+//       transition: all 0.4s;
+//       &:hover {
+//         transform: scale(1.2);
+//       }
+//     `}
+//   ${(props) =>
+//     props.btn === "register" &&
+//     css`
+//       border-radius: var(--Border-radius-cir);
+//       border: 1px solid var(--color-gold-900);
+//       padding: 0.5rem 1.5rem;
+//       transition: all 0.4s;
+//       &:hover {
+//         background-color: var(--color-gold-900);
+//       }
+//     `}
 
-  @media ${devicesMax.sm} {
-    padding: 0.5rem 1rem;
-  }
-`;
+//   @media ${devicesMax.sm} {
+//     padding: 0.5rem 1rem;
+//   }
+// `;
 const NavButton = styled.button`
   background: none;
   border: none;
@@ -132,12 +132,10 @@ const NavButton = styled.button`
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 2000
-  &:hover {
+  z-index: 2000 /* &:hover {
     background-color: var(--color-grey-100);
-  }
-
-  & svg {
+  } */ &
+    svg {
     width: 3rem;
     height: 3rem;
     color: var(--color-grey-900);
@@ -149,10 +147,10 @@ const NavButton = styled.button`
 `;
 
 const Img = styled.img`
-  height: 8rem;
+  height: 5rem;
   position: absolute;
-  top: -5px;
-  left: 40px;
+  /* top: -5px; */
+  /* left: 40px; */
 `;
 
 function HomeNav() {
@@ -164,19 +162,19 @@ function HomeNav() {
         <StyledSideNav>
           <StyledUl isOpen={isOpen}>
             <StyledLi>
-              <NavLink to="/home">home</NavLink>
+              <NavLink to="/home"></NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="/buy">buy</NavLink>
+              <NavLink to="/buy"></NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="/sell">sell</NavLink>
+              <NavLink to="/sell"></NavLink>
             </StyledLi>
             <StyledLi>
               <NavLink to="home/blog">blog</NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="home/contact">contact</NavLink>
+              <NavLink to="home/contact"></NavLink>
             </StyledLi>
           </StyledUl>
         </StyledSideNav>
@@ -192,23 +190,23 @@ function HomeNav() {
         <StyledList>
           <StyledUl>
             <StyledLi>
-              <NavLink to="/home">home</NavLink>
+              <NavLink></NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="/buy">buy</NavLink>
+              <NavLink></NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="/sell">sell</NavLink>
+              <NavLink></NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="/blog">blog</NavLink>
+              <NavLink></NavLink>
             </StyledLi>
             <StyledLi>
-              <NavLink to="/contact">contact</NavLink>
+              <NavLink></NavLink>
             </StyledLi>
           </StyledUl>
         </StyledList>
-        <StyledBtnD>
+        {/* <StyledBtnD>
           <StyledBtn btn="login" to="/login">
             Login
           </StyledBtn>
@@ -216,7 +214,7 @@ function HomeNav() {
           <StyledBtn btn="register" to="/signup">
             Register
           </StyledBtn>
-        </StyledBtnD>
+        </StyledBtnD> */}
       </StyledRightContainer>
     </StyledNav>
   );

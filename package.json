@@ -13,12 +13,17 @@
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
     "@supabase/supabase-js": "^2.38.1",
-    "@tanstack/react-query": "^4.35.3",
-    "@tanstack/react-query-devtools": "^4.32.6",
+    "@tanstack/query-sync-storage-persister": "^5.71.10",
+    "@tanstack/react-query": "^5.79.0",
+    "@tanstack/react-query-persist-client": "^5.79.0",
+    "axios": "^1.8.4",
     "emailjs-com": "^3.2.0",
     "google-map-react": "^2.2.1",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
     "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
+    "react-cookie": "^8.0.1",
     "react-cookie-consent": "^9.0.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
@@ -30,11 +35,18 @@
     "react-intersection-observer": "^9.5.3",
     "react-phone-number-input": "^3.3.7",
     "react-router-dom": "^6.28.0",
+    "react-secure-storage": "^1.3.2",
     "react-select": "^5.7.4",
     "react-slick": "^0.30.2",
+    "react-spinners": "^0.15.0",
+    "react-stars": "^2.2.5",
+    "react-window": "^1.8.11",
+    "recharts": "^2.15.3",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.0.6",
+    "styled-normalize": "^8.1.1",
     "supabase": "^2.0.0",
+    "update": "^0.4.2",
     "vite-plugin-svg-icons": "^0.1.0"
   },
   "devDependencies": {
@@ -47,7 +59,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "vite": "^4.3.9",
+    "vite": "^6.3.5",
     "vite-plugin-eslint": "^1.8.1"
   }
 }
