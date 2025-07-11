@@ -12,6 +12,14 @@ const ProtectedSellerRoute = ({
 }) => {
   const { isAuthenticated, isSeller, status, isLoading } = useSellerAuth();
 
+  // console.log(
+  //   "ProtectedSellerRoute rendered",
+  //   isAuthenticated,
+  //   isSeller,
+  //   status,
+  //   isLoading
+  // );
+
   if (isLoading) {
     return <div>Loading...</div>;
   }

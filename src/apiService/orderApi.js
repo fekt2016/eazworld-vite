@@ -1,8 +1,55 @@
 import api from "./api";
 
 export const orderService = {
+  createOrder: async (data) => {
+    const response = await api.post("/order", data);
+    return response;
+  },
   getAllOrders: async () => {
     const response = await api.get("/order");
-    return response.data;
+    return response;
+  },
+  getSellersOrders: async () => {
+    const response = await api.get("/order/get-seller-orders");
+    return response;
+  },
+  getSellerOrderById: async (id) => {
+    try {
+      const response = await api.get(`/order/seller-order/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log("API Error - getSellerOrderById:", {
+        url: error.config?.url,
+        status: error.response?.status,
+        message: error.message,
+      });
+      throw new Error(error.response?.data?.message || "Failed to fetch order");
+    }
+  },
+  getUserOrderById: async (id) => {
+    try {
+      const response = await api.get(`/order/get-user-order/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log("API Error - getUserOrderById:", {
+        url: error.config?.url,
+        status: error.response?.status,
+        message: error.message,
+      });
+      throw new Error(error.response?.data?.message || "Failed to fetch order");
+    }
+  },
+  getUserOrders: async () => {
+    try {
+      const response = await api.get(`/order/get-user-orders`);
+      return response.data;
+    } catch (error) {
+      console.log("API Error - getUserOrderById:", {
+        url: error.config?.url,
+        status: error.response?.status,
+        message: error.message,
+      });
+      throw new Error(error.response?.data?.message || "Failed to fetch order");
+    }
   },
 };

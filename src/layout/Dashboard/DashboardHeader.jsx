@@ -1,24 +1,17 @@
 import styled from "styled-components";
-import { FaBell, FaSearch } from "react-icons/fa";
-// import { useState } from "react";
-// import { Link } from "react-router-dom";
+import { FaBell } from "react-icons/fa";
 
-const DashboardHeader = () => {
-  // const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  // const toggleSidebar = () => {
-  //   setSidebarOpen(!sidebarOpen);
-  // };
+const DashboardHeader = ({ user }) => {
   return (
     <Header>
       <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
         {/* <ToggleButton onClick={toggleSidebar}>
           <FaBars />
         </ToggleButton> */}
-        <SearchBar>
+        {/* <SearchBar>
           <FaSearch style={{ color: theme.gray }} />
           <input type="text" placeholder="Search..." />
-        </SearchBar>
+        </SearchBar> */}
       </div>
       <TopbarRight>
         <IconButton>
@@ -26,25 +19,15 @@ const DashboardHeader = () => {
           <NotificationBadge>3</NotificationBadge>
         </IconButton>
         <UserProfile>
-          <UserAvatar>AD</UserAvatar>
+          <UserAvatar>{user.avatar}</UserAvatar>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontWeight: 600 }}>Admin User</div>
+            <div style={{ fontWeight: 600 }}>{user.name}</div>
             <div style={{ fontSize: "12px", color: theme.gray }}>
-              Administrator
+              {user.shopName}
             </div>
           </div>
         </UserProfile>
       </TopbarRight>
-      {/* <NavItems>
-        <NavLink to="/notifications">
-          <FaUser />
-          Notifications
-        </NavLink>
-        <UserProfile>
-          <img src="user-avatar.jpg" alt="User profile" />
-          <span>John Doe</span>
-        </UserProfile>
-      </NavItems> */}
     </Header>
   );
 };
@@ -68,27 +51,7 @@ const UserAvatar = styled.div`
   font-weight: 600;
   font-size: 18px;
 `;
-const SearchBar = styled.div`
-  background: ${({ theme }) => theme.light};
-  border-radius: 10px;
-  padding: 8px 15px;
-  display: flex;
-  align-items: center;
-  width: 400px;
 
-  input {
-    background: transparent;
-    border: none;
-    padding: 5px 10px;
-    width: 100%;
-    outline: none;
-    font-size: 14px;
-  }
-
-  @media (max-width: 768px) {
-    width: 200px;
-  }
-`;
 const NotificationBadge = styled.span`
   position: absolute;
   top: -5px;

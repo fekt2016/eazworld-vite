@@ -2,8 +2,14 @@ import api from "./api";
 
 export const categoryService = {
   // Category endpoints
-  getAllCategories: async () => {
-    const response = await api.get("/categories");
+  getAllCategories: async (params = {}) => {
+    const { page = 1, limit = 100 } = params;
+    const response = await api.get("/categories", {
+      params: {
+        page,
+        limit,
+      },
+    });
     return response.data;
   },
   getCategory: async (id) => {

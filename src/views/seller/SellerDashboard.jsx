@@ -1,133 +1,218 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 import {
   FaBox,
   FaShoppingCart,
   FaDollarSign,
   FaChartLine,
-  FaPlus,
-  FaSearch,
-  FaFilter,
-  // FaEllipsisH,
+  FaExclamationTriangle,
+  FaRedo,
+  // FaPlus,
+  // FaSearch,
+  // FaFilter,
 } from "react-icons/fa";
 import useProduct from "../../hooks/product/useProduct";
 import useSellerAuth from "../../hooks/auth/useSellerAuth";
-
+import useOrder from "../../hooks/order/useOrder";
+import { formatDate } from "../../utils/helpers";
+import { Link } from "react-router-dom";
+import useAnalytics from "../../hooks/analytic/useAnalytics";
 const SellerDashboard = () => {
-  const [activeTab, setActiveTab] = useState("overview");
   const [timeFilter, setTimeFilter] = useState("month");
-  const [orders, setOrders] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [stats, setStats] = useState({});
+  const [retryCount, setRetryCount] = useState(0);
+  console.log("timeFilter", timeFilter);
 
-  const { useProductBySellerId } = useProduct();
-  const { user } = useSellerAuth();
-  console.log(user); // Assuming you have a hook to get the seller ID
+  const { useGetAllProductBySeller } = useProduct();
 
-  const { data: productData, isLoading: isLoadingProduct } =
-    useProductBySellerId(user?.id);
+  const { getSellerOrders } = useOrder();
+  const { useGetSellerProductViews } = useAnalytics();
 
-  const productsLength = productData?.data.data.length || 0;
-  console.log("Product Data:", productData?.data.data.length);
+  const {
+    seller,
+    isLoading: isSellerLoading,
+    error: sellerError,
+  } = useSellerAuth();
+  const sellerId = useMemo(() => seller?.id || null, [seller]);
 
-  // Mock data initialization
-  useEffect(() => {
-    // Dashboard stats
-    setStats({
-      totalRevenue: 48250,
-      pendingOrders: 12,
-      totalProducts: productsLength || 0,
-      conversionRate: 4.2,
-      revenueChange: +15.3,
-      orderChange: -2.4,
-    });
+  const {
+    data: ordersData,
+    isLoading: isOrdersLoading,
+    isError: isOrdersError,
+    error: ordersError,
+    refetch: refetchOrders,
+  } = getSellerOrders;
 
-    // Recent orders
-    setOrders([
-      {
-        id: "#ORD-283",
-        customer: "Sarah Johnson",
-        date: "2023-06-15",
-        amount: 149.99,
-        status: "Delivered",
-      },
-      {
-        id: "#ORD-284",
-        customer: "Michael Chen",
-        date: "2023-06-14",
-        amount: 89.5,
-        status: "Shipped",
-      },
-      {
-        id: "#ORD-285",
-        customer: "Emma Rodriguez",
-        date: "2023-06-14",
-        amount: 210.0,
-        status: "Processing",
-      },
-      {
-        id: "#ORD-286",
-        customer: "David Wilson",
-        date: "2023-06-13",
-        amount: 55.25,
-        status: "Pending",
-      },
-      {
-        id: "#ORD-287",
-        customer: "Olivia Brown",
-        date: "2023-06-12",
-        amount: 325.75,
-        status: "Delivered",
-      },
-    ]);
+  const {
+    data: productData,
+    isLoading: isProductLoading,
+    isError: isProductError,
+    error: productError,
+    refetch: refetchProducts,
+  } = useGetAllProductBySeller(sellerId, {
+    enabled: !!sellerId,
+  });
 
-    // Top products
-    setProducts([
-      {
-        id: 1,
-        name: "Wireless Bluetooth Headphones",
-        stock: 42,
-        price: 79.99,
-        sales: 128,
-      },
-      {
-        id: 2,
-        name: "Stainless Steel Water Bottle",
-        stock: 87,
-        price: 24.99,
-        sales: 95,
-      },
-      {
-        id: 3,
-        name: "Yoga Mat with Carrying Strap",
-        stock: 15,
-        price: 35.5,
-        sales: 63,
-      },
-      {
-        id: 4,
-        name: "Phone Mount for Car Dashboard",
-        stock: 0,
-        price: 19.99,
-        sales: 47,
-      },
-      {
-        id: 5,
-        name: "Portable External Battery",
-        stock: 28,
-        price: 45.0,
-        sales: 41,
-      },
-    ]);
-  }, [productsLength]);
+  const { data: viewData } = useGetSellerProductViews(sellerId, {
+    enabled: !!sellerId,
+  });
 
-  if (isLoadingProduct) {
-    return <div>Loading products...</div>;
+  console.log("viewData", viewData);
+  const orders = useMemo(() => {
+    return ordersData?.data.data.orders || [];
+  }, [ordersData]);
+
+  const products = useMemo(() => {
+    return productData?.data.data || [];
+  }, [productData]);
+
+  const stats = useMemo(() => {
+    // Filter delivered orders
+    const deliveredOrders = orders.filter(
+      (order) => order.status.toLowerCase() === "delivered"
+    );
+
+    // Helper: Get date range for current/previous period
+    const getDateRange = (period) => {
+      const now = new Date();
+      let start, end, prevStart, prevEnd;
+
+      switch (period) {
+        case "today":
+          start = new Date(now.setHours(0, 0, 0, 0));
+          end = new Date(now.setHours(23, 59, 59, 999));
+          prevStart = new Date(start);
+          prevStart.setDate(prevStart.getDate() - 1);
+          prevEnd = new Date(start);
+          break;
+        case "week":
+          {
+            const dayOfWeek = now.getDay();
+            start = new Date(now);
+            start.setDate(now.getDate() - dayOfWeek);
+            start.setHours(0, 0, 0, 0);
+            end = new Date(start);
+            end.setDate(end.getDate() + 6);
+            end.setHours(23, 59, 59, 999);
+            prevStart = new Date(start);
+            prevStart.setDate(prevStart.getDate() - 7);
+            prevEnd = new Date(start);
+            prevEnd.setDate(prevEnd.getDate() - 1);
+          }
+          break;
+        case "month":
+          start = new Date(now.getFullYear(), now.getMonth(), 1);
+          end = new Date(
+            now.getFullYear(),
+            now.getMonth() + 1,
+            0,
+            23,
+            59,
+            59,
+            999
+          );
+          prevStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+          prevEnd = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            0,
+            23,
+            59,
+            59,
+            999
+          );
+          break;
+        case "year":
+          start = new Date(now.getFullYear(), 0, 1);
+          end = new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999);
+          prevStart = new Date(now.getFullYear() - 1, 0, 1);
+          prevEnd = new Date(now.getFullYear() - 1, 11, 31, 23, 59, 59, 999);
+          break;
+        default:
+          return { current: [], previous: [] };
+      }
+
+      return { start, end, prevStart, prevEnd };
+    };
+
+    const { start, end, prevStart, prevEnd } = getDateRange(timeFilter);
+
+    // Filter orders in current and previous periods
+    const currentPeriodOrders = deliveredOrders.filter(
+      (order) =>
+        new Date(order.createdAt) >= start && new Date(order.createdAt) <= end
+    );
+    const previousPeriodOrders = deliveredOrders.filter(
+      (order) =>
+        new Date(order.createdAt) >= prevStart &&
+        new Date(order.createdAt) <= prevEnd
+    );
+
+    // Calculate revenue
+    const currentRevenue = currentPeriodOrders.reduce(
+      (sum, order) => sum + order.subtotal,
+      0
+    );
+    const previousRevenue = previousPeriodOrders.reduce(
+      (sum, order) => sum + order.subtotal,
+      0
+    );
+
+    // Compute percentage change
+    const revenueChange =
+      previousRevenue === 0
+        ? currentRevenue > 0
+          ? 100
+          : 0
+        : ((currentRevenue - previousRevenue) / previousRevenue) * 100;
+
+    // Other metrics
+    const pendingOrders = orders.filter(
+      (order) => order.status.toLowerCase() === "pending"
+    ).length;
+    const outOfStock = products.filter((p) => p.stock === 0).length;
+
+    return {
+      totalRevenue: currentRevenue,
+      revenueChange: parseFloat(revenueChange.toFixed(1)),
+      pendingOrders,
+      totalProducts: products.length,
+      outOfStock,
+    };
+  }, [orders, products, timeFilter]);
+  console.log("stats", stats);
+
+  const isLoading = isOrdersLoading || isProductLoading || isSellerLoading;
+  const isError = isOrdersError || isProductError || sellerError;
+  const anyDataAvailable = orders.length > 0 || products.length > 0;
+
+  const handleRetry = () => {
+    refetchOrders();
+    refetchProducts();
+    setRetryCount((prev) => prev + 1);
+  };
+
+  if (isLoading && !anyDataAvailable && retryCount === 0) {
+    return <LoadingContainer>Loading dashboard data...</LoadingContainer>;
   }
-  if (!productData || productData.length === 0) {
-    return <div>No products available</div>;
-  }
 
+  if (isError && !anyDataAvailable) {
+    return (
+      <ErrorContainer>
+        <ErrorIcon>
+          <FaExclamationTriangle />
+        </ErrorIcon>
+        <ErrorMessage>
+          {ordersError?.message ||
+            productError?.message ||
+            sellerError?.message ||
+            "Failed to load data. Please check your connection."}
+        </ErrorMessage>
+        <RetryButton onClick={handleRetry}>
+          <FaRedo /> Try Again
+        </RetryButton>
+      </ErrorContainer>
+    );
+  }
   return (
     <DashboardContainer>
       <DashboardHeader>
@@ -170,7 +255,7 @@ const SellerDashboard = () => {
           </CardIcon>
           <CardContent>
             <h3>Total Revenue</h3>
-            <Value>${(stats.totalRevenue || 0).toLocaleString()}</Value>
+            <Value>Gh₵{(stats.totalRevenue || 0).toLocaleString()}</Value>
             <Trend $positive={stats.revenueChange > 0}>
               {stats.revenueChange > 0 ? "↑" : "↓"}{" "}
               {Math.abs(stats.revenueChange || 0)}% from last period
@@ -216,151 +301,59 @@ const SellerDashboard = () => {
           </CardContent>
         </MetricCard>
       </DashboardMetrics>
-
-      <DashboardTabs>
-        <Tab
-          active={activeTab === "overview"}
-          onClick={() => setActiveTab("overview")}
-        >
-          Overview
-        </Tab>
-        <Tab
-          active={activeTab === "orders"}
-          onClick={() => setActiveTab("orders")}
-        >
-          Orders
-        </Tab>
-        <Tab
-          active={activeTab === "products"}
-          onClick={() => setActiveTab("products")}
-        >
-          Products
-        </Tab>
-        <Tab
-          active={activeTab === "analytics"}
-          onClick={() => setActiveTab("analytics")}
-        >
-          Analytics
-        </Tab>
-      </DashboardTabs>
-
       <DashboardContent>
-        {activeTab === "overview" && (
-          <OverviewContent>
-            <Section>
-              <SectionHeader>
-                <h2>Recent Orders</h2>
-                <ViewAllLink>View All Orders</ViewAllLink>
-              </SectionHeader>
-              <OrdersTable>
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Date</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr key={order.id}>
-                      <td>{order.id}</td>
-                      <td>{order.customer}</td>
-                      <td>{order.date}</td>
-                      <td>${order.amount.toFixed(2)}</td>
-                      <td>
-                        <StatusBadge $status={order.status.toLowerCase()}>
-                          {order.status}
-                        </StatusBadge>
-                      </td>
-                      <td>
-                        <ActionButton>Manage</ActionButton>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </OrdersTable>
-            </Section>
-
-            <Section>
-              <SectionHeader>
-                <h2>Top Selling Products</h2>
-                <ViewAllLink>View All Products</ViewAllLink>
-              </SectionHeader>
-              <ProductsGrid>
-                {products.map((product) => (
-                  <ProductCard key={product.id}>
-                    <ProductImage />
-                    <ProductInfo>
-                      <ProductName>{product.name}</ProductName>
-                      <ProductMeta>
-                        <div>${product.price.toFixed(2)}</div>
-                        <StockStatus $inStock={product.stock > 0}>
-                          {product.stock > 0
-                            ? `${product.stock} in stock`
-                            : "Out of stock"}
-                        </StockStatus>
-                      </ProductMeta>
-                      <SalesBadge>{product.sales} sold</SalesBadge>
-                    </ProductInfo>
-                  </ProductCard>
-                ))}
-              </ProductsGrid>
-            </Section>
-          </OverviewContent>
-        )}
-
-        {activeTab === "orders" && (
-          <OrdersContent>
-            <OrdersHeader>
-              <SearchBar>
-                <FaSearch />
-                <input type="text" placeholder="Search orders..." />
-              </SearchBar>
-              <OrderFilters>
-                <FilterSelect>
-                  <option>All Statuses</option>
-                  <option>Pending</option>
-                  <option>Processing</option>
-                  <option>Shipped</option>
-                  <option>Delivered</option>
-                </FilterSelect>
-                <FilterSelect>
-                  <option>Last 30 days</option>
-                  <option>Last 90 days</option>
-                  <option>2023</option>
-                </FilterSelect>
-                <ActionButton>
-                  <FaFilter /> Filter
-                </ActionButton>
-              </OrderFilters>
-            </OrdersHeader>
-
+        <OverviewContent>
+          <Section>
+            <SectionHeader>
+              <h2>Recent Orders</h2>
+              <ViewAllLink to="/seller/dashboard/orders">
+                View All Orders
+              </ViewAllLink>
+            </SectionHeader>
             <OrdersTable>
-              {/* Same table as in overview but with more data */}
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order.id}>
+                    <td>{order.orderNumber}</td>
+                    <td>{order.user.name}</td>
+                    <td>{formatDate(order.createdAt)}</td>
+                    <td>Gh₵{order.total}</td>
+                    <td>
+                      <StatusBadge $status={order.status.toLowerCase()}>
+                        {order.status}
+                      </StatusBadge>
+                    </td>
+                    <td>
+                      <ActionButton>Manage</ActionButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </OrdersTable>
-          </OrdersContent>
-        )}
+          </Section>
 
-        {activeTab === "products" && (
-          <ProductsContent>
-            <ProductsHeader>
-              <AddProductButton>
-                <FaPlus /> Add Product
-              </AddProductButton>
-              <SearchBar>
-                <FaSearch />
-                <input type="text" placeholder="Search products..." />
-              </SearchBar>
-            </ProductsHeader>
-
-            <ProductsList>
+          <Section>
+            <SectionHeader>
+              <h2>Top Selling Products</h2>
+              <ViewAllLink to="/seller/dashboard/products">
+                View All Products
+              </ViewAllLink>
+            </SectionHeader>
+            <ProductsGrid>
               {products.map((product) => (
-                <ProductRow key={product.id}>
-                  <ProductRowImage />
-                  <ProductRowInfo>
+                <ProductCard key={product.id}>
+                  <ProductImage src={product.imageCover} alt={product.name} />
+                  <ProductInfo>
                     <ProductName>{product.name}</ProductName>
                     <ProductMeta>
                       <div>${product.price.toFixed(2)}</div>
@@ -370,17 +363,13 @@ const SellerDashboard = () => {
                           : "Out of stock"}
                       </StockStatus>
                     </ProductMeta>
-                  </ProductRowInfo>
-                  <SalesData>{product.sales} sold</SalesData>
-                  <ProductActions>
-                    <ActionButton>Edit</ActionButton>
-                    <ActionButton>Manage</ActionButton>
-                  </ProductActions>
-                </ProductRow>
+                    <SalesBadge>{product.sales} sold</SalesBadge>
+                  </ProductInfo>
+                </ProductCard>
               ))}
-            </ProductsList>
-          </ProductsContent>
-        )}
+            </ProductsGrid>
+          </Section>
+        </OverviewContent>
       </DashboardContent>
     </DashboardContainer>
   );
@@ -483,28 +472,6 @@ const SmallText = styled.div`
   margin-top: 0.25rem;
 `;
 
-const DashboardTabs = styled.div`
-  display: flex;
-  border-bottom: 1px solid #e3e6f0;
-  margin-bottom: 1.5rem;
-`;
-
-const Tab = styled.button`
-  padding: 1rem 1.5rem;
-  background: none;
-  border: none;
-  font-weight: 600;
-  color: ${(props) => (props.active ? "#4e73df" : "#6e707e")};
-  border-bottom: 3px solid
-    ${(props) => (props.active ? "#4e73df" : "transparent")};
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    color: #4e73df;
-  }
-`;
-
 const DashboardContent = styled.div`
   background: white;
   border-radius: 0.5rem;
@@ -541,7 +508,7 @@ const SectionHeader = styled.div`
   }
 `;
 
-const ViewAllLink = styled.a`
+const ViewAllLink = styled(Link)`
   color: #4e73df;
   font-weight: 600;
   text-decoration: none;
@@ -633,7 +600,7 @@ const ProductCard = styled.div`
   }
 `;
 
-const ProductImage = styled.div`
+const ProductImage = styled.img`
   height: 150px;
   background-color: #f8f9fc;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
@@ -675,105 +642,60 @@ const SalesBadge = styled.div`
 `;
 
 // Additional styles for other tabs
-const OrdersContent = styled.div``;
-const OrdersHeader = styled.div`
+
+const LoadingContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 1.5rem;
-`;
-const ProductsContent = styled.div``;
-// const AnalyticsContent = styled.div``;
-
-const SearchBar = styled.div`
-  display: flex;
-  align-items: center;
-  background: #f8f9fc;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  width: 300px;
-
-  input {
-    border: none;
-    background: transparent;
-    padding: 0.5rem;
-    width: 100%;
-    outline: none;
-  }
-`;
-
-const OrderFilters = styled.div`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-`;
-
-const FilterSelect = styled.select`
-  padding: 0.5rem;
-  border: 1px solid #d1d3e2;
-  border-radius: 4px;
-  background: white;
-`;
-
-const ProductsHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-`;
-
-const AddProductButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  background-color: #1cc88a;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    background-color: #17a673;
-  }
-`;
-
-const ProductsList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const ProductRow = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  border: 1px solid #eaecf4;
-  border-radius: 0.5rem;
-  gap: 1.5rem;
-`;
-
-const ProductRowImage = styled.div`
-  width: 60px;
-  height: 60px;
-  background-color: #f8f9fc;
-  border-radius: 4px;
-`;
-
-const ProductRowInfo = styled.div`
-  flex: 1;
-`;
-
-const SalesData = styled.div`
-  width: 100px;
-  font-weight: 600;
+  min-height: 300px;
+  font-size: 1.2rem;
   color: #4e73df;
 `;
 
-const ProductActions = styled.div`
+const ErrorContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #e74a3b;
+  background: #fff6f6;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  margin: 2rem 0;
+`;
+
+const ErrorIcon = styled.div`
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #e74a3b;
+`;
+
+const ErrorMessage = styled.div`
+  color: #e74a3b;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
+const RetryButton = styled.button`
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
+  background-color: #4e73df;
+  color: white;
+  border: none;
+  border-radius: 0.35rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #2e59d9;
+  }
 `;
 
 export default SellerDashboard;

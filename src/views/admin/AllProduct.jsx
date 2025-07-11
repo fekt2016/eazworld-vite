@@ -10,111 +10,117 @@ import {
   // FiEdit,
   // FiTrash2,
 } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import useProduct from "../../hooks/product/useProduct";
+import { useMemo, useState } from "react";
 // Mock data (replace with API call)
 
-const mockProducts = [
-  {
-    id: "1",
-    name: "Wireless Headphones",
-    vendor: "TechGadgets Inc",
-    price: 89.99,
-    stock: 42,
-    category: "Electronics",
-    status: "active",
-    createdAt: "2023-05-15",
-    image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop",
-  },
-  {
-    id: "2",
-    name: "Running Shoes",
-    vendor: "SportWorld",
-    price: 120.0,
-    stock: 0,
-    category: "Footwear",
-    status: "out-of-stock",
-    createdAt: "2023-06-22",
-    image:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&h=100&fit=crop",
-  },
-  {
-    id: "3",
-    name: "Bluetooth Speaker",
-    vendor: "AudioTech",
-    price: 65.5,
-    stock: 15,
-    category: "Electronics",
-    status: "active",
-    createdAt: "2023-07-10",
-    image:
-      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=100&h=100&fit=crop",
-  },
-  {
-    id: "4",
-    name: "Leather Wallet",
-    vendor: "FashionHub",
-    price: 45.99,
-    stock: 30,
-    category: "Accessories",
-    status: "active",
-    createdAt: "2023-08-05",
-    image:
-      "https://images.unsplash.com/photo-1627123424574-724758594e93?w=100&h=100&fit=crop",
-  },
-  {
-    id: "5",
-    name: "Yoga Mat",
-    vendor: "FitLife",
-    price: 29.99,
-    stock: 0,
-    category: "Fitness",
-    status: "inactive",
-    createdAt: "2023-09-12",
-    image:
-      "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?w=100&h=100&fit=crop",
-  },
-  {
-    id: "6",
-    name: "Smart Watch",
-    vendor: "TechGadgets Inc",
-    price: 199.99,
-    stock: 8,
-    category: "Electronics",
-    status: "active",
-    createdAt: "2023-10-18",
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100&h=100&fit=crop",
-  },
-  {
-    id: "7",
-    name: "Desk Lamp",
-    vendor: "HomeEssentials",
-    price: 39.95,
-    stock: 25,
-    category: "Home",
-    status: "active",
-    createdAt: "2023-11-22",
-    image:
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=100&h=100&fit=crop",
-  },
-];
+// const mockProducts = [
+//   {
+//     id: "1",
+//     name: "Wireless Headphones",
+//     vendor: "TechGadgets Inc",
+//     price: 89.99,
+//     stock: 42,
+//     category: "Electronics",
+//     status: "active",
+//     createdAt: "2023-05-15",
+//     image:
+//       "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop",
+//   },
+//   {
+//     id: "2",
+//     name: "Running Shoes",
+//     vendor: "SportWorld",
+//     price: 120.0,
+//     stock: 0,
+//     category: "Footwear",
+//     status: "out-of-stock",
+//     createdAt: "2023-06-22",
+//     image:
+//       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&h=100&fit=crop",
+//   },
+//   {
+//     id: "3",
+//     name: "Bluetooth Speaker",
+//     vendor: "AudioTech",
+//     price: 65.5,
+//     stock: 15,
+//     category: "Electronics",
+//     status: "active",
+//     createdAt: "2023-07-10",
+//     image:
+//       "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=100&h=100&fit=crop",
+//   },
+//   {
+//     id: "4",
+//     name: "Leather Wallet",
+//     vendor: "FashionHub",
+//     price: 45.99,
+//     stock: 30,
+//     category: "Accessories",
+//     status: "active",
+//     createdAt: "2023-08-05",
+//     image:
+//       "https://images.unsplash.com/photo-1627123424574-724758594e93?w=100&h=100&fit=crop",
+//   },
+//   {
+//     id: "5",
+//     name: "Yoga Mat",
+//     vendor: "FitLife",
+//     price: 29.99,
+//     stock: 0,
+//     category: "Fitness",
+//     status: "inactive",
+//     createdAt: "2023-09-12",
+//     image:
+//       "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?w=100&h=100&fit=crop",
+//   },
+//   {
+//     id: "6",
+//     name: "Smart Watch",
+//     vendor: "TechGadgets Inc",
+//     price: 199.99,
+//     stock: 8,
+//     category: "Electronics",
+//     status: "active",
+//     createdAt: "2023-10-18",
+//     image:
+//       "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100&h=100&fit=crop",
+//   },
+//   {
+//     id: "7",
+//     name: "Desk Lamp",
+//     vendor: "HomeEssentials",
+//     price: 39.95,
+//     stock: 25,
+//     category: "Home",
+//     status: "active",
+//     createdAt: "2023-11-22",
+//     image:
+//       "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=100&h=100&fit=crop",
+//   },
+// ];
 
 export default function AllProduct() {
-  const [products, setProducts] = useState([]);
+  const { getProducts } = useProduct();
+  const { data, isLoading: productLoading, error: productError } = getProducts;
+
+  const products = useMemo(() => data?.results || [], [data]);
+  console.log("products", products);
+  // const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(10);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
   });
 
-  useEffect(() => {
-    // Simulate API fetch
-    setProducts(mockProducts);
-  }, []);
+  // useEffect(() => {
+  //   // Simulate API fetch
+  //   setProducts(mockProducts);
+  // }, []);
 
   const requestSort = (key) => {
     let direction = "ascending";
@@ -142,10 +148,18 @@ export default function AllProduct() {
   const filteredProducts = getSortedProducts(products).filter((product) => {
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.vendor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchTerm.toLowerCase());
+      (product.seller?.shopName || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      (product.parentCategory?.name || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      (product.subCategory?.name || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
     const matchesStatus =
-      statusFilter === "all" || product.status === statusFilter;
+      statusFilter === "all" || (product.status || "active") === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
@@ -159,12 +173,15 @@ export default function AllProduct() {
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   const handleDelete = (productId) => {
-    setProducts(products.filter((product) => product.id !== productId));
+    console.log("productId", productId);
+    // setProducts(products.filter((product) => product.id !== productId));
   };
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
+  if (productLoading) return <div>Loading...</div>;
+  if (productError) return <div>Error: {productError.message}</div>;
   return (
     <DashboardContainer>
       <Header>
@@ -175,6 +192,7 @@ export default function AllProduct() {
             <SearchInput
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              // onChange={(e) => console.log(e.target.value)}
               placeholder="Search products..."
             />
           </SearchContainer>
@@ -185,7 +203,7 @@ export default function AllProduct() {
             <option value="all">All Statuses</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
-            <option value="out-of-stock">Out of Stock</option>
+            <option value="outOfStock">Out of Stock</option>
           </FilterSelect>
         </Controls>
       </Header>
@@ -194,22 +212,22 @@ export default function AllProduct() {
           <HeaderRow>
             <HeaderCell>IMAGE</HeaderCell>
             <SortableHeader onClick={() => requestSort("name")}>
-              PRODUCT{" "}
+              PRODUCT
               {sortConfig.key === "name" &&
                 (sortConfig.direction === "ascending" ? "↑" : "↓")}
             </SortableHeader>
             <SortableHeader onClick={() => requestSort("vendor")}>
-              VENDOR{" "}
+              SELLER
               {sortConfig.key === "vendor" &&
                 (sortConfig.direction === "ascending" ? "↑" : "↓")}
             </SortableHeader>
             <SortableHeader onClick={() => requestSort("price")}>
-              PRICE{" "}
+              PRICE
               {sortConfig.key === "price" &&
                 (sortConfig.direction === "ascending" ? "↑" : "↓")}
             </SortableHeader>
             <SortableHeader onClick={() => requestSort("stock")}>
-              STOCK{" "}
+              STOCK
               {sortConfig.key === "stock" &&
                 (sortConfig.direction === "ascending" ? "↑" : "↓")}
             </SortableHeader>
@@ -223,20 +241,28 @@ export default function AllProduct() {
           {currentProducts.map((product) => (
             <TableRow key={product.id}>
               <TableCell>
-                <ProductImage src={product.image} alt={product.name} />
+                <ProductImage src={product.imageCover} alt={product.name} />
               </TableCell>
               <TableCell>
                 <ProductName>{product.name}</ProductName>
                 <ProductId>ID: {product.id}</ProductId>
               </TableCell>
-              <TableCell>{product.vendor}</TableCell>
-              <TableCell>${product.price.toFixed(2)}</TableCell>
               <TableCell>
-                <StockIndicator stock={product.stock}>
-                  {product.stock > 0 ? product.stock : "Out of stock"}
+                <SellerInfo>{product.seller?.shopName || "N/A"}</SellerInfo>
+              </TableCell>
+              <TableCell>₵{product.price.toFixed(2)}</TableCell>
+              <TableCell>
+                <StockIndicator stock={product.totalStock}>
+                  {product.totalStock > 0 ? product.totalStock : "Out of stock"}
                 </StockIndicator>
               </TableCell>
-              <TableCell>{product.category}</TableCell>
+              <TableCell>
+                <CategoryInfo>
+                  {product.parentCategory?.name ||
+                    product.parentCategory?.name ||
+                    "Uncategorized"}
+                </CategoryInfo>
+              </TableCell>
               <TableCell>
                 <StatusPill status={product.status}>
                   {product.status.replace("-", " ")}
@@ -585,4 +611,15 @@ const ProductImage = styled.img`
   border-radius: 8px;
   object-fit: cover;
   border: 1px solid #e2e8f0;
+`;
+
+const SellerInfo = styled.div`
+  font-weight: 500;
+  color: #1e293b;
+`;
+
+const CategoryInfo = styled.div`
+  font-weight: 500;
+  color: #1e293b;
+  text-transform: capitalize;
 `;

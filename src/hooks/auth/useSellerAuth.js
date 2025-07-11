@@ -1,37 +1,85 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { sellerAuthApi } from "../../apiService/authApi";
-import { useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+
+const validateToken = (token) => {
+  if (!token) {
+    console.log("No token found");
+    return false;
+  }
+  try {
+    const { exp } = JSON.parse(atob(token.split(".")[1]));
+    const isValid = exp * 1000 > Date.now();
+
+    return isValid;
+  } catch (error) {
+    console.error("Token validation error:", error);
+    return false;
+  }
+};
+// const validateToken = (token) => {
+//   if (!token) {
+//     console.log("No token found");
+//     return false;
+//   }
+
+//   try {
+//     // Split token and decode payload
+//     const parts = token.split(".");
+//     if (parts.length !== 3) {
+//       console.error("Invalid token format");
+//       return false;
+//     }
+
+//     const payload = JSON.parse(atob(parts[1]));
+//     if (!payload.exp) {
+//       console.error("Token missing expiration");
+//       return false;
+//     }
+
+//     // Check expiration
+//     const isValid = payload.exp * 1000 > Date.now();
+//     console.log(`Token valid: ${isValid}`);
+//     return isValid;
+//   } catch (error) {
+//     console.error("Token validation error:", error);
+//     return false;
+//   }
+// };
 
 const useSellerAuth = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const validateToken = (token) => {
-    if (!token) return false;
-    try {
-      const { exp } = JSON.parse(atob(token.split(".")[1]));
-      return exp * 1000 > Date.now();
-    } catch {
-      return false;
-    }
-  };
-  useEffect(() => {
-    return () => {
-      if (!validateToken(localStorage.getItem("token"))) {
-        queryClient.removeQueries(["sellerAuth"]);
-        localStorage.removeItem("token");
-      }
-    };
-  }, [queryClient]);
+  const sellerTokenExists = !!localStorage.getItem("seller_token");
 
-  const { data: user, isLoading: isUserLoading } = useQuery({
+  const {
+    data: seller,
+    isLoading: isSellerLoading,
+    error: sellerError,
+  } = useQuery({
     queryKey: ["sellerAuth"],
     queryFn: async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("seller_token");
+      console.log("Token:", token);
 
       if (!token || !validateToken(token)) {
-        localStorage.removeItem("token");
+        localStorage.removeItem("seller_token");
         return null;
       }
-      return sellerAuthApi.getCurrentUser();
+
+      try {
+        const response = await sellerAuthApi.getCurrentUser();
+        console.log("Get current user response:", response);
+        return response.data.data;
+      } catch (error) {
+        console.error("Get current user error:", error);
+        throw error;
+      }
+    },
+    enabled: sellerTokenExists, // Only run if token exists
+    onSuccess: (data) => {
+      console.log("User data:", data);
     },
     staleTime: Infinity,
     retry: false,
@@ -40,87 +88,148 @@ const useSellerAuth = () => {
   const login = useMutation({
     mutationFn: sellerAuthApi.login,
     onSuccess: (data) => {
-      const { user } = data.data.data;
+      console.log("Login data", data);
+      const { user: seller } = data.data.data;
+      const token = data?.data.token;
+      // Validate token before storing
+      if (!validateToken(token)) {
+        console.error("Received invalid token from server");
+        return;
+      }
+      localStorage.removeItem("token");
+      localStorage.removeItem("admin_token");
+      localStorage.setItem("seller_token", token);
+      localStorage.setItem("current_role", "seller"); // Push role to localStorage
 
-      queryClient.setQueryData(["sellerAuth"], user);
-      localStorage.setItem("token", data.data.token);
+      queryClient.setQueryData(["sellerAuth"], seller);
+
+      console.log("Login successfully!!!:", seller);
+      // localStorage.setItem("seller_token", data.data.token);
+    },
+    onError: (error) => {
+      console.error("Login error:", error);
+      queryClient.setQueryData(["sellerAuth"], null);
+      localStorage.removeItem("seller_token");
     },
   });
 
   const register = useMutation({
     mutationFn: sellerAuthApi.register,
     onSuccess: (data) => {
-      queryClient.setQueryData(["sellerAuth"], data.user);
-      localStorage.setItem("token", data.token);
+      const { user } = data.data.data;
+      const token = data?.data.token;
+      console.log("Register successfully!!!:", user);
+
+      localStorage.setItem("seller_token", token);
+      queryClient.setQueryData(["sellerAuth"], user);
+      navigate("/seller/dashboard");
+      if (!validateToken(token)) {
+        console.error("Received invalid token from server");
+        return;
+      }
+    },
+    onError: (error) => {
+      console.error("Register error:", error);
     },
   });
 
   const logout = useMutation({
     mutationFn: sellerAuthApi.logout,
-    onSuccess: () => {
+    onMutate: () => {
+      // Immediate UI update before request completes
+      queryClient.setQueryData(["sellerAuth"], null);
+    },
+    onSuccess: (data) => {
+      // Handle backend's clearLocalStorage action
+      if (data.action === "clearLocalStorage") {
+        localStorage.removeItem("seller_token");
+        localStorage.removeItem("seller_refresh_token");
+        localStorage.removeItem("seller_user");
+      }
+
+      // Clear all seller-related queries
+      queryClient.removeQueries({
+        predicate: (query) =>
+          query.queryKey[0] === "seller" || query.queryKey.includes("seller"),
+      });
+
+      // Redirect to login
+      navigate("login");
+
+      // Show success notification
+      // toast.success(data.message || "Logged out successfully");
+    },
+    onError: (error) => {
+      console.error("Logout error:", error);
+
+      // Force clear local storage even on error
+      localStorage.removeItem("seller_token");
+
+      // Show error notification
+      // toast.error(
+      //   error.response?.data?.message || "Logout failed. Please try again."
+      // );
+    },
+    onSettled: () => {
+      // Final cleanup after success or error
       queryClient.removeQueries(["sellerAuth"]);
-      localStorage.removeItem("token");
     },
   });
 
   const update = useMutation({
-    mutationFn: (data) => sellerAuthApi.update(data), // Assuming you have an API method
+    mutationFn: (data) => sellerAuthApi.update(data),
     onSuccess: (response) => {
-      console.log("Seller Updated Successfully!!!");
+      console.log("Update success:", response);
       const updatedSeller = response.data.seller;
       queryClient.setQueryData(["sellerAuth"], (oldData) => ({
         ...oldData,
         avatar: updatedSeller.avatar,
       }));
-
-      // If you need to update other related queries
-      queryClient.invalidateQueries(["seller", user.id]);
+      queryClient.invalidateQueries(["seller", seller.id]);
     },
     onError: (error) => {
-      // Handle error (you might want to add error state)
-      console.error("Update failed:", error);
+      console.error("Update error:", error);
     },
   });
+
   const imageUpdate = useMutation({
     mutationFn: (formData) => {
-      console.log(formData);
-      for (const [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
+      console.log("Image update form data:", formData);
       return sellerAuthApi.updateSellerImage(formData, {
         headers: {
-          "Content-Type": "multipart/form-ata",
+          "Content-Type": "multipart/form-data",
         },
       });
     },
     onSuccess: (response) => {
-      console.log("Updated seller:", response.data);
+      console.log("Image update success:", response);
       const updatedSeller = response?.data.data;
       queryClient.setQueryData(["sellerAuth"], (oldData) => ({
         ...oldData,
         avatar: updatedSeller.avatar,
       }));
-
-      // queryClient.invalidateQueries(["sellerAuth"]);
     },
     onError: (error) => {
-      console.error("Update error:", error.response?.data || error.message);
+      console.error(
+        "Image update error:",
+        error.response?.data || error.message
+      );
     },
   });
 
   return {
-    user,
+    seller,
     login,
     register,
     logout,
     update,
-    isUserLoading,
+    isSellerLoading: isSellerLoading,
     isLoginLoading: login.isLoading,
     isRegisterLoading: register.isLoading,
     isLogoutLoading: logout.isLoading,
     isUpdateLoading: update.isLoading,
     isLoading:
-      isUserLoading ||
+      isSellerLoading ||
       login.isLoading ||
       register.isLoading ||
       logout.isLoading ||
@@ -129,9 +238,10 @@ const useSellerAuth = () => {
     isImageUpdateLoading: imageUpdate.isLoading,
     isError: login.isError || register.isError,
     imageUpdate,
-    isAuthenticated: !!user,
-    isSeller: user?.role === "seller",
-    status: user?.status || "pending",
+    isAuthenticated: !!seller,
+    isSeller: seller?.role === "seller",
+    status: seller?.status || "pending",
+    error: sellerError,
   };
 };
 

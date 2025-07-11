@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import adminApi from "../../apiService/adminApi";
+import adminApi from "../../apiService/adminSellerApi";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -95,6 +95,18 @@ const useSellerAdmin = (sellerId) => {
       queryClient.invalidateQueries(["admin", "sellers"]);
     },
   });
+  const updateSeller = useMutation({
+    mutationFn: (sellerData) => adminApi.updateSeller(sellerData),
+    onSuccess: (data) => {
+      console.log("Seller updated successfully:", data);
+      // Invalidate the sellers query
+      queryClient.invalidateQueries(["admin", "sellers"]);
+      // Optionally, refetch the specific seller if needed
+      if (sellerId) {
+        queryClient.invalidateQueries(["admin", "sellers", sellerId]);
+      }
+    },
+  });
 
   return {
     seller,
@@ -103,6 +115,7 @@ const useSellerAdmin = (sellerId) => {
     isLoading: isSellerLoading || isSellersLoading,
     error: sellerError || sellersError,
     updateStatus,
+    updateSeller,
     page,
     setPage,
     sort,

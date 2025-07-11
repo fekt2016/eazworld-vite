@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import useAdminAuth from "../../hooks/auth/useAdminAuth";
 import { useNavigate } from "react-router-dom";
+
 // import { useNavigate } from "react-router-dom";
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -19,7 +20,11 @@ export default function AdminLogin() {
     if (!state.email || !state.password) {
       return;
     }
-    await login.mutateAsync(state);
+    const response = await login.mutateAsync(state);
+    localStorage.setItem("admin_token", response.data.token);
+
+    // Set role context to admin
+
     navigate("/admin/dashboard");
   };
 

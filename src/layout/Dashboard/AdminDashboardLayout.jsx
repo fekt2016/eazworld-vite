@@ -1,22 +1,15 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import DashboardHeader from "./DashboardHeader";
-import DashboardSidebar from "./DashboardSidebar";
+import AdminSidebar from "./AdminSidebar";
 import styled from "styled-components";
 import useAdminAuth from "../../hooks/auth/useAdminAuth";
-import useSellerAuth from "../../hooks/auth/useSellerAuth";
 
-export default function DashboardLayout() {
-  const { user: adminUser } = useAdminAuth();
-  const { user: sellerUser } = useSellerAuth();
-
-  const location = useLocation();
-  const isAdmin = location.pathname.startsWith("/admin");
-  const user = isAdmin ? adminUser : sellerUser;
-  const role = isAdmin ? adminUser?.role : sellerUser?.role;
+export default function AdminDashboardLayout() {
+  const { admin: user } = useAdminAuth();
 
   return (
     <DashboardLayoutContainer>
-      <DashboardSidebar role={role} />
+      <AdminSidebar role={user.role} />
       <Content>
         <DashboardHeader user={user} />
         <main>

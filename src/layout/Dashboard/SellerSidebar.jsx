@@ -1,28 +1,20 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
-  // FaHome,
-  // FaBox,
   FaChartLine,
-  FaCog,
-  // FaUser,
   FaSignOutAlt,
   FaUsersCog,
   FaBoxes,
   FaShoppingCart,
-  // FaChartLine,
-  // FaCog,
   FaStore,
-  // FaSignOutAlt,
 } from "react-icons/fa";
+import useSellerAuth from "../../hooks/auth/useSellerAuth";
 
-export default function DashboardSidebar({ role }) {
-  const commonMenu = [
-    { path: "dashboard/settings", label: "Settings", icon: <FaCog /> },
-  ];
+export default function SellerSidebar({ role }) {
+  const { logout } = useSellerAuth();
 
-  // Seller-specific menu items
-  const sellerMenu = [
+  // Combine role-specific menu with common menu
+  const menuItems = [
     { path: "/seller/dashboard", label: "Dashboard", icon: <FaStore /> },
     {
       path: "/seller/dashboard/add-product",
@@ -62,61 +54,9 @@ export default function DashboardSidebar({ role }) {
       icon: <FaUsersCog />,
     },
   ];
-
-  // Admin-specific menu items
-  const adminMenu = [
-    { path: "/admin/dashboard", label: "Dashboard", icon: <FaUsersCog /> },
-    {
-      path: "/admin/dashboard/order",
-      label: "Order",
-      icon: <FaShoppingCart />,
-    },
-    {
-      path: "/admin/dashboard/products",
-      label: "All Products",
-      icon: <FaBoxes />,
-    },
-    {
-      path: "/admin/dashboard/categories",
-      label: "Categories",
-      icon: <FaChartLine />,
-    },
-    {
-      path: "/admin/dashboard/users",
-      label: "User Management",
-      icon: <FaUsersCog />,
-    },
-    {
-      path: "/admin/dashboard/payment-request",
-      label: "Payment Request",
-      icon: <FaChartLine />,
-    },
-    // {
-    //   path: "/admin/dashboard/deactive-sellers",
-    //   label: "Deactive Sellers",
-    //   icon: <FaUsersCog />,
-    // },
-    {
-      path: "/admin/dashboard/seller-request",
-      label: "Seller Request",
-      icon: <FaUsersCog />,
-    },
-    {
-      path: "/admin/dashboard/chat",
-      label: "Live Chat",
-      icon: <FaUsersCog />,
-    },
-    {
-      path: "/admin/dashboard/activity",
-      label: "activity",
-      icon: <FaUsersCog />,
-    },
-  ];
-  // Combine role-specific menu with common menu
-  const menuItems = [
-    ...(role === "admin" ? adminMenu : role === "seller" ? sellerMenu : []),
-    ...commonMenu,
-  ];
+  const handleLogout = () => {
+    logout.mutate();
+  };
 
   return (
     <Sidebar>
@@ -142,9 +82,9 @@ export default function DashboardSidebar({ role }) {
           </MenuItem>
         ))}
       </MenuList>
-      <LogoutButton>
+      <LogoutButton onClick={handleLogout}>
         <FaSignOutAlt />
-        Logout
+        {logout.isloading ? "Logging out..." : "Logout"}
       </LogoutButton>
     </Sidebar>
   );

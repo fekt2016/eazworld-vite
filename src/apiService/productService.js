@@ -4,7 +4,7 @@ export const productService = {
   getProductById: async (id) => {
     try {
       // Example implementation - replace with your actual API call
-      const response = await api.get(`product/${id}`);
+      const response = await api.get(`/product/${id}`);
 
       return response;
     } catch (err) {
@@ -20,7 +20,7 @@ export const productService = {
   },
 
   getAllProductsBySeller: async () => {
-    const response = await api.get("/product/seller");
+    const response = await api.get("/seller/me/products");
     return response.data;
   },
   createProduct: async (formData) => {
@@ -56,7 +56,10 @@ export const productService = {
   },
   updateProduct: async (id, productData) => {
     try {
-      const response = await api.patch(`/product/${id}`, productData);
+      const response = await api.patch(
+        `/seller/me/products/${id}`,
+        productData
+      );
 
       // Axios handles status codes differently than Fetch API
       if (response.status < 200 || response.status >= 300) {
@@ -73,22 +76,20 @@ export const productService = {
 
   deleteProduct: async (id) => {
     try {
-      const response = await api.delete(`product/${id}`);
+      const response = await api.delete(`seller/me/products/${id}`);
 
       if (response.status === 204 || !response.data) {
         return { success: true }; // Return dummy object
       }
 
-      return response.data;
-      // if (!response.ok)
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // if (
-      //   response.status === 204 ||
-      //   response.headers.get("Content-Length") === "0"
-      // ) {
-      //   return { success: true };
-      // }
-      // return await response.json();
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
+      if (
+        response.status === 204 ||
+        response.headers.get("Content-Length") === "0"
+      ) {
+        return { success: true };
+      }
     } catch (err) {
       console.error("Error deleting product:", err);
       throw err;

@@ -1,31 +1,5 @@
 import { jwtDecode } from "jwt-decode";
 
-// import { formatDistance, parseISO } from 'date-fns';
-// import { differenceInDays } from 'date-fns/esm';
-
-// We want to make this function work for both Date objects and strings (which come from Supabase)
-// export const subtractDates = (dateStr1, dateStr2) =>
-//   differenceInDays(parseISO(String(dateStr1)), parseISO(String(dateStr2)));
-
-// export const formatDistanceFromNow = (dateStr) =>
-//   formatDistance(parseISO(dateStr), new Date(), {
-//     addSuffix: true,
-//   })
-//     .replace('about ', '')
-//     .replace('in', 'In');
-
-// Supabase needs an ISO date string. However, that string will be different on every render because the MS or SEC have changed, which isn't good. So we use this trick to remove any time
-// export const getToday = function (options = {}) {
-//   const today = new Date();
-
-// This is necessary to compare with created_at from Supabase, because it it not at 0.0.0.0, so we need to set the date to be END of the day when we compare it with earlier dates
-//   if (options?.end)
-//     // Set to the last second of the day
-//     today.setUTCHours(23, 59, 59, 999);
-//   else today.setUTCHours(0, 0, 0, 0);
-//   return today.toISOString();
-// };
-
 export const formatCurrency = (value) =>
   new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
     value
@@ -94,59 +68,94 @@ export function returnRole(token) {
   }
 }
 
-// export function generateSKU(sellerId) {
-//   console.log("sellerId", sellerId);
-//   // const categoryCode = cat.category.substring(0, 4).toUpperCase();
-//   // const sellerCode = `SELLER${sellerId.id.slice(0, 4)}`; // SELLER012
-//   // const attributeCode = cat.color.substring(0, 3).toUpperCase(); // BLU
-//   // const uniqueId = Math.floor(Math.random() * 1000)
-//   //   .toString()
-//   //   .padStart(4, "0"); // 1001
-//   // return `${categoryCode}-${sellerCode}-${attributeCode}-${uniqueId}`;
-//   // const categoryCode = cat.category
-//   //   .substring(0, 4)
-//   //   .toUpperCase()
-//   //   .padEnd(4, "X");
-//   const sellerCode = `SELLER${sellerId.id.toString().slice(0, 4)}`;
-//   // const attributeCode = cat.color.substring(0, 3).toUpperCase().padEnd(3, "X");
-//   const uniqueId = uuidv4().substring(0, 4);
+export const generateSKU = ({ user, variants, category }) => {
+  console.log(category);
+  const cate = category.slice(0, 3).toUpperCase();
+  // Ensure we have valid values for all required fields
+  if (!user?.id || !category || !variants) {
+    console.error("Missing required fields for SKU generation:", {
+      user,
+      category,
+      variants,
+    });
+    return `ERR-${Date.now().toString().slice(-4)}`;
+  }
 
-//   return `${sellerCode}-${uniqueId}`;
-// }
-
-// export function generateSKU({
-//   user,
-//   selectedCategoryType,
-//   variantTypes,
-//   selectedOptions,
-// }) {
-//   const prefix =
-//     {
-//       clothing: "CLTH",
-//       electronics: "ELEC",
-//     }[selectedCategoryType] || "PROD";
-//   const variantCodes = variantTypes || [];
-//   variantCodes.map((type) => selectedOptions[type]?.join("") || "").join("-");
-//   return `${prefix}-${user.id.slice(-4)}-${variantCodes}-${Date.now().toString(
-//     36
-//   )}`;
-// }
-
-export const generateSKU = ({ user, category, variants }) => {
-  const variantString = Object.values(variants)
+  // Clean and format the variant string
+  const variantString = Object.entries(variants)
+    .filter(
+      ([, value]) => value !== undefined && value !== null && value !== ""
+    )
+    .map(([, value]) => String(value).trim())
     .join("-")
     .replace(/\s+/g, "")
     .substring(0, 3)
     .toUpperCase();
 
-  return `${user.id.slice(-3)}-${category.slice(
-    0,
-    3
-  )}-${variantString}-${Date.now().toString().slice(-4)}`;
+  // Generate a more robust SKU format
+  const userId = user.id.slice(-3);
+  // const categoryCode = category.slice(0, 3).toUpperCase();
+  const timestamp = Date.now().toString().slice(-4);
+
+  return `${userId}-${cate}-${variantString || "DEF"}-${timestamp}`;
 };
 
 export const getParentName = (parentId, categories) => {
   if (!parentId) return "None";
   const parent = categories.find((cat) => cat._id === parentId);
   return parent ? parent.name : "Unknown";
+};
+
+// utils/phoneValidation.js
+const networks = {
+  MTN: ["24", "54", "55", "59", "50"],
+  Telecel: ["27", "57", "28", "20"],
+  AirtelTigo: ["26", "56", "23"],
+};
+
+export const validateGhanaPhone = (phone) => {
+  const cleanedPhone = phone.replace(/\D/g, "");
+  console.log("cleanedPhone", cleanedPhone);
+
+  // Validate length
+  if (cleanedPhone.length < 10 || cleanedPhone.length > 12) {
+    return { valid: false, message: "Number must be 10 digits" };
+  }
+
+  // Handle both local (0xx) and intl (233xx) formats
+  let localNumber = cleanedPhone;
+
+  if (cleanedPhone.startsWith("233")) {
+    localNumber = "0" + cleanedPhone.substring(3);
+  }
+
+  // Validate Ghanaian format
+  if (!/^0(24|54|55|59|20|50|27|57|26|56|23|28|57)\d{7}$/.test(localNumber)) {
+    return { valid: false, message: "Invalid Ghanaian number format" };
+  }
+
+  // Extract prefix
+  const prefix = localNumber.substring(1, 3);
+
+  // Identify network
+  let network = "";
+  for (const [net, prefixes] of Object.entries(networks)) {
+    if (prefixes.includes(prefix)) {
+      network = net;
+      break;
+    }
+  }
+
+  if (!network) {
+    return { valid: false, message: "Unsupported network provider" };
+  }
+
+  // Format to E.164 standard
+  const formattedPhone = `+233${localNumber.substring(1)}`;
+
+  return {
+    valid: true,
+    formatted: formattedPhone,
+    network,
+  };
 };

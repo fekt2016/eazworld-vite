@@ -1,149 +1,214 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { useState } from "react";
+import styled from "styled-components";
 
 export default function CategorySection({
-  isSubmitting,
-  categoriesData,
-  setSelectedCategoryType,
+  categories = [],
+  // setSelectedCategoryType,
   initialData,
   mode,
+  isSubmitting,
 }) {
   const {
     register,
-    formState: { errors },
     setValue,
     watch,
+    formState: { errors },
   } = useFormContext();
   const selectedCategory = watch("category");
+
+  const selectedSubCategory = watch("subCategory");
   const prevInitialDataRef = useRef();
-  console.log("categories", categoriesData);
-  const categories = useMemo(() => categoriesData || [], [categoriesData]);
+  const [subCategories, setSubCategories] = useState([]);
 
   // Memoized category lists
-  const { mainCategories, subCategories } = useMemo(
-    () => ({
-      mainCategories: categories.filter((c) => !c.parentCategory),
-      subCategories: categories.filter(
-        (c) => c.parentCategory === selectedCategory
-      ),
-    }),
-    [categories, selectedCategory]
-  );
+  const mainCategories = useMemo(() => {
+    return categories
+      .filter((c) => !c.parentCategory)
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [categories]);
 
   // Single category type effect
   useEffect(() => {
-    const currentCategory = categories.find((c) => c._id === selectedCategory);
-    const categoryType = currentCategory?.parentCategory
-      ? ""
-      : currentCategory?.name.toLowerCase() || "";
+    if (selectedCategory) {
+      const category = categories.find((c) => c._id === selectedCategory);
 
-    setSelectedCategoryType(categoryType);
-  }, [selectedCategory, categories, setSelectedCategoryType]);
+      if (category) {
+        const categoryName = category.name.toLowerCase().replace(/\s+/g, "");
+        console.log(categoryName);
+        // Get subcategories from the database
+        const subCategories = categories.filter((c) => {
+          if (
+            c.parentCategory &&
+            typeof c.parentCategory === "object" &&
+            c.parentCategory._id
+          ) {
+            return c.parentCategory._id === selectedCategory;
+          }
+          return c.parentCategory === selectedCategory;
+        });
 
-  useEffect(() => {
-    if (!selectedCategory) {
-      setSelectedCategoryType((prev) => (prev !== "" ? "" : prev));
-      return;
+        if (subCategories.length > 0) {
+          setSubCategories(subCategories);
+        } else {
+          setSubCategories([]);
+        }
+
+        // Only set category type if no subcategory is selected
+        if (!selectedSubCategory) {
+          // setSelectedCategoryType(categoryName);
+        }
+      }
     }
+  }, [selectedCategory, categories, selectedSubCategory]);
 
-    const category = categories.find((c) => c._id === selectedCategory);
-    const newType = category?.parentCategory
-      ? ""
-      : category?.name.toLowerCase() || "";
+  // Handle subcategory selection
+  useEffect(() => {
+    if (selectedSubCategory) {
+      const subCategory = subCategories.find(
+        (sub) => sub._id === selectedSubCategory
+      );
+      if (subCategory) {
+        const subCategoryName = subCategory.name
+          .toLowerCase()
+          .replace(/\s+/g, "");
+        console.log(subCategoryName);
+        // setSelectedCategoryType(subCategoryName);
+      }
+    } else if (selectedCategory) {
+      // If subcategory is cleared, fall back to main category
+      const category = categories.find((c) => c._id === selectedCategory);
+      if (category) {
+        const categoryName = category.name.toLowerCase().replace(/\s+/g, "");
+        console.log(categoryName);
 
-    setSelectedCategoryType((prev) => (prev !== newType ? newType : prev));
-  }, [selectedCategory, categories, setSelectedCategoryType]);
+        // setSelectedCategoryType(categoryName);
+      }
+    }
+  }, [selectedSubCategory, subCategories, selectedCategory, categories]);
 
   // Edit mode initialization (runs once)
   useEffect(() => {
-    if (mode === "edit" && initialData?.category) {
-      const initialCategory = categories.find(
-        (c) => c._id === initialData.category
-      );
-      if (initialCategory) {
-        setValue("category", initialData.category);
-        initialData.subCategory &&
-          setValue("subCategory", initialData.subCategory);
-      }
-    }
-  }, [mode, initialData, categories, setValue]); // Fixed deps
+    if (
+      mode === "edit" &&
+      initialData &&
+      initialData !== prevInitialDataRef.current
+    ) {
+      prevInitialDataRef.current = initialData;
 
-  useEffect(() => {
-    if (mode === "edit" && initialData?.category) {
-      const shouldInitialize = !deepEqual(
-        initialData,
-        prevInitialDataRef.current
-      );
-
-      if (shouldInitialize && categories.length) {
-        const initialCategory = categories.find(
-          (c) => c._id === initialData.category
-        );
-        if (initialCategory) {
-          setValue("category", initialData.category);
-          setValue("subCategory", initialData.subcategory || "");
+      // Set category
+      if (initialData.category) {
+        const category = categories.find((c) => c._id === initialData.category);
+        if (category) {
+          setValue("category", category._id);
         }
       }
-      prevInitialDataRef.current = initialData;
-    }
-  }, [initialData, mode, categories, setValue]);
 
-  // Helper function
-  const deepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+      // Set subcategory
+      if (initialData.subCategory) {
+        const subCategory = categories.find(
+          (c) => c._id === initialData.subCategory
+        );
+        if (subCategory) {
+          setValue("subCategory", subCategory._id);
+        }
+      }
+    }
+  }, [mode, initialData, categories, setValue]);
 
   return (
-    <div className="form-section">
-      <h3>Category & Brand</h3>
-      <div className="form-grid">
-        <div className="form-group">
-          <label>Category *</label>
-          <select
-            {...register("category", { required: "Category is required" })}
-            disabled={isSubmitting}
-          >
-            <option value="">Select Category</option>
-            {mainCategories
-              .filter((c) => !c.parentCategory)
-              .map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
-          </select>
-          {errors.category && (
-            <span className="error">{errors.category.message}</span>
-          )}
-        </div>
-
-        {selectedCategory && (
-          <div className="form-group">
-            <label>Subcategory</label>
-            <select
-              {...register("subCategory")}
-              disabled={!subCategories.length || isSubmitting}
-            >
-              <option value="">Select Subcategory</option>
-
-              {subCategories.map((sub) => (
-                <option key={sub._id} value={sub._id}>
-                  {sub.name}
-                </option>
-              ))}
-            </select>
-          </div>
+    <>
+      <FormGroup>
+        <Label>Category *</Label>
+        <Select
+          {...register("category", { required: "Category is required" })}
+          disabled={isSubmitting}
+        >
+          <option value="">Select Category</option>
+          {mainCategories.map((category) => (
+            <option key={category._id} value={category._id}>
+              {category.name}
+            </option>
+          ))}
+        </Select>
+        {errors.category && (
+          <ErrorMessage>{errors.category.message}</ErrorMessage>
         )}
+      </FormGroup>
 
-        <div className="form-group">
-          <label>Brand *</label>
-          <input
-            {...register("brand", { required: "Brand is required" })}
-            disabled={isSubmitting}
-          />
-          {errors.brand && (
-            <span className="error">{errors.brand.message}</span>
-          )}
-        </div>
-      </div>
-    </div>
+      {subCategories.length > 0 && (
+        <FormGroup>
+          <Label>Subcategory</Label>
+          <Select {...register("subCategory")} disabled={isSubmitting}>
+            <option value="">Select Subcategory</option>
+            {subCategories.map((subCategory) => (
+              <option key={subCategory._id} value={subCategory._id}>
+                {subCategory.name}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+      )}
+
+      <FormGroup>
+        <Label>Brand *</Label>
+        <Input
+          {...register("brand", { required: "Brand is required" })}
+          placeholder="Enter brand name"
+          disabled={isSubmitting}
+        />
+        {errors.brand && <ErrorMessage>{errors.brand.message}</ErrorMessage>}
+      </FormGroup>
+    </>
   );
 }
+
+const FormGroup = styled.div`
+  margin-bottom: 1.25rem;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #4a5568;
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: white;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  }
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  }
+`;
+
+const ErrorMessage = styled.span`
+  display: block;
+  margin-top: 0.5rem;
+  color: #e53e3e;
+  font-size: 0.875rem;
+`;

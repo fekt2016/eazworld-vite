@@ -10,7 +10,7 @@ const useCategory = () => {
     queryKey: ["categories"],
     queryFn: async () => {
       try {
-        const data = await categoryService.getAllCategories();
+        const data = await categoryService.getAllCategories({ limit: 1000 }); // Set a high limit to get all categories
         return data || [];
       } catch (error) {
         console.error("Failed to fetch categories:", error);

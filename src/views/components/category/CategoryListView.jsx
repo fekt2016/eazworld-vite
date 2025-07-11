@@ -9,6 +9,7 @@ const CategoryListView = ({
   setFilters,
   handleEdit,
   handleDelete,
+  // handleEditVariants,
 }) => {
   const getImmediateSubcategories = useGetImmediateSubcategories(categories);
   const getSubCategoryCount = useGetSubCategoryCount(categories);

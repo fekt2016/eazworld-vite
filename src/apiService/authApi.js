@@ -4,7 +4,11 @@ export const authApi = {
   login: (credentials) => api.post("/users/login", credentials),
   register: (userData) => api.post("/users/register", userData),
   logout: () => api.post("/users/logout"),
-  getCurrentUser: () => api.get("/users/me"),
+  getCurrentUser: async () => {
+    const res = await api.get("/users/me");
+
+    return res;
+  },
   forgotPassword: (email) => api.post("/users/forgot-password", { email }),
   resetPassword: ({ token, password }) =>
     api.post(`/users/reset-password/${token}`, { password }),
@@ -14,7 +18,7 @@ export const adminAuthApi = {
   login: (credentials) => api.post("/admin/login", credentials),
   register: (userData) => api.post("/admin/register", userData),
   logout: () => api.post("/admin/logout"),
-  getCurrentUser: () => api.get("/admin/getMe"),
+  getCurrentUser: () => api.get("/admin/me"),
   forgotPassword: (email) => api.post("/admin/forgot-password", { email }),
   resetPassword: ({ token, password }) =>
     api.post(`/admin/reset-password/${token}`, { password }),
@@ -22,7 +26,7 @@ export const adminAuthApi = {
 
 export const sellerAuthApi = {
   login: (credentials) => api.post("/seller/login", credentials),
-  register: (userData) => api.post("/seller/register", userData),
+  register: (userData) => api.post("/seller/signup", userData),
   logout: () => api.post("/seller/logout"),
   getCurrentUser: () => api.get("/seller/me"),
   updateSellerImage: (avatar) => api.patch("/seller/updateSellerImage", avatar),

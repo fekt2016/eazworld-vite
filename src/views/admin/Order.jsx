@@ -1,197 +1,119 @@
-// import { useState } from "react";
-
 import styled from "styled-components";
+import useOrder from "../../hooks/order/useOrder";
+import { Link } from "react-router-dom";
+import { formatDate } from "../../utils/helpers";
+import { useState, useEffect } from "react";
 import {
-  FaChartBar,
   FaCheckCircle,
   FaEdit,
   FaExclamationCircle,
   FaEye,
-  FaFilter,
   FaSearch,
   FaShoppingBag,
   FaTimesCircle,
-  FaTrash,
   FaTruck,
+  FaAngleLeft,
+  FaAngleRight,
 } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function Order() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [dateFilter, setDateFilter] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filteredOrders, setFilteredOrders] = useState([]);
-  const [orders, setOrders] = useState([]);
-  const ordersPerPage = 8;
-  const [stats, setStats] = useState({
-    total: 0,
-    pending: 0,
-    processing: 0,
-    shipped: 0,
-    delivered: 0,
-    cancelled: 0,
-  });
-  const [showStatusModal, setShowStatusModal] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [newStatus, setNewStatus] = useState("");
 
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = filteredOrders.slice(
-    indexOfFirstOrder,
-    indexOfLastOrder
-  );
+  // Hook with pagination and filtering parameters
+  const { getAllOrders } = useOrder();
+  const { data: ordersData, isLoading, error, refetch } = getAllOrders;
 
-  // Apply filters
+  // Refetch data when parameters change
   useEffect(() => {
-    let result = [...orders];
+    refetch();
+  }, [currentPage, pageSize, searchTerm, statusFilter, dateFilter, refetch]);
 
-    // Apply status filter
-    if (statusFilter !== "all") {
-      result = result.filter((order) => order.status === statusFilter);
+  if (isLoading) {
+    return (
+      <LoadingContainer>
+        <LoaderSpinner />
+        <p>Loading orders...</p>
+      </LoadingContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorContainer>
+        <FaExclamationCircle size={48} color="#e74c3c" />
+        <h3>Failed to load orders</h3>
+        <p>{error.message}</p>
+        <p>Please try again later</p>
+      </ErrorContainer>
+    );
+  }
+
+  // Extract data from response
+  const orders = ordersData?.data?.results || [];
+
+  const pagination = ordersData?.data?.pagination || {};
+  const {
+    totalOrders = 0,
+    totalPages = 1,
+    currentPage: currentPageFromApi = 1,
+    hasNext = false,
+    hasPrev = false,
+  } = pagination;
+
+  // Stats from backend
+
+  const stats = () => {
+    if (!orders || orders.length === 0) {
+      return {
+        totalOrders: 0,
+        pendingCount: 0,
+        processing: 0,
+        shipped: 0,
+        delivered: 0,
+        cancelled: 0,
+      };
     }
 
-    // Apply date filter (simplified)
-    if (dateFilter !== "all") {
-      result = result.filter((order) => {
-        if (dateFilter === "week") return order.id.includes("ORD-2023-00");
-        if (dateFilter === "month") return true; // all in demo
-        return true;
-      });
+    return {
+      totalOrders: orders.length,
+      pendingCount: orders.filter((order) => order.orderStatus === "pending")
+        .length,
+      processing: orders.filter((order) => order.orderStatus === "processing")
+        .length,
+      shipped: orders.filter((order) => order.orderStatus === "shipped").length,
+      delivered: orders.filter((order) => order.orderStatus === "delivered")
+        .length,
+      cancelled: orders.filter((order) => order.orderStatus === "cancelled")
+        .length,
+    };
+  };
+  console.log("stats", stats());
+
+  // console.log("Stats:", stats());
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
     }
-
-    // Apply search filter
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(
-        (order) =>
-          order.id.toLowerCase().includes(term) ||
-          order.customer.toLowerCase().includes(term)
-      );
-    }
-
-    setFilteredOrders(result);
-    setCurrentPage(1); // Reset to first page
-  }, [statusFilter, dateFilter, searchTerm, orders]);
-
-  useEffect(() => {
-    const mockOrders = [
-      {
-        id: "ORD-2023-001",
-        customer: "John Smith",
-        date: "2023-10-15",
-        status: "processing",
-        items: 3,
-        amount: 142.5,
-      },
-      {
-        id: "ORD-2023-002",
-        customer: "Sarah Johnson",
-        date: "2023-10-14",
-        status: "shipped",
-        items: 2,
-        amount: 89.99,
-      },
-      {
-        id: "ORD-2023-003",
-        customer: "Michael Brown",
-        date: "2023-10-14",
-        status: "pending",
-        items: 5,
-        amount: 245.75,
-      },
-      {
-        id: "ORD-2023-004",
-        customer: "Emily Davis",
-        date: "2023-10-13",
-        status: "delivered",
-        items: 1,
-        amount: 49.99,
-      },
-      {
-        id: "ORD-2023-005",
-        customer: "David Wilson",
-        date: "2023-10-12",
-        status: "cancelled",
-        items: 4,
-        amount: 178.4,
-      },
-      {
-        id: "ORD-2023-006",
-        customer: "Jessica Lee",
-        date: "2023-10-11",
-        status: "delivered",
-        items: 2,
-        amount: 112.3,
-      },
-      {
-        id: "ORD-2023-007",
-        customer: "Robert Taylor",
-        date: "2023-10-10",
-        status: "processing",
-        items: 3,
-        amount: 156.8,
-      },
-      {
-        id: "ORD-2023-008",
-        customer: "Amanda Clark",
-        date: "2023-10-09",
-        status: "shipped",
-        items: 1,
-        amount: 75.25,
-      },
-      {
-        id: "ORD-2023-009",
-        customer: "Daniel Moore",
-        date: "2023-10-08",
-        status: "pending",
-        items: 2,
-        amount: 94.99,
-      },
-      {
-        id: "ORD-2023-010",
-        customer: "Olivia Anderson",
-        date: "2023-10-07",
-        status: "delivered",
-        items: 4,
-        amount: 210.45,
-      },
-    ];
-
-    setOrders(mockOrders);
-    setFilteredOrders(mockOrders);
-
-    // Calculate stats
-    const total = mockOrders.length;
-    const pending = mockOrders.filter((o) => o.status === "pending").length;
-    const processing = mockOrders.filter(
-      (o) => o.status === "processing"
-    ).length;
-    const shipped = mockOrders.filter((o) => o.status === "shipped").length;
-    const delivered = mockOrders.filter((o) => o.status === "delivered").length;
-    const cancelled = mockOrders.filter((o) => o.status === "cancelled").length;
-
-    setStats({ total, pending, processing, shipped, delivered, cancelled });
-  }, []);
-  const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
-
-  const handleStatusChange = (order) => {
-    setSelectedOrder(order);
-    setNewStatus(order.status);
-    setShowStatusModal(true);
   };
 
-  const confirmStatusChange = () => {
-    if (selectedOrder && newStatus) {
-      const updatedOrders = orders.map((order) =>
-        order.id === selectedOrder.id ? { ...order, status: newStatus } : order
-      );
+  const handleStatusChange = (order) => {
+    console.log("Selected order for status change:", order);
+  };
 
-      setOrders(updatedOrders);
-      setShowStatusModal(false);
+  const calculateTotalQuantity = (order) => {
+    if (!order.orderItems) return 0;
+
+    // If orderItems are populated objects
+    if (order.orderItems[0]?.quantity) {
+      return order.orderItems.reduce((sum, item) => sum + item.quantity, 0);
     }
+
+    // If orderItems are just IDs (not populated)
+    return order.orderItems.length;
   };
   const getStatusIcon = (status) => {
     switch (status) {
@@ -209,6 +131,7 @@ export default function Order() {
         return null;
     }
   };
+
   const getStatusColor = (status) => {
     switch (status) {
       case "pending":
@@ -225,6 +148,7 @@ export default function Order() {
         return "#7f8c8d";
     }
   };
+
   return (
     <Container>
       <Header>
@@ -233,13 +157,14 @@ export default function Order() {
         </Title>
         <Description>Manage and track customer orders</Description>
       </Header>
+
       <StatsContainer>
         <StatCard>
           <StatIcon $color="#3498db">
             <FaShoppingBag />
           </StatIcon>
           <StatContent>
-            <StatValue>{stats.total}</StatValue>
+            <StatValue>{stats().totalOrders}</StatValue>
             <StatLabel>Total Orders</StatLabel>
           </StatContent>
         </StatCard>
@@ -249,7 +174,7 @@ export default function Order() {
             <FaExclamationCircle />
           </StatIcon>
           <StatContent>
-            <StatValue>{stats.pending}</StatValue>
+            <StatValue>{stats().pendingCount}</StatValue>
             <StatLabel>Pending</StatLabel>
           </StatContent>
         </StatCard>
@@ -259,7 +184,7 @@ export default function Order() {
             <FaShoppingBag />
           </StatIcon>
           <StatContent>
-            <StatValue>{stats.processing}</StatValue>
+            <StatValue>{stats().processing}</StatValue>
             <StatLabel>Processing</StatLabel>
           </StatContent>
         </StatCard>
@@ -269,7 +194,7 @@ export default function Order() {
             <FaTruck />
           </StatIcon>
           <StatContent>
-            <StatValue>{stats.shipped}</StatValue>
+            <StatValue>{stats().shipped}</StatValue>
             <StatLabel>Shipped</StatLabel>
           </StatContent>
         </StatCard>
@@ -279,7 +204,7 @@ export default function Order() {
             <FaCheckCircle />
           </StatIcon>
           <StatContent>
-            <StatValue>{stats.delivered}</StatValue>
+            <StatValue>{stats().delivered}</StatValue>
             <StatLabel>Delivered</StatLabel>
           </StatContent>
         </StatCard>
@@ -294,21 +219,31 @@ export default function Order() {
           </StatContent>
         </StatCard>
       </StatsContainer>
+
       <ControlsContainer>
         <SearchContainer>
-          <FaSearch />
+          <SearchIcon>
+            <FaSearch />
+          </SearchIcon>
           <SearchInput
             type="text"
-            placeholder="Search orders by ID or customer..."
+            placeholder="Search by order ID"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1);
+            }}
           />
         </SearchContainer>
+
         <FilterGroup>
           <FilterLabel>Status</FilterLabel>
           <FilterSelect
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+            onChange={(e) => {
+              setStatusFilter(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <option value="all">All Statuses</option>
             <option value="pending">Pending</option>
@@ -318,11 +253,15 @@ export default function Order() {
             <option value="cancelled">Cancelled</option>
           </FilterSelect>
         </FilterGroup>
+
         <FilterGroup>
           <FilterLabel>Date</FilterLabel>
           <FilterSelect
             value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
+            onChange={(e) => {
+              setDateFilter(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <option value="all">All Dates</option>
             <option value="today">Today</option>
@@ -330,14 +269,8 @@ export default function Order() {
             <option value="month">This Month</option>
           </FilterSelect>
         </FilterGroup>
-        <ActionButton>
-          <FaFilter /> Apply Filters
-        </ActionButton>
-
-        <ActionButton $primary>
-          <FaChartBar /> Reports
-        </ActionButton>
       </ControlsContainer>
+
       <OrdersTable>
         <TableHeader>
           <TableRow>
@@ -351,19 +284,21 @@ export default function Order() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentOrders.length > 0 ? (
-            currentOrders.map((order) => (
+          {orders.length > 0 ? (
+            orders.map((order) => (
               <TableRow key={order.id}>
-                <TableCell>{order.id}</TableCell>
-                <TableCell>{order.customer}</TableCell>
-                <TableCell>{order.date}</TableCell>
-                <TableCell>{order.items}</TableCell>
-                <TableCell>${order.amount.toFixed(2)}</TableCell>
+                <TableCell>{order.orderNumber}</TableCell>
+                <TableCell>{order.user?.name || "Unknown Customer"}</TableCell>
+                <TableCell>{formatDate(order.createdAt)}</TableCell>
+                <TableCell>{calculateTotalQuantity(order)}</TableCell>
                 <TableCell>
-                  <StatusBadge $color={getStatusColor(order.status)}>
-                    {getStatusIcon(order.status)}
-                    {order.status.charAt(0).toUpperCase() +
-                      order.status.slice(1)}
+                  Gh₵{order.totalPrice?.toFixed(2) || "0.00"}
+                </TableCell>
+                <TableCell>
+                  <StatusBadge $color={getStatusColor(order.orderStatus)}>
+                    {getStatusIcon(order.orderStatus)}
+                    {order.orderStatus?.charAt(0).toUpperCase() +
+                      order.orderStatus?.slice(1) || "Unknown"}
                   </StatusBadge>
                 </TableCell>
                 <TableCell>
@@ -382,9 +317,6 @@ export default function Order() {
                     >
                       <FaEdit />
                     </ActionIcon>
-                    <ActionIcon $color="#e74c3c" title="Delete order">
-                      <FaTrash />
-                    </ActionIcon>
                   </ActionButtons>
                 </TableCell>
               </TableRow>
@@ -402,102 +334,74 @@ export default function Order() {
           )}
         </TableBody>
       </OrdersTable>
+
+      {/* Pagination Controls */}
       <PaginationContainer>
+        <PageSizeControl>
+          <span>Orders per page:</span>
+          <PageSizeSelect
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </PageSizeSelect>
+        </PageSizeControl>
+
         <PaginationInfo>
-          Showing {indexOfFirstOrder + 1} to{" "}
-          {Math.min(indexOfLastOrder, filteredOrders.length)} of{" "}
-          {filteredOrders.length} orders
+          Showing {(currentPage - 1) * pageSize + 1} to{" "}
+          {Math.min(currentPage * pageSize, totalOrders)} of {totalOrders}{" "}
+          orders
         </PaginationInfo>
+
         <PaginationControls>
           <PaginationButton
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={!hasPrev}
+            onClick={() => handlePageChange(1)}
+            title="First Page"
           >
-            Prev
+            <FaAngleLeft />
           </PaginationButton>
 
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <PaginationButton
-              key={page}
-              $active={currentPage === page}
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </PaginationButton>
-          ))}
+          <PaginationButton
+            disabled={!hasPrev}
+            onClick={() => handlePageChange(currentPage - 1)}
+            title="Previous Page"
+          >
+            <FaAngleLeft />
+          </PaginationButton>
+
+          <PageInfo>
+            Page {currentPageFromApi} of {totalPages}
+          </PageInfo>
 
           <PaginationButton
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={!hasNext}
+            onClick={() => handlePageChange(currentPage + 1)}
+            title="Next Page"
           >
-            Next
+            <FaAngleRight />
+          </PaginationButton>
+
+          <PaginationButton
+            disabled={!hasNext}
+            onClick={() => handlePageChange(totalPages)}
+            title="Last Page"
+          >
+            <FaAngleRight />
           </PaginationButton>
         </PaginationControls>
       </PaginationContainer>
-      {showStatusModal && selectedOrder && (
-        <ModalOverlay>
-          <ModalContainer>
-            <ModalHeader>
-              <h3>Update Order Status</h3>
-              <CloseButton onClick={() => setShowStatusModal(false)}>
-                ×
-              </CloseButton>
-            </ModalHeader>
-            <ModalContent>
-              <OrderInfo>
-                <InfoLabel>Order ID:</InfoLabel>
-                <InfoValue>{selectedOrder.id}</InfoValue>
-              </OrderInfo>
-              <OrderInfo>
-                <InfoLabel>Customer:</InfoLabel>
-                <InfoValue>{selectedOrder.customer}</InfoValue>
-              </OrderInfo>
-              <OrderInfo>
-                <InfoLabel>Current Status:</InfoLabel>
-                <InfoValue>
-                  <StatusBadge $color={getStatusColor(selectedOrder.status)}>
-                    {selectedOrder.status.charAt(0).toUpperCase() +
-                      selectedOrder.status.slice(1)}
-                  </StatusBadge>
-                </InfoValue>
-              </OrderInfo>
-
-              <FormGroup>
-                <FormLabel>New Status</FormLabel>
-                <FormSelect
-                  value={newStatus}
-                  onChange={(e) => setNewStatus(e.target.value)}
-                >
-                  <option value="pending">Pending</option>
-                  <option value="processing">Processing</option>
-                  <option value="shipped">Shipped</option>
-                  <option value="delivered">Delivered</option>
-                  <option value="cancelled">Cancelled</option>
-                </FormSelect>
-              </FormGroup>
-
-              {newStatus === "shipped" && (
-                <FormGroup>
-                  <FormLabel>Tracking Number</FormLabel>
-                  <FormInput type="text" placeholder="Enter tracking number" />
-                </FormGroup>
-              )}
-
-              <ActionButtons>
-                <ModalButton onClick={() => setShowStatusModal(false)}>
-                  Cancel
-                </ModalButton>
-                <ModalButton $primary onClick={confirmStatusChange}>
-                  Update Status
-                </ModalButton>
-              </ActionButtons>
-            </ModalContent>
-          </ModalContainer>
-        </ModalOverlay>
-      )}
     </Container>
   );
 }
+
+// Styled Components
 const Container = styled.div`
   padding: 2rem;
   background-color: #f8fafc;
@@ -599,6 +503,13 @@ const SearchInput = styled.input`
   outline: none;
 `;
 
+const SearchIcon = styled.div`
+  color: #7f8c8d;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+`;
+
 const FilterGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -617,24 +528,6 @@ const FilterSelect = styled.select`
   border-radius: 8px;
   font-size: 0.9rem;
   min-width: 150px;
-`;
-
-const ActionButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  background-color: ${(props) => (props.$primary ? "#3498db" : "white")};
-  color: ${(props) => (props.$primary ? "white" : "#2c3e50")};
-  border: ${(props) => (props.$primary ? "none" : "1px solid #e2e8f0")};
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  &:hover {
-    background-color: ${(props) => (props.$primary ? "#2980b9" : "#f8f9fa")};
-  }
 `;
 
 const OrdersTable = styled.table`
@@ -709,6 +602,7 @@ const ActionIcon = styled(Link)`
     props.$color ? `${props.$color}20` : "#f1f5f9"};
   color: ${(props) => props.$color || "#4a5568"};
   border: none;
+  text-decoration: none;
 
   &:hover {
     background-color: ${(props) => props.$color || "#e2e8f0"};
@@ -738,36 +632,77 @@ const NoOrders = styled.div`
 
 const PaginationContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   background: white;
   border-radius: 10px;
-  padding: 1rem 1.5rem;
+  padding: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+`;
+
+const PageSizeControl = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+`;
+
+const PageSizeSelect = styled.select`
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.9rem;
 `;
 
 const PaginationInfo = styled.div`
   color: #7f8c8d;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
 `;
 
 const PaginationControls = styled.div`
   display: flex;
+  align-items: center;
   gap: 0.5rem;
 `;
 
-const PaginationButton = styled.button`
+const PageInfo = styled.div`
   padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #4a5568;
+`;
+
+const PaginationButton = styled.button`
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  background-color: ${(props) => (props.$active ? "#3498db" : "white")};
-  color: ${(props) => (props.$active ? "white" : "#2c3e50")};
-  border: ${(props) => (props.$active ? "none" : "1px solid #e2e8f0")};
+  background-color: white;
+  color: #2c3e50;
+  border: 1px solid #e2e8f0;
 
   &:hover:not(:disabled) {
-    background-color: ${(props) => (props.$active ? "#2980b9" : "#f8f9fa")};
+    background-color: #f8f9fa;
   }
 
   &:disabled {
@@ -776,119 +711,56 @@ const PaginationButton = styled.button`
   }
 `;
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+const LoadingContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  min-height: 300px;
+  font-size: 1.2rem;
+  color: #3498db;
 `;
 
-const ModalContainer = styled.div`
+const LoaderSpinner = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
   background: white;
   border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  overflow: hidden;
-`;
-
-const ModalHeader = styled.div`
-  padding: 1.5rem;
-  background: #f8fafc;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 2rem auto;
 
   h3 {
-    margin: 0;
-    font-size: 1.25rem;
-    color: #2c3e50;
+    color: #e74c3c;
+    margin: 1rem 0 0.5rem;
   }
-`;
 
-const CloseButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #7f8c8d;
-
-  &:hover {
-    color: #2c3e50;
-  }
-`;
-
-const ModalContent = styled.div`
-  padding: 1.5rem;
-`;
-
-const OrderInfo = styled.div`
-  display: flex;
-  margin-bottom: 1rem;
-`;
-
-const InfoLabel = styled.div`
-  flex: 1;
-  font-weight: 500;
-  color: #2c3e50;
-`;
-
-const InfoValue = styled.div`
-  flex: 2;
-  color: #4a5568;
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 1.5rem;
-`;
-
-const FormLabel = styled.label`
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #2c3e50;
-`;
-
-const FormSelect = styled.select`
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
-`;
-
-const FormInput = styled.input`
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
-`;
-
-// const ActionButtons = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   gap: 1rem;
-//   margin-top: 1rem;
-// `;
-
-const ModalButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  background-color: ${(props) => (props.$primary ? "#3498db" : "white")};
-  color: ${(props) => (props.$primary ? "white" : "#2c3e50")};
-  border: ${(props) => (props.$primary ? "none" : "1px solid #e2e8f0")};
-
-  &:hover {
-    background-color: ${(props) => (props.$primary ? "#2980b9" : "#f8f9fa")};
+  p {
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin: 0.25rem 0;
   }
 `;

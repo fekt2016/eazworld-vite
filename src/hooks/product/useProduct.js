@@ -21,7 +21,7 @@ const useProduct = () => {
   });
 
   // Get single product by ID
-  const useProductById = (id) =>
+  const useGetProductById = (id) =>
     useQuery({
       queryKey: ["products", id],
       queryFn: async () => {
@@ -40,20 +40,20 @@ const useProduct = () => {
       retry: 2,
     });
 
-  const useProductBySellerId = (sellerId) =>
+  // Get all products by seller
+  const useGetAllProductBySeller = (sellerId) =>
     useQuery({
-      queryKey: ["products", sellerId],
+      queryKey: ["seller-products", sellerId],
       queryFn: async () => {
         if (!sellerId) return null;
         try {
           return await productService.getAllProductsBySeller(sellerId);
         } catch (error) {
-          console.error(`Failed to fetch product ${sellerId}:`, error);
-          throw new Error(`Failed to load product: ${error.message}`);
+          throw new Error(`Failed to load seller products: ${error.message}`);
         }
       },
       enabled: !!sellerId,
-      staleTime: 1000 * 60 * 2,
+      staleTime: 1000 * 60 * 2, // 2 minutes
     });
 
   // Create product mutation
@@ -66,12 +66,6 @@ const useProduct = () => {
 
   const updateProduct = useMutation({
     mutationFn: ({ id, data }) => productService.updateProduct(id, data),
-    /**
-     * Callback function executed when the product update mutation is successful.
-     * It invalidates the "product" query to ensure that any cached data is
-     * refreshed with the latest information from the server. Additionally, it
-     * logs a success message to the console.
-     */
 
     onSuccess: () => {
       queryClient.invalidateQueries(["product"]);
@@ -81,17 +75,9 @@ const useProduct = () => {
   // Delete product mutation
   const deleteProduct = useMutation({
     mutationFn: (id) => productService.deleteProduct(id),
-    onSuccess: (_, deletedId) => {
-      queryClient.getQueryData(["products"]);
-      queryClient.setQueryData(["products"], (old) => {
-        // Handle different response structures
-        const actualProducts = old?.data?.data || old?.data || old || [];
-        return Array.isArray(actualProducts)
-          ? actualProducts.filter((p) => p.id !== deletedId)
-          : [];
-      });
-      const afterUpdate = queryClient.getQueryData(["products"]);
-      console.log("Data after update:", afterUpdate);
+    onSuccess: () => {
+      queryClient.getQueryData(["product"]);
+      console.log("product deleted successfully!!!");
     },
   });
 
@@ -106,8 +92,8 @@ const useProduct = () => {
 
   return {
     getProducts,
-    useProductById,
-    useProductBySellerId,
+    useGetProductById,
+    useGetAllProductBySeller,
     getProductCountByCategory,
     createProduct: {
       mutate: createProduct.mutate,

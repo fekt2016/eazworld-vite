@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import useProduct from "../../hooks/product/useProduct";
-import ProductForm from "../components/forms/ProductForm";
+import ProductForm from "../components/product/ProductForm";
 import { compressImage } from "../../utils/imageCompressor";
 // import api from "../../apiService/api";
 

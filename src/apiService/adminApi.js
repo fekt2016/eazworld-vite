@@ -1,6 +1,7 @@
 import api from "./api";
-const adminSellerApi = {
-  getAllSellers: (params) => {
+
+const adminApi = {
+  getAllAdmins: (params) => {
     const validatedParams = {
       page: params?.page || 1,
       limit: params?.limit || 10,
@@ -12,16 +13,7 @@ const adminSellerApi = {
       Object.entries(validatedParams).filter(([v]) => v !== undefined)
     );
 
-    return api.get(`/seller`, { params: cleanParams });
+    return api.get(`/admin`, { params: cleanParams });
   },
-  updateSellerStatus: (status) => {
-    const { sellerId, status: newStatus } = status;
-    if (!sellerId || !newStatus) {
-      throw new Error("sellerId and newStatus are required");
-    }
-    return api.patch(`/seller/${sellerId}/status`, { newStatus });
-  },
-  getSellerDetails: (sellerId) => api.get(`/seller/${sellerId}`),
-  deleteSeller: (sellerId) => api.delete(`/seller/${sellerId}`),
 };
-export default adminSellerApi;
+export default adminApi;

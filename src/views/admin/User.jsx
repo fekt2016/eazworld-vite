@@ -1,148 +1,216 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useMemo, useState } from "react";
 import {
   FaChartLine,
-  FaCheckCircle,
-  FaEdit,
-  FaEllipsisV,
-  FaEnvelope,
   FaFilter,
   FaSearch,
   FaStore,
-  FaTimesCircle,
-  FaTrash,
   FaUserAlt,
   FaUserPlus,
   FaUserShield,
 } from "react-icons/fa";
 import styled from "styled-components";
+import useSellerAdmin from "../../hooks/admin/useSellerAdmin";
+import useUserAdmin from "../../hooks/admin/useUsersAdmin";
+import useAdmin from "../../hooks/admin/useAdmin";
+import {
+  Table,
+  RoleCell,
+  UserCell,
+  StatusCell,
+  DateCell,
+  LastActiveCell,
+} from "../components/table";
+import UserDetailsModal from "../components/Modal/UserDetailsModal";
+import EditUserModal from "../components/Modal/EditUserModal";
+import AddUserModal from "../components/Modal/AddUserModal";
 
-export default function User() {
+// Dynamic Table Component
+
+export default function UserManagement() {
+  const [activeTab, setActiveTab] = useState("users");
   const [filterOpen, setFilterOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [actionMenu, setActionMenu] = useState(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false); // New state for setIsDetailsModalOpen
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // New state for isEditModalOpen
+  const [selectedUser, setSelectedUser] = useState(null); // New state for setSelectedUser
+  const [userToEdit, setUserToEdit] = useState(null); // New state for setUserToEdit
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
 
-  const users = [
-    {
-      id: "user1",
-      name: "Alex Johnson",
-      email: "alex@example.com",
-      role: "admin",
-      status: "active",
-      lastActive: "2 hours ago",
-      registration: "Oct 12, 2023",
-      vendor: null,
-      orders: 0,
-      revenue: "$0",
-    },
-    {
-      id: "user2",
-      name: "Sarah Williams",
-      email: "sarah@fashionhub.com",
-      role: "vendor",
-      status: "active",
-      lastActive: "5 hours ago",
-      registration: "Sep 28, 2023",
-      vendor: "FashionHub",
-      orders: 42,
-      revenue: "$12,450",
-    },
-    {
-      id: "user3",
-      name: "Michael Brown",
-      email: "michael@techgadgets.com",
-      role: "vendor",
-      status: "pending",
-      lastActive: "1 day ago",
-      registration: "Oct 15, 2023",
-      vendor: "TechGadgets",
-      orders: 28,
-      revenue: "$8,920",
-    },
-    {
-      id: "user4",
-      name: "Emily Davis",
-      email: "emily@example.com",
-      role: "customer",
-      status: "active",
-      lastActive: "3 hours ago",
-      registration: "Oct 5, 2023",
-      vendor: null,
-      orders: 8,
-      revenue: "$420",
-    },
-    {
-      id: "user5",
-      name: "David Wilson",
-      email: "david@homestyle.com",
-      role: "vendor",
-      status: "inactive",
-      lastActive: "1 week ago",
-      registration: "Aug 20, 2023",
-      vendor: "HomeStyle",
-      orders: 35,
-      revenue: "$7,310",
-    },
-    {
-      id: "user6",
-      name: "Jessica Lee",
-      email: "jessica@example.com",
-      role: "customer",
-      status: "active",
-      lastActive: "Today",
-      registration: "Oct 18, 2023",
-      vendor: null,
-      orders: 12,
-      revenue: "$689",
-    },
-    {
-      id: "user7",
-      name: "Robert Garcia",
-      email: "robert@beautycare.com",
-      role: "vendor",
-      status: "active",
-      lastActive: "4 hours ago",
-      registration: "Sep 10, 2023",
-      vendor: "BeautyCare",
-      orders: 19,
-      revenue: "$5,680",
-    },
-    {
-      id: "user8",
-      name: "Amanda Taylor",
-      email: "amanda@example.com",
-      role: "customer",
-      status: "inactive",
-      lastActive: "2 weeks ago",
-      registration: "Jul 15, 2023",
-      vendor: null,
-      orders: 3,
-      revenue: "$150",
-    },
-  ];
-  const filteredUsers = users.filter((user) => {
-    const roleMatch = selectedRole === "all" || user.role === selectedRole;
-    const statusMatch =
-      selectedStatus === "all" || user.status === selectedStatus;
-    return roleMatch && statusMatch;
+  // Pagination state
+  const [pagination, setPagination] = useState({
+    users: { page: 1, limit: 10, total: 0 },
+    sellers: { page: 1, limit: 10, total: 0 },
+    admins: { page: 1, limit: 10, total: 0 },
   });
 
-  const getRoleIcon = (role) => {
-    switch (role) {
-      case "admin":
-        return <FaUserShield style={{ color: "#4361EE" }} />;
-      case "vendor":
-        return <FaStore style={{ color: "#F8961E" }} />;
-      case "customer":
-        return <FaUserAlt style={{ color: "#4CC9F0" }} />;
-      default:
-        return <FaUserAlt />;
+  // New state for setIsAddUserModalOpen
+  // Update hooks to accept pagination parameters
+  const { sellers, isSellerLoading, totalSellers } = useSellerAdmin();
+  console.log("Sellers:", sellers);
+  const {
+    users,
+    isLoading: isUsersLoading,
+    totalUsers,
+  } = useUserAdmin(pagination.users.page, pagination.users.limit);
+
+  const {
+    admins,
+    isLoading: isAdminLoading,
+    totalAdmins,
+  } = useAdmin(pagination.admins.page, pagination.admins.limit);
+
+  // Update pagination totals when data changes
+  useEffect(() => {
+    setPagination((prev) => ({
+      ...prev,
+      users: { ...prev.users, total: totalUsers },
+      sellers: { ...prev.sellers, total: totalSellers },
+      admins: { ...prev.admins, total: totalAdmins },
+    }));
+  }, [totalUsers, totalSellers, totalAdmins]);
+
+  // memoize data
+  const allSellers = useMemo(() => sellers?.results || [], [sellers]);
+  const allUsers = useMemo(() => users?.results || [], [users]);
+  const allAdmins = useMemo(() => admins?.results || [], [admins]);
+
+  const handlePageChange = (page) => {
+    setPagination((prev) => ({
+      ...prev,
+      [activeTab]: { ...prev[activeTab], page },
+    }));
+  };
+  const handleItemsPerPageChange = (limit) => {
+    setPagination((prev) => ({
+      ...prev,
+      [activeTab]: { ...prev[activeTab], limit, page: 1 }, // Reset to first page
+    }));
+  };
+
+  const activeRate = useMemo(() => {
+    const allAccounts = [...allUsers, ...allSellers, ...allAdmins];
+    const activeAccounts = allAccounts.filter(
+      (account) => account.status === "active"
+    ).length;
+
+    return allAccounts.length > 0
+      ? Math.round((activeAccounts / allAccounts.length) * 100)
+      : 0;
+  }, [allUsers, allSellers, allAdmins]);
+
+  // Columns configuration
+  const columns = {
+    users: [
+      { Header: "Registration", accessor: "createdAt", Cell: DateCell },
+      { Header: "User", accessor: "name", Cell: UserCell },
+      { Header: "Role", accessor: "role", Cell: RoleCell },
+      { Header: "Last Active", accessor: "lastLogin", Cell: LastActiveCell },
+      { Header: "Status", accessor: "status", Cell: StatusCell },
+    ],
+    sellers: [
+      { Header: "Registration", accessor: "createdAt", Cell: DateCell },
+      { Header: "Seller", accessor: "name", Cell: UserCell },
+      { Header: "Store", accessor: "shopName" },
+      { Header: "Orders", accessor: "orders" },
+      { Header: "Revenue", accessor: "revenue" },
+      { Header: "Last Active", accessor: "lastLogin", Cell: LastActiveCell },
+      { Header: "Status", accessor: "status", Cell: StatusCell },
+    ],
+    admins: [
+      { Header: "Registration", accessor: "createdAt", Cell: DateCell },
+      { Header: "Admin", accessor: "name", Cell: UserCell },
+      { Header: "Role", accessor: "role", Cell: RoleCell },
+      { Header: "Actions", accessor: "permissions" },
+      { Header: "Last Active", accessor: "lastLogin", Cell: LastActiveCell },
+      { Header: "Status", accessor: "status", Cell: StatusCell },
+    ],
+  };
+  const generateLastLogin = (createdAt) => {
+    const createdDate = new Date(createdAt);
+    const now = new Date();
+    const diffTime = Math.abs(now - createdDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    // Random login within the last 1-30 days
+    const randomDays = Math.max(1, Math.floor(Math.random() * diffDays));
+    const lastLogin = new Date(createdDate);
+    lastLogin.setDate(lastLogin.getDate() + randomDays);
+
+    return lastLogin.toISOString();
+  };
+
+  // Get filtered data based on active tab
+  const getFilteredData = () => {
+    const data = {
+      users: allUsers
+        .filter((u) => u.role === "user")
+        .map((user) => ({
+          ...user,
+          registration: user.createdAt
+            ? new Date(user.createdAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "-",
+          lastLogin: user.lastLogin || generateLastLogin(user.createdAt),
+        })),
+      sellers: allSellers
+        .filter((u) => u.role === "seller")
+        .map((seller) => ({
+          ...seller,
+          lastLogin: seller.lastLogin || generateLastLogin(seller.createdAt),
+        })),
+      admins: allAdmins
+        .filter((u) => u.role === "admin")
+        .map((admin) => ({
+          ...admin,
+          lastLogin: admin.lastLogin || generateLastLogin(admin.createdAt),
+        })),
+    };
+
+    const tabData = data[activeTab] || [];
+
+    return selectedStatus === "all"
+      ? tabData
+      : tabData.filter((item) => item.status === selectedStatus);
+  };
+
+  const filteredData = getFilteredData();
+
+  // Current pagination settings
+  const currentPagination = pagination[activeTab];
+  const totalPages = Math.ceil(
+    currentPagination.total / currentPagination.limit
+  );
+
+  // Action handlers
+  const handleEdit = (item) => {
+    setUserToEdit(item);
+    setIsEditModalOpen(true);
+    setActionMenu(null);
+  };
+
+  const handleDelete = (item) => {
+    if (window.confirm(`Delete ${item.name}?`)) {
+      setActionMenu(null);
     }
   };
 
-  const toggleActionMenu = (userId) => {
-    setActionMenu(actionMenu === userId ? null : userId);
+  const handleViewDetails = (item) => {
+    setSelectedUser(item);
+    setIsDetailsModalOpen(true);
+    setActionMenu(null);
   };
+  const handleClose = () => {
+    setIsAddUserModalOpen(false);
+  };
+
+  if (isSellerLoading || isUsersLoading || isAdminLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <UserManagementContainer>
       <Header>
@@ -150,16 +218,39 @@ export default function User() {
           <h1>User Management</h1>
           <p>Manage all users, vendors, and administrators</p>
         </TitleSection>
-        <ActionButton>
+        <ActionButton onClick={() => setIsAddUserModalOpen(true)}>
           <FaUserPlus /> Add New User
         </ActionButton>
       </Header>
+
+      {/* Tabs Section */}
+      <TabsContainer>
+        <Tab
+          active={activeTab === "users"}
+          onClick={() => setActiveTab("users")}
+        >
+          <FaUserAlt /> Users
+        </Tab>
+        <Tab
+          active={activeTab === "sellers"}
+          onClick={() => setActiveTab("sellers")}
+        >
+          <FaStore /> Sellers
+        </Tab>
+        <Tab
+          active={activeTab === "admins"}
+          onClick={() => setActiveTab("admins")}
+        >
+          <FaUserShield /> Admins
+        </Tab>
+      </TabsContainer>
+
       <ControlsSection>
         <SearchBar>
           <FaSearch style={{ color: "#8D99AE" }} />
           <input
             type="text"
-            placeholder="Search users by name, email, or vendor..."
+            placeholder={`Search ${activeTab} by name, email, or vendor...`}
           />
         </SearchBar>
 
@@ -167,21 +258,9 @@ export default function User() {
           <FaFilter /> Filters
         </FilterButton>
       </ControlsSection>
+
       {filterOpen && (
         <FiltersPanel>
-          <FilterGroup>
-            <label>User Role</label>
-            <Select
-              value={selectedRole}
-              onChange={(e) => setSelectedRole(e.target.value)}
-            >
-              <option value="all">All Roles</option>
-              <option value="admin">Administrator</option>
-              <option value="vendor">Vendor</option>
-              <option value="customer">Customer</option>
-            </Select>
-          </FilterGroup>
-
           <FilterGroup>
             <label>Account Status</label>
             <Select
@@ -207,13 +286,14 @@ export default function User() {
           <ApplyFiltersButton>Apply Filters</ApplyFiltersButton>
         </FiltersPanel>
       )}
+
       <StatsSummary>
         <StatCard>
           <StatIcon style={{ background: "#4361EE20", color: "#4361EE" }}>
             <FaUserAlt />
           </StatIcon>
           <StatInfo>
-            <StatValue>142</StatValue>
+            <StatValue>{allUsers.length}</StatValue>
             <StatLabel>Total Users</StatLabel>
           </StatInfo>
         </StatCard>
@@ -223,8 +303,10 @@ export default function User() {
             <FaStore />
           </StatIcon>
           <StatInfo>
-            <StatValue>28</StatValue>
-            <StatLabel>Active Vendors</StatLabel>
+            <StatValue>
+              {allSellers.filter((u) => u.role === "seller").length}
+            </StatValue>
+            <StatLabel>Active Sellers</StatLabel>
           </StatInfo>
         </StatCard>
 
@@ -233,7 +315,9 @@ export default function User() {
             <FaUserShield />
           </StatIcon>
           <StatInfo>
-            <StatValue>5</StatValue>
+            <StatValue>
+              {allAdmins.filter((u) => u.role === "admin").length}
+            </StatValue>
             <StatLabel>Administrators</StatLabel>
           </StatInfo>
         </StatCard>
@@ -243,105 +327,90 @@ export default function User() {
             <FaChartLine />
           </StatIcon>
           <StatInfo>
-            <StatValue>89%</StatValue>
+            <StatValue>{activeRate}%</StatValue>
             <StatLabel>Active Rate</StatLabel>
           </StatInfo>
         </StatCard>
       </StatsSummary>
-      <UsersTable>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>USER</TableHeaderCell>
-            <TableHeaderCell>ROLE</TableHeaderCell>
-            <TableHeaderCell>STATUS</TableHeaderCell>
-            <TableHeaderCell>LAST ACTIVE</TableHeaderCell>
-            <TableHeaderCell>REGISTRATION</TableHeaderCell>
-            <TableHeaderCell>ACTIONS</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredUsers.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>
-                <UserInfo>
-                  <UserAvatar>{user.name.charAt(0)}</UserAvatar>
-                  <UserDetails>
-                    <UserName>{user.name}</UserName>
-                    <UserEmail>{user.email}</UserEmail>
-                    {user.vendor && <VendorTag>{user.vendor}</VendorTag>}
-                  </UserDetails>
-                </UserInfo>
-              </TableCell>
 
-              <TableCell>
-                <RoleBadge>
-                  {getRoleIcon(user.role)}
-                  <span>
-                    {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
-                  </span>
-                </RoleBadge>
-              </TableCell>
-
-              <TableCell>
-                <StatusBadge status={user.status}>
-                  {user.status === "active" ? (
-                    <FaCheckCircle />
-                  ) : (
-                    <FaTimesCircle />
-                  )}
-                  <span>
-                    {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
-                  </span>
-                </StatusBadge>
-              </TableCell>
-
-              <TableCell>
-                <LastActive>{user.lastActive}</LastActive>
-              </TableCell>
-
-              <TableCell>
-                <RegistrationDate>{user.registration}</RegistrationDate>
-              </TableCell>
-
-              <TableCell>
-                <ActionsCell>
-                  <ActionButton onClick={() => toggleActionMenu(user.id)}>
-                    <FaEllipsisV />
-                  </ActionButton>
-
-                  {actionMenu === user.id && (
-                    <ActionMenu>
-                      <ActionMenuItem>
-                        <FaEdit /> Edit Profile
-                      </ActionMenuItem>
-                      <ActionMenuItem>
-                        <FaEnvelope /> Send Message
-                      </ActionMenuItem>
-                      <ActionMenuItem>
-                        <FaChartLine /> View Activity
-                      </ActionMenuItem>
-                      <ActionMenuItem danger>
-                        <FaTrash /> Delete Account
-                      </ActionMenuItem>
-                    </ActionMenu>
-                  )}
-                </ActionsCell>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </UsersTable>
+      {/* Dynamic Table */}
+      <Table
+        data={filteredData}
+        columns={columns[activeTab]}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onViewDetails={handleViewDetails}
+        actionMenu={actionMenu}
+        setActionMenu={setActionMenu}
+      />
+      {isEditModalOpen && (
+        <EditUserModal
+          user={userToEdit}
+          onClose={() => setIsEditModalOpen(false)}
+        />
+      )}
+      {isDetailsModalOpen && (
+        <UserDetailsModal
+          selectedUser={selectedUser}
+          setIsDetailsModalOpen={setIsDetailsModalOpen}
+        />
+      )}
+      {isAddUserModalOpen && (
+        <AddUserModal
+          setIsAddUserModalOpen={setIsAddUserModalOpen}
+          // selectedUser={selectedUser}
+          onClose={handleClose}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+      )}
       <Pagination>
-        <PaginationButton>Previous</PaginationButton>
-        <PaginationButton active>1</PaginationButton>
-        <PaginationButton>2</PaginationButton>
-        <PaginationButton>3</PaginationButton>
-        <PaginationButton>Next</PaginationButton>
+        <PaginationButton
+          disabled={currentPagination.page === 1}
+          onClick={() => handlePageChange(currentPagination.page - 1)}
+        >
+          Previous
+        </PaginationButton>
+
+        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+          const pageNum = i + 1;
+          return (
+            <PaginationButton
+              key={pageNum}
+              active={pageNum === currentPagination.page}
+              onClick={() => handlePageChange(pageNum)}
+            >
+              {pageNum}
+            </PaginationButton>
+          );
+        })}
+
+        {totalPages > 5 && (
+          <PageInfo>
+            Page {currentPagination.page} of {totalPages}
+          </PageInfo>
+        )}
+
+        <PaginationButton
+          disabled={currentPagination.page >= totalPages}
+          onClick={() => handlePageChange(currentPagination.page + 1)}
+        >
+          Next
+        </PaginationButton>
+
+        <ItemsPerPageSelect
+          value={currentPagination.limit}
+          onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+        >
+          <option value={5}>5 per page</option>
+          <option value={10}>10 per page</option>
+          <option value={20}>20 per page</option>
+          <option value={50}>50 per page</option>
+        </ItemsPerPageSelect>
       </Pagination>
     </UserManagementContainer>
   );
 }
-
 const UserManagementContainer = styled.div`
   padding: 30px;
   background-color: #f5f7fb;
@@ -395,6 +464,30 @@ const ActionButton = styled.button`
   &:hover {
     background: #3a56d4;
     transform: translateY(-2px);
+  }
+`;
+
+const TabsContainer = styled.div`
+  display: flex;
+  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 25px;
+  padding: 0 5px;
+`;
+
+const Tab = styled.div`
+  padding: 12px 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  color: ${({ active }) => (active ? "#4361EE" : "#8D99AE")};
+  border-bottom-color: ${({ active }) => (active ? "#4361EE" : "transparent")};
+  transition: all 0.3s;
+
+  &:hover {
+    color: #4361ee;
   }
 `;
 
@@ -574,171 +667,6 @@ const StatLabel = styled.div`
   font-size: 14px;
 `;
 
-const UsersTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  margin-bottom: 30px;
-`;
-
-const TableHeader = styled.thead`
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
-`;
-
-const TableHeaderCell = styled.th`
-  padding: 18px 25px;
-  text-align: left;
-  font-weight: 600;
-  color: #2b2d42;
-  font-size: 14px;
-`;
-
-const TableBody = styled.tbody``;
-
-const TableRow = styled.tr`
-  border-bottom: 1px solid #e9ecef;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background-color: #f8faff;
-  }
-`;
-
-const TableCell = styled.td`
-  padding: 18px 25px;
-  color: #2b2d42;
-  vertical-align: middle;
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 15px;
-`;
-
-const UserAvatar = styled.div`
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: #4361ee;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 18px;
-`;
-
-const UserDetails = styled.div``;
-
-const UserName = styled.div`
-  font-weight: 600;
-  margin-bottom: 5px;
-`;
-
-const UserEmail = styled.div`
-  color: #8d99ae;
-  font-size: 14px;
-  margin-bottom: 8px;
-`;
-
-const VendorTag = styled.span`
-  background: #f0f2ff;
-  color: #4361ee;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-`;
-
-const RoleBadge = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-  font-size: 14px;
-`;
-
-const StatusBadge = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: ${({ status }) =>
-    status === "active"
-      ? "#4CC9F020"
-      : status === "pending"
-      ? "#F8961E20"
-      : "#F7258520"};
-  color: ${({ status }) =>
-    status === "active"
-      ? "#4CC9F0"
-      : status === "pending"
-      ? "#F8961E"
-      : "#F72585"};
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  width: fit-content;
-`;
-
-const LastActive = styled.div`
-  font-size: 14px;
-  color: #2b2d42;
-`;
-
-const RegistrationDate = styled.div`
-  font-size: 14px;
-  color: #2b2d42;
-`;
-
-const ActionsCell = styled.div`
-  position: relative;
-`;
-
-const ActionMenu = styled.div`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
-  z-index: 10;
-  overflow: hidden;
-`;
-
-const ActionMenuItem = styled.div`
-  padding: 12px 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #f8f9fa;
-  }
-
-  ${({ danger }) =>
-    danger &&
-    `
-    color: #F72585;
-
-    &:hover {
-      background: #F7258510;
-    }
-  `}
-`;
-
 const Pagination = styled.div`
   display: flex;
   justify-content: center;
@@ -764,3 +692,40 @@ const PaginationButton = styled.button`
     background: ${({ active }) => (active ? "#3a56d4" : "#f0f2ff")};
   }
 `;
+const PageInfo = styled.span`
+  padding: 8px 12px;
+  color: #6c757d;
+`;
+
+const ItemsPerPageSelect = styled.select`
+  margin-left: 15px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+  background-color: white;
+  cursor: pointer;
+`;
+
+// Modify existing PaginationButton for disabled state
+// const PaginationButton = styled.button`
+//   min-width: 40px;
+//   padding: 0 15px;
+//   height: 40px;
+//   border-radius: 10px;
+//   border: none;
+//   background: ${({ active }) => (active ? "#4361ee" : "white")};
+//   color: ${({ active, disabled }) =>
+//     active ? "white" : disabled ? "#adb5bd" : "#2b2d42"};
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+//   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+//   font-weight: 500;
+//   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
+
+//   &:hover {
+//     background: ${({ active, disabled }) =>
+//       disabled ? "white" : active ? "#3a56d4" : "#f0f2ff"};
+//   }
+// `;
